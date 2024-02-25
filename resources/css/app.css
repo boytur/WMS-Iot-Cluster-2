@@ -7,3 +7,127 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+:root {
+    --blue: #5d87ff;
+    --indigo: #6610f2;
+    --purple: #6f42c1;
+    --pink: #d63384;
+    --red: #fa896b;
+    --orange: #fd7e14;
+    --yellow: #ffae1f;
+    --green: #13deb9;
+    --teal: #20c997;
+    --cyan: #539bff;
+    --black: #000;
+    --white: #fff;
+    --gray: #2a3547;
+    --gray-dark: #343a40;
+    --gray-100: #f6f9fc;
+    --gray-200: #eaeff4;
+    --gray-300: #dfe5ef;
+    --gray-400: #7c8fac;
+    --gray-500: #5a6a85;
+    --gray-600: #2a3547;
+    --gray-700: #495057;
+    --gray-800: #343a40;
+    --gray-900: #212529;
+    --primary: #5d87ff;
+    --secondary: #CCCCCC;
+    --success: #13deb9;
+    --info: #539bff;
+    --warning: #ffae1f;
+    --danger: #fa896b;
+    --light: #f6f9fc;
+    --dark: #2a3547;
+    --muted: #5a6a85;
+    --indigo: #6610f2;
+    --light-primary: #ecf2ff;
+    --light-secondary: #e8f7ff;
+    --light-info: #ebf3fe;
+    --light-success: #e6fffa;
+    --light-warning: #fef5e5;
+    --light-danger: #fbf2ef;
+    --light-indigo: #ebf3fe;
+    --dark-light: #2a3547;
+    --light-gray: #f6f9fc;
+    --primary-text: #4a6ccc;
+    --secondary-text: #2a3547;
+    --success-text: #0fb294;
+    --info-text: #325d99;
+    --warning-text: #996813;
+    --danger-text: #c86e56;
+    --light-text: #2a3547;
+    --dark-text: #495057;
+    --primary-bg-subtle: #dfe7ff;
+    --secondary-bg-subtle: #f6f9fc;
+    --success-bg-subtle: #d0f8f1;
+    --info-bg-subtle: #ddebff;
+    --warning-bg-subtle: #ffefd2;
+    --danger-bg-subtle: #fee7e1;
+    --light-bg-subtle: #fbfcfe;
+    --dark-bg-subtle: #7c8fac;
+    --primary-border-subtle: #becfff;
+    --secondary-border-subtle: #eaeff4;
+    --success-border-subtle: #a1f2e3;
+    --info-border-subtle: #bad7ff;
+    --warning-border-subtle: #ffdfa5;
+    --danger-border-subtle: #fdd0c4;
+    --light-border-subtle: #eaeff4;
+    --dark-border-subtle: #5a6a85;
+    --body-color: #5a6a85;
+    --emphasis-color: #000;
+    --emphasis-color-rgb: 0, 0, 0;
+    --secondary-color: rgba(90, 106, 133, 0.75);
+    --secondary-color-rgb: 90, 106, 133;
+    --secondary-bg: #eaeff4;
+    --secondary-bg-rgb: 234, 239, 244;
+    --tertiary-color: rgba(90, 106, 133, 0.5);
+    --tertiary-color-rgb: 90, 106, 133;
+    --tertiary-bg: #f6f9fc;
+    --tertiary-bg-rgb: 246, 249, 252;
+    --body-bg: #fff;
+    --body-bg-rgb: 255, 255, 255;
+    --heading-color: #2a3547;
+    --link-color: #5d87ff;
+    --link-color-rgb: 93, 135, 255;
+    --link-decoration: underline;
+    --link-hover-color: #4a6ccc;
+    --link-hover-color-rgb: 74, 108, 204;
+    --code-color: #d63384;
+    --highlight-bg: #ffefd2;
+    --border-width: 1px;
+    --border-style: solid;
+    --border-color: #ebf1f6;
+    --border-color-translucent: rgba(0, 0, 0, 0.175);
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --breakpoint-xxl: 1400px;
+}
+
+@layer components {
+    .btn-primary {
+        @apply bg-[#5d87ff] text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 cursor-pointer;
+    }
+
+    .btn-danger {
+        @apply bg-[#c86e56] text-white font-semibold rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2  focus:ring-red-600 cursor-pointer;
+    }
+
+    .btn-secondary {
+        @apply px-4 bg-[#CCCCCC] text-black font-semibold rounded-lg shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 cursor-pointer;
+    }
+
+
+    .input-primary {
+        @apply  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#5d87ff] focus:outline-none focus:border-blue-500 block w-full p-2.5;
+    }
+    .input-date {
+        @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#5d87ff] focus:outline-none focus:border-blue-500 block w-full p-2.5 cursor-pointer;
+    }
+    .input-number {
+        @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#5d87ff] focus:outline-none focus:border-blue-500 block w-full p-2.5;
+    }
+}
