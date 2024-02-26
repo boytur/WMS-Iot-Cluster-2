@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,6 +7,9 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+body {
+    font-family: 'Sarabun', sans-serif;
 }
 
 :root {
@@ -33,7 +37,7 @@
     --gray-800: #343a40;
     --gray-900: #212529;
     --primary: #5d87ff;
-    --secondary: #CCCCCC;
+    --secondary: #cccccc;
     --success: #13deb9;
     --info: #539bff;
     --warning: #ffae1f;
@@ -120,9 +124,12 @@
         @apply px-4 bg-[#CCCCCC] text-black font-semibold rounded-lg shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 cursor-pointer;
     }
 
+    .btn-secondary-2 {
+        @apply bg-white border border-[#5d87ff] text-gray-900 hover:bg-[#5d87ff] cursor-pointer hover:text-white text-sm rounded-lg focus:ring-[#5d87ff] focus:outline-none focus:border-blue-500 block w-full p-2.5;
+    }
 
     .input-primary {
-        @apply  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#5d87ff] focus:outline-none focus:border-blue-500 block w-full p-2.5;
+        @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#5d87ff] focus:outline-none focus:border-blue-500 block w-full p-2.5;
     }
     .input-date {
         @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#5d87ff] focus:outline-none focus:border-blue-500 block w-full p-2.5 cursor-pointer;
