@@ -18,7 +18,7 @@
             <div class="w-full flex text-center items-center flex-col justify-center">
                 <p class="md:text-[2.7rem] text-[2rem] mt-6 md:mt-0 w-full text-white font-bold"> Warehouse Management +
                     Iot</p>
-                <p class="text-[1rem] w-full text-white"> Warehouse Management + Iot</p>
+                <p class="text-[1rem] w-full text-white">by cluster 2</p>
             </div>
 
             {{-- Login box --}}
@@ -36,7 +36,7 @@
                             <label for="">username</label>
                         </div>
                         <div>
-                            <input class="input-primary mt-2" placeholder="username or email" type="text">
+                            <input class="input-primary mt-2 py-3" placeholder="username or email" type="text">
                         </div>
                     </div>
 
@@ -47,7 +47,7 @@
                             <label for="">password</label>
                         </div>
                         <div>
-                            <input class="input-primary mt-2" placeholder="************" type="password">
+                            <input class="input-primary mt-2 py-3" placeholder="************" type="password">
 
                             <div class="mt-8">
                                 <a href="/dashboard/analytic">
