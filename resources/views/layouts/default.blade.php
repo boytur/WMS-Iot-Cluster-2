@@ -217,7 +217,6 @@
 
 </body>
 
-<script src="https://kit.fontawesome.com/14014c696e.js" crossorigin="anonymous"></script>
 <script>
     // function to toggle sidebar
     const toggle_sidebar = ()=> {
