@@ -25,6 +25,8 @@ Route::get('/product/import', function () {
     return view('products.imports.v_import_by_lot_number');
 });
 
+
+
 Route::get('/product/export', function () {
     return view('products.exports.v_export_by_sale_number');
 });
