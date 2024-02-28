@@ -26,7 +26,7 @@ Route::get('/product/import', function () {
 });
 
 
-
+// Test
 Route::get('/product/export', function () {
     return view('products.exports.v_export_by_sale_number');
 });
