@@ -44,3 +44,7 @@ Route::get('/warehouse/add-wh', function () {
 Route::get('/management', function () {
     return view('users.v_user_management');
 });
+
+Route::get('/', function () {
+    return view('auth.v_login');
+});
