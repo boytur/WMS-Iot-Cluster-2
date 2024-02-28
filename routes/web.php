@@ -17,6 +17,7 @@ Route::get('/dashboard/analytic', function () {
     return view('dashboards.v_all_wh');
 });
 
+// Testๆ
 Route::get('/dashboard/view-another', function () {
     return view('dashboards.v_single_wh');
 });
