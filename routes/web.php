@@ -40,7 +40,7 @@ Route::get('/warehouse/add-space', function () {
 Route::get('/warehouse/add-wh', function () {
     return view('warehouses.v_add_more_wh');
 });
-
+// trrrrrrrrrrrrrr
 Route::get('/management', function () {
     return view('users.v_user_management');
 });
