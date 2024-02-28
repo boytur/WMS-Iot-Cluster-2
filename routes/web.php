@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+//
 Route::get('/dashboard/analytic', function () {
     return view('dashboards.v_all_wh');
 });
