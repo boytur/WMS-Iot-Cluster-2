@@ -17,7 +17,7 @@ Route::get('/dashboard/analytic', function () {
     return view('dashboards.v_all_wh');
 });
 
-//Oreo not Oreo,mann!!!
+//Oreo not Oreo,mann!!
 Route::get('/dashboard/view-another', function () {
     return view('dashboards.v_single_wh');
 });
