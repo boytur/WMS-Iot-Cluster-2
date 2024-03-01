@@ -38,5 +38,6 @@
             <h1>จัดการผู้ใช้งาน</h1>
             <h1>rachapro </h1>
         </div>
+        <H1>Rachapro</H1>
     </div>
 @endsection
