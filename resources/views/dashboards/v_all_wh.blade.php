@@ -5,6 +5,7 @@
 @section('content')
 <div style="height: calc(100vh - 4rem)" class="bg-[#F6F9FC] border w-full flex flex-col overflow-y-scroll">
     <div class="mt-[5rem] md:mt-0">
+        <h1> สวัสดี</h1>
         <h1>ดูภาพรวมทั้งหมด1</h1>
         <h1>ดูภาพรวมทั้งหมด2</h1>
         <h1>ดูภาพรวมทั้งหมด3</h1>
