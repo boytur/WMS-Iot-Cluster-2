@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/dashboard/analytic', function () {
     return view('dashboards.v_all_wh');
 });
-//ahhhhh
+//ahhhhhsdasgtfgrhytryrtyrt
 Route::get('/dashboard/view-another', function () {
     return view('dashboards.v_single_wh');
 });
