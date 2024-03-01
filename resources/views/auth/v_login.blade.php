@@ -8,7 +8,7 @@
     <title>WMS | Login</title>
     @vite('resources/css/app.css')
 </head>
-
+{{-- โอ้วเเม่เจ้า --}}
 <body>
     <div class="flex justify-center w-full">
         <img class="w-full h-full absolute object-cover z-0" src="{{ URL::to('/assets/loginbg.png') }}">
