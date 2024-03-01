@@ -20,7 +20,7 @@
                     Iot</p>
                 <p class="text-[1rem] w-full text-white">by cluster 2</p>
             </div>
-
+            <div></div>
             {{-- Login box --}}
             <div class="w-full md:h-[84vh] my-12 flex items-center justify-center ">
                 <div class="w-[27rem] h-[30rem] bg-white rounded-md flex justify-center flex-col shadow-xl">
