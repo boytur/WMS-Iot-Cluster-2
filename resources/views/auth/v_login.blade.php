@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>WMS | Login</title>
     @vite('resources/css/app.css')
+    <h1>sdsd</h1>
 </head>
 
 <body>
