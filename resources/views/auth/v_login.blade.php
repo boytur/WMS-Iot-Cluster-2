@@ -9,6 +9,9 @@
     @vite('resources/css/app.css')
 </head>
 
+
+
+
 <body>
     <div class="flex justify-center w-full">
         <img class="w-full h-full absolute object-cover z-0" src="{{ URL::to('/assets/loginbg.png') }}">
