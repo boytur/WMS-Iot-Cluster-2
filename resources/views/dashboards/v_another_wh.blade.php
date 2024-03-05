@@ -1,14 +1,13 @@
-
 @extends('layouts.default')
-@section('title', 'เพิ่มคลังสินค้า')
 
+@section('title', 'ดูคลังสินค้าอื่น')
 @section('content')
 
 <div style="height: calc(100vh - 4rem)" class="bg-[#F6F9FC] border w-full flex flex-col h-full">
     <div class="mt-[5rem] md:mt-0">
         <div class=" w-full h-[3rem] ">
             <div class="h-full flex items-center bg-white p-3 border-b-2 shadow-sm text-blue-800">
-                <a href="">คลังสินค้า > เพิ่มคลังสินค้า</a>
+                <a href="">แดชบอร์ด > ดูคลังสินค้าอื่น</a>
             </div>
         </div>
         <div class="w-full p-2">
@@ -25,5 +24,4 @@
         </div>
     </div>
 </div>
-
 @endsection

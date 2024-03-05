@@ -1,3 +1,9 @@
+{{--
+* default.blade.php
+* Display sidebar menu
+* @author Piyawat Wongyat 65160340
+* @create date : 2024-02-27
+--}}
 <!doctype html>
 <html>
 
@@ -58,24 +64,33 @@
                             <div class="flex flex-col gap-2 pl-7 w-full">
 
                                 {{-- ภาพรวมทั้งหมด --}}
-                                @if(request()->is('dashboard/analytic'))
-                                <div class="px-8 py-2 rounded-md bg-[#5d87ff] text-white"><a href={{
-                                        url('dashboard/analytic') }}>ภาพรวมทั้งหมด</a></div>
+                                @if(request()->is('dashboard/view-all'))
+                                <a href={{ url('dashboard/view-all') }}
+                                    class="px-8 py-2 rounded-md bg-blue-700 text-white">
+                                    <div>ภาพรวมทั้งหมด</div>
+                                </a>
                                 @else
-                                <div class="px-8 py-2 rounded-md transition-all"><a href={{ url('dashboard/analytic')
-                                        }}>ภาพรวมทั้งหมด</a>
-                                </div>
+                                <a href={{ url('dashboard/view-all') }}>
+                                    <div class="px-8 py-2 rounded-md hover:bg-[#5d87ff] hover:text-white">
+                                        ภาพรวมทั้งหมด
+                                    </div>
+                                </a>
                                 @endif
 
                                 {{-- ดูคลังสินค้าอื่น --}}
                                 @if(request()->is('dashboard/view-another'))
-                                <div class="px-8 py-2 rounded-md bg-[#5d87ff] text-white">
-                                    <a href={{ url("/dashboard/view-another") }}>ดูคลังสินค้าอื่น</a>
-                                </div>
+                                <a href={{ url("/dashboard/view-another") }}>
+                                    <div class="px-8 py-2 rounded-md bg-blue-700 text-white">
+                                        ดูคลังสินค้าอื่น
+                                    </div>
+                                </a>
                                 @else
-                                <div class="px-8 py-2 rounded-md">
-                                    <a href={{ url('/dashboard/view-another') }}>ดูคลังสินค้าอื่น</a>
-                                </div>
+                                <a href={{ url('/dashboard/view-another') }}
+                                    class="px-8 py-2 rounded-md hover:bg-[#5d87ff] hover:text-white">
+                                    <div>
+                                        ดูคลังสินค้าอื่น
+                                    </div>
+                                </a>
                                 @endif
                             </div>
                         </div>
@@ -93,31 +108,43 @@
                             <div class="bg-black/20 w-[1.5px] ml-2 mb-[1rem]"></div>
                             <div class="flex flex-col gap-2 pl-7 w-full">
 
-                                {{-- นำเข้า --}}
-                                @if(request()->is('product/import'))
-                                <div class="px-8 py-2 rounded-md bg-[#5d87ff] text-white w-full"><a
-                                        href="{{ url('/product/import') }}">รับเข้า</a></div>
+                                {{-- รับสินค้าเข้า --}}
+                                @if(request()->is('product/inbounds'))
+                                <a href="{{ url('/product/inbounds') }}"
+                                    class="px-8 py-2 rounded-md bg-blue-700 text-white w-full">
+                                    <div>รับสินค้าเข้า</div>
+                                </a>
                                 @else
-                                <div class="px-8 py-2 rounded-md w-full"><a
-                                        href="{{ url('/product/import') }}">รับเข้า</a></div>
+                                <a href="{{ url('/product/inbounds') }}"
+                                    class="px-8 py-2 rounded-md w-full hover:bg-[#5d87ff] hover:text-white">
+                                    <div>รับสินค้าเข้า</div>
+                                </a>
                                 @endif
 
-                                {{-- ส่งออก --}}
-                                @if(request()->is('product/export'))
-                                <div class="px-8 py-2 rounded-md bg-[#5d87ff] text-white w-full"><a
-                                        href="{{ url('/product/export') }}">ส่งออก</a></div>
+                                {{-- ส่งสินค้าออก --}}
+                                @if(request()->is('product/outbounds'))
+                                <a href="{{ url('/product/outbounds') }}"
+                                    class="px-8 py-2 rounded-md bg-blue-700 text-white w-full">
+                                    <div>ส่งสินค้าออก</div>
+                                </a>
                                 @else
-                                <div class="px-8 py-2 rounded-md w-full"><a
-                                        href="{{ url('/product/export') }}">ส่งออก</a></div>
+                                <a href="{{ url('/product/outbounds') }}"
+                                    class="px-8 py-2 rounded-md w-full hover:bg-[#5d87ff] hover:text-white">
+                                    <div>ส่งสินค้าออก</div>
+                                </a>
                                 @endif
 
-                                {{-- ประวัติ --}}
-                                @if(request()->is('product/history'))
-                                <div class="px-8 py-2 rounded-md bg-[#5d87ff] text-white w-full"><a
-                                        href="{{ url('product/history') }}">ประวัติ</a></div>
+                                {{-- จัดการสินค้า --}}
+                                @if(request()->is('product/managements'))
+                                <a href="{{ url('/product/managements') }}"
+                                    class="px-8 py-2 rounded-md bg-blue-700 text-white w-full">
+                                    <div>จัดการสินค้า</div>
+                                </a>
                                 @else
-                                <div class="px-8 py-2 rounded-md w-full"><a
-                                        href="{{ url('product/history') }}">ประวัติ</a></div>
+                                <a href="{{ url('/product/managements') }}">
+                                    <div class="px-8 py-2 rounded-md w-full hover:bg-[#5d87ff] hover:text-white">
+                                        จัดการสินค้า</div>
+                                </a>
                                 @endif
 
                             </div>
@@ -137,22 +164,32 @@
 
                                 {{-- เพิ่มพื้นที่จัดเก็บ --}}
                                 @if(request()->is('warehouse/add-space'))
-                                <div class="px-8 py-2 rounded-md bg-[#5d87ff] text-white w-full"><a
-                                        href="{{ url('/warehouse/add-space') }}">เพิ่มพื้นที่จัดเก็บ</a></div>
+                                <a href="{{ url('/warehouse/add-space') }}"
+                                    class="px-8 py-2 rounded-md bg-blue-700 text-white w-full">
+                                    <div>เพิ่มพื้นที่จัดเก็บ</div>
+                                </a>
                                 @else
-                                <div class="px-8 py-2 rounded-md w-full"><a
-                                        href="{{ url('/warehouse/add-space') }}">เพิ่มพื้นที่จัดเก็บ</a></div>
+
+                                <a href="{{ url('/warehouse/add-space') }}"
+                                    class="px-8 py-2 rounded-md w-full hover:bg-[#5d87ff] hover:text-white">
+                                    <div>เพิ่มพื้นที่จัดเก็บ</div>
+                                </a>
                                 @endif
 
                                 {{-- เพิ่มพื้นที่จัดเก็บ --}}
                                 @if(request()->is('warehouse/add-wh'))
-                                <div class="px-8 py-2 rounded-md bg-[#5d87ff] text-white w-full"><a
-                                        href="{{ url('/warehouse/add-wh') }}">เพิ่มคลังสินค้า</a></div>
+                                <a href="{{ url('/warehouse/add-wh') }}">
+                                    <div class="px-8 py-2 rounded-md bg-blue-700 text-white w-full">
+                                        เพิ่มคลังสินค้า
+                                    </div>
+                                </a>
                                 @else
-                                <div class="px-8 py-2 rounded-md w-full"><a
-                                        href="{{ url('/warehouse/add-wh') }}">เพิ่มคลังสินค้า</a></div>
+                                <a href="{{ url('/warehouse/add-wh') }}">
+                                    <div class="px-8 py-2 rounded-md w-full hover:bg-[#5d87ff] hover:text-white">
+                                        เพิ่มคลังสินค้า
+                                    </div>
+                                </a>
                                 @endif
-
                             </div>
                         </div>
                     </div>
@@ -169,12 +206,17 @@
                             <div class="flex flex-col gap-2 pl-7">
 
                                 {{-- จัดการผู้ใช้งาน --}}
-                                @if(request()->is('management'))
-                                <div class="px-8 py-2 rounded-md bg-[#5d87ff] text-white w-full"><a
-                                        href="{{ url('/management') }}">จัดการผู้ใช้งาน</a></div>
+                                <a href="{{ url('/management') }}">
+                                    <div @if(request()->is('management'))
+                                        class="px-8 py-2 rounded-md bg-blue-700 text-white w-full">จัดการผู้ใช้งาน
+                                    </div>
+                                </a>
                                 @else
-                                <div class="px-8 py-2 rounded-md w-full"><a
-                                        href="{{ url('/management') }}">จัดการผู้ใช้งาน</a></div>
+                                <a href="{{ url('/management') }}">
+                                    <div class="px-8 py-2 rounded-md w-full hover:bg-[#5d87ff] hover:text-white">
+                                        จัดการผู้ใช้งาน
+                                    </div>
+                                </a>
                                 @endif
 
                             </div>
@@ -218,15 +260,26 @@
 </body>
 
 <script>
-    // function to toggle sidebar
+
+    /*
+        * toggle_sidebar()
+        * @author: Piyawat Wongyat 65160340
+        * @create date: 2024-02-27
+    */
+
     const toggle_sidebar = ()=> {
         const sidebar = document.querySelector('#nav-bar');
         sidebar.classList.toggle('left-[-100%]');
     }
 
+    /*  * toggle_profile_desktop()
+        * @author: Piyawat Wongyat 65160340
+        * @create date: 2024-02-27
+    */
+
     const toggle_profile_desktop = () => {
-        const profileDesktop = document.querySelector('#profile-desktop');
-        profileDesktop.classList.toggle('md:block');
+        const profile_desktop = document.querySelector('#profile-desktop');
+        profile_desktop.classList.toggle('md:block');
     }
 
 </script>
