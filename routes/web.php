@@ -13,24 +13,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/dashboard/analytic', function () {
+Route::get('/dashboard/view-all', function () {
     return view('dashboards.v_all_wh');
 });
 
 Route::get('/dashboard/view-another', function () {
-    return view('dashboards.v_single_wh');
+    return view('dashboards.v_another_wh');
 });
 
-Route::get('/product/import', function () {
-    return view('products.imports.v_import_by_lot_number');
+Route::get('/product/inbounds', function () {
+    return view('products.inbounds.v_inbound_index');
 });
 
-Route::get('/product/export', function () {
-    return view('products.exports.v_export_by_sale_number');
+Route::get('/product/outbounds', function () {
+    return view('products.outbounds.v_outbound_index');
 });
 
-Route::get('/product/history', function () {
-    return view('products.historys.v_product_history');
+Route::get('/product/managements', function () {
+    return view('products.managements.v_product_management_index');
 });
 
 Route::get('/warehouse/add-space', function () {
