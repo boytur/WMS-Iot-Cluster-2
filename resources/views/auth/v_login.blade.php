@@ -50,7 +50,7 @@
                             <input class="input-primary mt-2 py-3" placeholder="************" type="password">
 
                             <div class="mt-8">
-                                <a href="/dashboard/analytic">
+                                <a href="/dashboard/view-all">
                                     <button class="btn-primary w-full h-[3.2rem]">Login</button>
                                 </a>
                             </div>
