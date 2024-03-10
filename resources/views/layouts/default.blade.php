@@ -10,6 +10,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.min.css" rel="stylesheet">
     @vite('resources/css/app.css')
     <title>WMS | @yield('title',"WMS + Iot")</title>
 </head>
@@ -234,21 +235,41 @@
             class="w-[15rem] h-[10rem] hidden  absolute mt-16 mr-12 rounded-md bg-white shadow-lg border">
             <div class="flex gap-2 items-center justify-start pl-10 mt-6 text-[1.2rem]">
                 <i class="fa-solid fa-user"></i>
-                <p>พิชณวัฒน์ สุวรรณ</p>
+                @if(Auth::check())
+                <span>{{ Auth::user()->fname }}</span><span>{{ Auth::user()->lname }}</span>
+                @endif
             </div>
             <div class="flex gap-2 items-center justify-start pl-10 mt-3 text-[1.2rem]">
-                <i class="fa-solid fa-house-user"></i>
-                <p>WH-1</p>
+                <i class="fa-solid fa-address-card"></i>
+                @if(Auth::check())
+                @if(Auth::user()-> role === "normal_employee")
+                <p>พนักงาน</p>
+                @else
+                <p>ผู้จัดการ</p>
+                @endif
+                @endif
             </div>
             <div class="px-2">
-                <div class="btn-secondary-2 flex gap-2 items-center justify-center mt-3 text-[1.2rem] py-3 rounded-md">
-                    <p>ออกจากระบบ</p>
-                </div>
+                <form action="{{ route('logout') }}" method="POST"
+                    class="btn-secondary-2 flex gap-2 items-center justify-center mt-3 text-[1.2rem] py-3 rounded-md">
+                    @csrf
+                    <button>ออกจากระบบ</button>
+                </form>
             </div>
         </div>
-        <div class="w-full justify-end hidden md:flex px-5 py-2">
-            <img onclick="toggle_profile_desktop()" class="w-[2.5rem] rounded-full hover:scale-105 cursor-pointer"
-                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="">
+
+        <div class="w-full h-full justify-end hidden md:flex px-5 py-1 object-cover gap-2 items-center">
+            <select name="warehouse_id" id="warehouse_id" class="input-primary w-[5rem] h-[90%] cursor-pointer"
+                onchange="change_warehouse_user(this.value)">
+                @foreach (Auth::user()->warehouses()->get() as $warehouse)
+                <option value="{{ $warehouse->wh_id }}">{{ $warehouse->wh_name }}</option>
+                @endforeach
+            </select>
+            @if(Auth::check())
+            <img onclick="toggle_profile_desktop()"
+                class="w-[2.8rem] h-[2.8rem] object-cover rounded-full hover:scale-105 cursor-pointer border-[2px]"
+                src={{ Auth::user()-> image }} alt="">
+            @endif
         </div>
     </div>
 
@@ -258,9 +279,8 @@
     </div>
 
 </body>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-
     /*
         * toggle_sidebar()
         * @author: Piyawat Wongyat 65160340
@@ -280,6 +300,41 @@
     const toggle_profile_desktop = () => {
         const profile_desktop = document.querySelector('#profile-desktop');
         profile_desktop.classList.toggle('md:block');
+    }
+
+    function change_warehouse_user(warehouse_id) {
+        fetch('/set-user-warehouse', {
+            method: 'POST',
+            body: JSON.stringify({ warehouse_id: warehouse_id }),
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'เปลี่ยนคลังสินค้าสำเร็จ',
+                });
+                window.location.reload();
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'มีข้อผิดพลาด: ' + data.error,
+                });
+            }
+        })
+        .catch(error => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'มีข้อผิดพลาดในการส่งข้อมูล',
+            });
+        });
     }
 
 </script>
