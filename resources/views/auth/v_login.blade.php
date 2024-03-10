@@ -29,33 +29,37 @@
                         <h1 class="text-[2.5rem] font-bold text-center">Login</h1>
                     </div>
 
-                    {{-- username --}}
-                    <div class=" text-black/70 md:mx-12 mx-3 mt-5">
-                        <div>
-                            <i class="fa-solid fa-user"></i>
-                            <label for="">username</label>
-                        </div>
-                        <div>
-                            <input class="input-primary mt-2 py-3" placeholder="username or email" type="text">
-                        </div>
-                    </div>
-
-                    {{-- password --}}
-                    <div class=" text-black/70 md:mx-12 mx-3 mt-3">
-                        <div>
-                            <i class="fa-solid fa-key"></i>
-                            <label for="">password</label>
-                        </div>
-                        <div>
-                            <input class="input-primary mt-2 py-3" placeholder="************" type="password">
-
-                            <div class="mt-8">
-                                <a href="/dashboard/view-all">
-                                    <button class="btn-primary w-full h-[3.2rem]">Login</button>
-                                </a>
+                    {{-- Login form --}}
+                    <form action="{{ route('login') }}" method="POST" class="md:mx-12 mx-3 mt-5">
+                        @csrf
+                        {{-- username --}}
+                        <div class="text-black/70">
+                            <div class="flex items-center">
+                                <i class="fas fa-user mr-2"></i>
+                                <label for="email">Email</label>
                             </div>
+                            <input id="email" name="email" class="input-primary mt-2 py-3"
+                                placeholder="Enter your email" type="text" value="{{ old('user_email') }}">
                         </div>
-                    </div>
+
+                        {{-- password --}}
+                        <div class="text-black/70 mt-3">
+                            <div class="flex items-center">
+                                <i class="fas fa-key mr-2"></i>
+                                <label for="password">Password</label>
+                            </div>
+                            <input id="password" name="password" class="input-primary mt-2 py-3"
+                                placeholder="Enter your password" type="password">
+                            </div>
+                            <div class="flex justify-start">
+                                @error('login')
+                                <span class="text-red-500 mt-4 text-[0.8rem]">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="mt-8">
+                                <button type="submit" class="btn-primary w-full h-[3.2rem]">Login</button>
+                            </div>
+                    </form>
                 </div>
             </div>
         </div>

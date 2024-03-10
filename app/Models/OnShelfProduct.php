@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class OnShelfProduct extends Model
 {
     use HasFactory;
+    protected $primaryKey = "on_prod_id";
 }

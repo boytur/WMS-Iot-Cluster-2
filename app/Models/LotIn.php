@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class LotIn extends Model
 {
     use HasFactory;
+    protected $primaryKey = "lot_in_id";
 }

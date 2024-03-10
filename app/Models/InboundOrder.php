@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class InboundOrder extends Model
 {
     use HasFactory;
+    protected $primaryKey  = "inbound_id";
+
 }

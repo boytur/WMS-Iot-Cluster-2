@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Rack extends Model
 {
     use HasFactory;
+    protected $primaryKey = "rack_id";
 }
