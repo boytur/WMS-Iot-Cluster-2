@@ -48,22 +48,50 @@
                                 <i class="fas fa-key mr-2"></i>
                                 <label for="password">Password</label>
                             </div>
-                            <input id="password" name="password" class="input-primary mt-2 py-3"
-                                placeholder="Enter your password" type="password">
+                            <div class="relative flex justify-end items-center">
+                                <i onclick="toggle_show_password()" id="eye" class="fa-solid fa-eye absolute mt-3 mr-4"></i>
+                                <input id="password" name="password" class="input-primary mt-2 py-3"
+                                    placeholder="Enter your password" type="password">
                             </div>
-                            <div class="flex justify-start">
-                                @error('login')
-                                <span class="text-red-500 mt-4 text-[0.8rem]">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="mt-8">
-                                <button type="submit" class="btn-primary w-full h-[3.2rem]">Login</button>
-                            </div>
+                        </div>
+                        <div class="flex justify-start">
+                            @error('login')
+                            <span class="text-red-500 mt-4 text-[0.8rem]">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="mt-8">
+                            <button type="submit" class="btn-primary w-full h-[3.2rem]">Login</button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </body>
+
+<script>
+
+    /*  * toggle_show_password()
+        * @author: Piyawat Wongyat 65160340
+        * @create date: 2024-03-11
+    */
+
+    const toggle_show_password = () => {
+
+        const eye_element = document.getElementById('eye');
+        const password = document.getElementById('password');
+
+        if (eye_element.classList.contains('fa-eye')) {
+            eye_element.classList.remove('fa-eye');
+            eye_element.classList.add('fa-eye-slash');
+            password.type="text";
+        } else {
+            eye_element.classList.remove('fa-eye-slash');
+            eye_element.classList.add('fa-eye');
+            password.type="password";
+        }
+    }
+
+</script>
 
 </html>
