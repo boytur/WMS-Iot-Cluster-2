@@ -8,5 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class LotIn extends Model
 {
     use HasFactory;
-    protected $primaryKey = "lot_in_id";
+    protected $table = 'lot_ins';
+    protected $fillable = [
+        'lot_in_number',
+        'lot_in_status',
+        'wh_id',
+        'user_id',
+    ];
+
+    public function warehouses()
+    {
+        return $this->belongsTo(Warehouse::class, 'wh_id', 'wh_id');
+    }
+
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }
