@@ -364,12 +364,12 @@
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                window.location.reload();
                 Swal.fire({
                     icon: 'success',
                     title: 'success',
                     text: 'เปลี่ยนคลังสินค้าสำเร็จ',
                 });
+                window.location.reload();
             } else {
                 Swal.fire({
                     icon: 'error',
