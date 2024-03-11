@@ -20,7 +20,7 @@ Route::post('/login', [Auth_controller::class, 'login_process'])->name('login');
 Route::post('/logout', [Auth_controller::class, 'logout'])->name('logout');
 
 Route::get('/', function () {
-    return redirect('/dashboard/view-all');
+    return "Testing...";
 });
 
 Route::middleware(['auth'])->group(function () {
