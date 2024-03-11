@@ -20,14 +20,30 @@ Route::post('/login', [Auth_controller::class, 'login_process'])->name('login');
 Route::post('/logout', [Auth_controller::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
+
     Route::get('/', function () {
-        return 'testing....';
+        if(Auth::check()) {
+            return redirect('/dashboard/view-all');
+        }
+        else{
+            return redirect('/login');
+        }
     });
 
-    Route::get('/dashboard/view-all',[Warehouse_controller::class, 'index_warehouse']);
+    Route::get('/dashboard/view-all', function () {
+        return view('dashboards.v_all_wh');
+    });
+
+    Route::post('/set-user-warehouse', [Warehouse_controller::class, 'set_user_warehouse'])->name('set-user-warehouse');
+
 
     Route::get('/dashboard/view-another', function () {
-        return view('dashboards.v_another_wh');
+
+        if (Auth::check() && Auth::user()->role === "warehouse_manager") {
+            return view('dashboards.v_another_wh');
+        } else {
+            return redirect('/dashboard/view-all');
+        }
     });
 
     Route::get('/product/inbounds', function () {
@@ -39,24 +55,38 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::get('/product/managements', function () {
-        return view('products.managements.v_product_management_index');
+        if (Auth::check() && Auth::user()->role === "warehouse_manager") {
+            return view('products.managements.v_product_management_index');
+        } else {
+            return redirect('/product/inbounds');
+        }
     });
 
     Route::get('/warehouse/add-space', function () {
-        return view('warehouses.v_add_wh_space');
+        if (Auth::check() && Auth::user()->role === "warehouse_manager") {
+            return view('warehouses.v_add_wh_space');
+        } else {
+            return redirect('/dashboard/view-all');
+        }
     });
 
     Route::get('/warehouse/add-wh', function () {
-        return view('warehouses.v_add_more_wh');
+        if (Auth::check() && Auth::user()->role === "warehouse_manager") {
+            return view('warehouses.v_add_more_wh');
+        } else {
+            return redirect('/dashboard/view-all');
+        }
     });
 
-    Route::get('/management', function () {
-        return view('users.v_user_management');
+    Route::get('/user-management', function () {
+        if (Auth::check() && Auth::user()->role === "warehouse_manager") {
+            return view('users.v_user_management');
+        } else {
+            return redirect('/dashboard/view-all');
+        }
     });
-
-    Route::post('/set-user-warehouse', [Warehouse_controller::class, 'set_user_warehouse'])->name('set-user-warehouse');
 });
 
-if(App::environment('production')){
+if (App::environment('production')) {
     URL::forceScheme('https');
 }

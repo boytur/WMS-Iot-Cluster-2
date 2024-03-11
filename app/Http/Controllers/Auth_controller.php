@@ -44,6 +44,11 @@ class Auth_controller extends Controller
 
             if (Auth::attempt($credentials)) {
                 $request->session()->regenerate();
+                $warehouse = Auth::user()->warehouses()->get();
+
+                Session::put('user_warehouse',$warehouse[0]->wh_id);
+                Session::put('user_warehouse_name',$warehouse[0]->wh_name);
+
                 return redirect('/dashboard/view-all');
             }
 
@@ -59,6 +64,7 @@ class Auth_controller extends Controller
     public function logout()
     {
         Auth::logout();
+        Session::flush();
         return redirect('/login');
     }
 }

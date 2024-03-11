@@ -17,6 +17,14 @@
 
 <body>
 
+    <div id="loading"
+        class="absolute text-white w-full h-full bg-black/70 hidden  flex-col justify-center  items-center z-50">
+        <div class="flex justify-center flex-col items-center w-full h-full">
+            <span class="loader"></span>
+            <p>กำลังโหลดข้อมูลคลังสินค้า...</p>
+        </div>
+    </div>
+
     {{-- Mobile --}}
     <nav class="w-full md:hidden border absolute bg-white">
         <div class="flex gap-3 p-3 items-center">
@@ -64,6 +72,7 @@
                             <div class="bg-black/20 w-[1.5px] ml-2 mb-[1rem]"></div>
                             <div class="flex flex-col gap-2 pl-7 w-full">
 
+                                @if(Auth::check() && Auth::user()->role === "warehouse_manager")
                                 {{-- ภาพรวมทั้งหมด --}}
                                 @if(request()->is('dashboard/view-all'))
                                 <a href={{ url('dashboard/view-all') }}
@@ -92,6 +101,20 @@
                                         ดูคลังสินค้าอื่น
                                     </div>
                                 </a>
+                                @endif
+                                @else
+                                @if(request()->is('dashboard/view-all'))
+                                <a href={{ url('dashboard/view-all') }}
+                                    class="px-8 py-2 rounded-md bg-blue-700 text-white">
+                                    <div>ภาพรวมทั้งหมด</div>
+                                </a>
+                                @else
+                                <a href={{ url('dashboard/view-all') }}>
+                                    <div class="px-8 py-2 rounded-md hover:bg-[#5d87ff] hover:text-white">
+                                        ภาพรวมทั้งหมด
+                                    </div>
+                                </a>
+                                @endif
                                 @endif
                             </div>
                         </div>
@@ -153,6 +176,7 @@
                     </div>
                 </li>
                 {{-- คลังสินค้า --}}
+                @if(Auth::check() && Auth::user()->role === "warehouse_manager")
                 <li>
                     <div class="flex flex-col gap-5">
                         <div class="text-[1.2rem] flex items-center gap-2">
@@ -207,13 +231,13 @@
                             <div class="flex flex-col gap-2 pl-7">
 
                                 {{-- จัดการผู้ใช้งาน --}}
-                                <a href="{{ url('/management') }}">
-                                    <div @if(request()->is('management'))
+                                <a href="{{ url('/user-management') }}">
+                                    <div @if(request()->is('user-management'))
                                         class="px-8 py-2 rounded-md bg-blue-700 text-white w-full">จัดการผู้ใช้งาน
                                     </div>
                                 </a>
                                 @else
-                                <a href="{{ url('/management') }}">
+                                <a href="{{ url('/user-management') }}">
                                     <div class="px-8 py-2 rounded-md w-full hover:bg-[#5d87ff] hover:text-white">
                                         จัดการผู้ใช้งาน
                                     </div>
@@ -224,6 +248,7 @@
                         </div>
                     </div>
                 </li>
+                @endif
             </ul>
         </div>
     </nav>
@@ -259,12 +284,28 @@
         </div>
 
         <div class="w-full h-full justify-end hidden md:flex px-5 py-1 object-cover gap-2 items-center">
+
+            @if(Auth::user()->warehouses()->get()->count() > 1)
             <select name="warehouse_id" id="warehouse_id" class="input-primary w-[5rem] h-[90%] cursor-pointer"
                 onchange="change_warehouse_user(this.value)">
+
+                @if(session('user_warehouse_name') !== null)
+                <option value="{{ session('user_warehouse_name') }}" disabled selected>{{ session('user_warehouse_name')
+                    }}</option>
+                @endif
                 @foreach (Auth::user()->warehouses()->get() as $warehouse)
+                @if($warehouse->wh_name === session('user_warehouse_name'))
+                @else
                 <option value="{{ $warehouse->wh_id }}">{{ $warehouse->wh_name }}</option>
+                @endif
                 @endforeach
             </select>
+            @else
+            <div class="flex items-center gap-1">
+                <i class="fa-solid fa-house-user"></i>
+                <p>{{ session('user_warehouse_name') }}</p>
+            </div>
+            @endif
             @if(Auth::check())
             <img onclick="toggle_profile_desktop()"
                 class="w-[2.8rem] h-[2.8rem] object-cover rounded-full hover:scale-105 cursor-pointer border-[2px]"
@@ -302,7 +343,16 @@
         profile_desktop.classList.toggle('md:block');
     }
 
-    function change_warehouse_user(warehouse_id) {
+    /*  * change_warehouse_user()
+        * @author: Piyawat Wongyat 65160340
+        * @create date: 2024-03-11
+    */
+
+    const change_warehouse_user = (warehouse_id) => {
+
+        const loading_element = document.getElementById('loading');
+        loading_element.classList.toggle('hidden');
+
         fetch('/set-user-warehouse', {
             method: 'POST',
             body: JSON.stringify({ warehouse_id: warehouse_id }),
@@ -314,12 +364,12 @@
         .then(response => response.json())
         .then(data => {
             if (data.success) {
+                window.location.reload();
                 Swal.fire({
                     icon: 'success',
-                    title: 'Success',
+                    title: 'success',
                     text: 'เปลี่ยนคลังสินค้าสำเร็จ',
                 });
-                window.location.reload();
             } else {
                 Swal.fire({
                     icon: 'error',

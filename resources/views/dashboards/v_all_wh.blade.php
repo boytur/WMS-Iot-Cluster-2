@@ -14,8 +14,7 @@
                 class=" border border-black rounded-sm  bg-white overflow-y-scroll">
 
                 <div>
-                    <!-- แสดงข้อมูลคลังสินค้า -->
-                    <p>คลัง: {{ $wh->wh_name}}</p>
+                    <h1>YOUR CODE HERE</h1>
                 </div>
 
             </div>
