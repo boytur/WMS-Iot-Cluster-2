@@ -19,16 +19,20 @@ Route::get('/login', [Auth_controller::class, 'login_index']);
 Route::post('/login', [Auth_controller::class, 'login_process'])->name('login');
 Route::post('/logout', [Auth_controller::class, 'logout'])->name('logout');
 
+Route::get('/', function () {
+    return redirect('/dashboard/view-all');
+});
+
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/', function () {
-        if(Auth::check()) {
-            return redirect('/dashboard/view-all');
-        }
-        else{
-            return redirect('/login');
-        }
-    });
+    // Route::get('/', function () {
+    //     if(Auth::check()) {
+    //         return redirect('/dashboard/view-all');
+    //     }
+    //     else{
+    //         return redirect('/login');
+    //     }
+    // });
 
     Route::get('/dashboard/view-all', function () {
         return view('dashboards.v_all_wh');
