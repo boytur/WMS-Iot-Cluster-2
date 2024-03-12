@@ -158,19 +158,20 @@
                                 </a>
                                 @endif
 
-                                {{-- จัดการสินค้า --}}
-                                @if(request()->is('product/managements'))
-                                <a href="{{ url('/product/managements') }}"
-                                    class="px-8 py-2 rounded-md bg-blue-700 text-white w-full">
-                                    <div>จัดการสินค้า</div>
-                                </a>
-                                @else
-                                <a href="{{ url('/product/managements') }}">
-                                    <div class="px-8 py-2 rounded-md w-full hover:bg-[#5d87ff] hover:text-white">
-                                        จัดการสินค้า</div>
-                                </a>
+                                @if(Auth::check() && Auth::user()->role === "warehouse_manager")
+                                    {{-- จัดการสินค้า --}}
+                                    @if(request()->is('product/managements'))
+                                    <a href="{{ url('/product/managements') }}"
+                                        class="px-8 py-2 rounded-md bg-blue-700 text-white w-full">
+                                        <div>จัดการสินค้า</div>
+                                    </a>
+                                    @else
+                                    <a href="{{ url('/product/managements') }}">
+                                        <div class="px-8 py-2 rounded-md w-full hover:bg-[#5d87ff] hover:text-white">
+                                            จัดการสินค้า</div>
+                                    </a>
+                                    @endif
                                 @endif
-
                             </div>
                         </div>
                     </div>
