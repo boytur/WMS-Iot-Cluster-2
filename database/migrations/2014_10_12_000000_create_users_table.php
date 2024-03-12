@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->string('password', 225)->nullable(false);
             $table->string('phone', 10)->nullable();
             $table->string('role')->nullable(false)->default('normal_employee');
-         
+            $table->timestamps();
         });
     }
 
