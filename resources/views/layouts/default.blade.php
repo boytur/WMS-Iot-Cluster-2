@@ -363,20 +363,7 @@
         })
         .then(response => response.json())
         .then(data => {
-            if (data.success) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'success',
-                    text: 'เปลี่ยนคลังสินค้าสำเร็จ',
-                });
-                window.location.reload();
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'มีข้อผิดพลาด: ' + data.error,
-                });
-            }
+            window.location.reload();
         })
         .catch(error => {
             Swal.fire({
