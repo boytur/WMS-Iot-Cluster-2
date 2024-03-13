@@ -322,6 +322,8 @@
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
     /*
         * toggle_sidebar()
@@ -351,27 +353,28 @@
 
     const change_warehouse_user = (warehouse_id) => {
 
-        const loading_element = document.getElementById('loading');
-        loading_element.classList.toggle('hidden');
+        const loading_element = $('#loading');
+        loading_element.toggleClass('hidden');
 
-        fetch('/set-user-warehouse', {
-            method: 'POST',
-            body: JSON.stringify({ warehouse_id: warehouse_id }),
+        $.ajax({
+            url: '/set-user-warehouse',
+            type: 'POST',
+            contentType: 'application/json',
             headers: {
-                'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            data: JSON.stringify({ warehouse_id: warehouse_id }),
+            success: function(data) {
+                window.location.reload();
+            },
+            error: function(xhr, status, error) {
+                loading_element.toggleClass('hidden');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'มีข้อผิดพลาดในการส่งข้อมูล: ' + error,
+                });
             }
-        })
-        .then(response => response.json())
-        .then(data => {
-            window.location.reload();
-        })
-        .catch(error => {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'มีข้อผิดพลาดในการส่งข้อมูล',
-            });
         });
     }
 
