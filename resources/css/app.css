@@ -125,7 +125,7 @@ body {
     }
 
     .btn-secondary {
-        @apply px-4 bg-[#CCCCCC] text-black font-semibold rounded-lg shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 cursor-pointer;
+        @apply px-4 bg-[#CCCCCC] text-black font-semibold rounded-lg shadow-md hover:bg-gray-300 focus:outline-none focus:ring-opacity-75 cursor-pointer;
     }
 
     .btn-secondary-2 {
