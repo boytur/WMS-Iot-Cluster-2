@@ -21,4 +21,9 @@ class Rack extends Model
     {
         return $this->belongsTo(Warehouse::class, 'wh_id', 'wh_id');
     }
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'rack_tags', 'rack_id','rack_tag_id');
+    }
+
 }

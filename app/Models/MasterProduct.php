@@ -22,4 +22,9 @@ class MasterProduct extends Model
     {
         return $this->belongsTo(Category::class, 'cat_id', 'cat_id');
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'master_product_tags', 'mas_prod_id	','mas_tag_id');
+    }
 }
