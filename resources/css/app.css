@@ -117,7 +117,7 @@ body {
 
 @layer components {
     .btn-primary {
-        @apply bg-[#5d87ff] text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 cursor-pointer;
+        @apply bg-blue-700 text-white font-semibold rounded-lg shadow-md hover:bg-[#2f67ff] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 cursor-pointer;
     }
 
     .btn-danger {
@@ -129,7 +129,7 @@ body {
     }
 
     .btn-secondary-2 {
-        @apply bg-white border border-[#5d87ff] text-gray-900 hover:bg-[#5d87ff] cursor-pointer hover:text-white text-sm rounded-lg focus:ring-[#5d87ff] focus:outline-none focus:border-blue-500 block w-full p-2.5;
+        @apply bg-white border border-[#5d87ff] text-gray-900 hover:bg-blue-700 cursor-pointer hover:text-white text-sm rounded-lg focus:ring-[#5d87ff] focus:outline-none focus:border-blue-500 block w-full p-2.5;
     }
 
     .input-primary {
