@@ -51,23 +51,26 @@
 
                             {{-- add product inbound --}}
                             <div class="w-full flex justify-end gap-3 mt-3">
-                                <div class=" items-center flex h-full">
+                                <div class=" items-center flex h-full relative">
                                     <i class="fa-solid fa-truck lg:text-[2rem] text-sm cursor-pointer lg:mt-4" ></i>
+                                    <div class="absolute flex top-4 left-[-8px]">
+                                        <p class="w-[1rem] h-[1rem] bg-red-500 rounded-full text-white flex items-center justify-center py-1 mb-1">1</p>
+                                    </div>
                                 </div>
                                 <div class="mt-3 lg:pt-0">
-                                    <button class="btn-secondary px-4 py-1">
-                                        <div class="h-full w-full mr-3">
-                                            <i class="fa-solid fa-clock-rotate-left cursor-pointer"></i>
+                                    <button class="btn-secondary px-4 flex items-center h-[3rem] gap-1">
+                                        <div>
+                                            <i class="fa-solid fa-clock-rotate-left cursor-pointer text-[0.8rem]"></i>
                                         </div>
                                         <div>
-                                            <p class=" md:text-sm lg:block hidden">รายการล่าสุด</p>
+                                            <p class=" md:text-sm lg:block hidden text-[0.5]">รายการล่าสุด</p>
                                         </div>
                                     </button>
                                 </div>
                                 <div class="mt-3 lg:pt-0">
-                                    <button class="btn-primary px-4 py-1">
+                                    <button class="btn-primary px-4 flex items-center h-[3rem] gap-1">
                                         <div>
-                                            <i class="fa-solid fa-circle-plus"></i>
+                                            <i class="fa-solid fa-circle-plus text-[0.8rem]"></i>
                                         </div>
                                         <div>
                                             <p class="lg:text-sm lg:block hidden">เพิ่มสินค้าเข้าคลัง</p>
