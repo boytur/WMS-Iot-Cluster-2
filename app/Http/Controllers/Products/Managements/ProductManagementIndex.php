@@ -13,7 +13,7 @@ class ProductManagementIndex extends Controller
     {
         try {
             if (Auth::check() && Auth::user()->role === "warehouse_manager") {
-                $products = MasterProduct::paginate();
+                $products = MasterProduct::paginate(20);
                 return view('products.managements.v_product_management_index', compact('products'));
             } else {
                 return redirect('/product/inbounds');
