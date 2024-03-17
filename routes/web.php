@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\Auth_controller;
+use App\Http\Controllers\Products\ManageMents\ProductManagementIndex;
 use App\Http\Controllers\Warehouse_controller;
 use Illuminate\Support\Facades\Route;
 /*
@@ -53,13 +54,7 @@ Route::middleware(['auth'])->group(function () {
         return view('products.outbounds.v_outbound_index');
     });
 
-    Route::get('/product/managements', function () {
-        if (Auth::check() && Auth::user()->role === "warehouse_manager") {
-            return view('products.managements.v_product_management_index');
-        } else {
-            return redirect('/product/inbounds');
-        }
-    });
+    Route::get('/product/managements', [ProductManagementIndex::class, 'product_management_index'])->name('product_management_index');
 
     Route::get('/warehouse/add-space', function () {
         if (Auth::check() && Auth::user()->role === "warehouse_manager") {
