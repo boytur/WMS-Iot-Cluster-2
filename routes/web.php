@@ -54,7 +54,7 @@ Route::middleware(['auth'])->group(function () {
         return view('products.outbounds.v_outbound_index');
     });
 
-    Route::get('/product/managements', 'Products\ProductManagementIndex@product_management_index')->name('product_management_index');
+    Route::get('/product/managements', [ProductManagementIndex::class, 'product_management_index'])->name('product_management_index');
 
     Route::get('/warehouse/add-space', function () {
         if (Auth::check() && Auth::user()->role === "warehouse_manager") {
