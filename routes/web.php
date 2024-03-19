@@ -3,6 +3,7 @@ use App\Http\Controllers\Auth_controller;
 use App\Http\Controllers\Products\ManageMents\ProductManagementIndex;
 use App\Http\Controllers\Warehouse_controller;
 use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,10 +23,9 @@ Route::post('/logout', [Auth_controller::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/', function () {
-        if(Auth::check()) {
+        if (Auth::check()) {
             return redirect('/dashboard/view-all');
-        }
-        else{
+        } else {
             return redirect('/login');
         }
     });
@@ -55,6 +55,9 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::get('/product/managements', [ProductManagementIndex::class, 'product_management_index'])->name('product_management_index');
+    Route::get('/product/managements/edit/{mas_prod_id}', [ProductManagementIndex::class, 'edit_master_product_index'])->name('edit_master_product');
+    Route::get('/product/managements/detail/{mas_prod_id}', [ProductManagementIndex::class, 'detail_master_product_index'])->name('edit_master_product');
+    Route::get('/product/managements/add-new-product', [ProductManagementIndex::class, 'add_master_product_index'])->name('edit_master_product');
 
     Route::get('/warehouse/add-space', function () {
         if (Auth::check() && Auth::user()->role === "warehouse_manager") {
