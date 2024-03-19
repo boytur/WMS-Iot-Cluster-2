@@ -1,6 +1,6 @@
 <?php
 use App\Http\Controllers\Auth_controller;
-use App\Http\Controllers\Products\ManageMents\ProductManagementIndex;
+use App\Http\Controllers\Products\Managements\ProductManagementIndex;
 use App\Http\Controllers\Warehouse_controller;
 use Illuminate\Support\Facades\Route;
 
