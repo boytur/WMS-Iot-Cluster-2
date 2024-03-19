@@ -54,7 +54,8 @@
                         {{-- add product inbound --}}
                         <div class="w-full flex justify-end gap-3 mt-2">
                             <div class="mt-3 lg:pt-0">
-                                <button class="btn-primary px-4 flex items-center h-[3rem] gap-1">
+                                <button onclick="onclick_product_details('/product/managements/add-new-product')"
+                                    class="btn-primary px-4 flex items-center h-[3rem] gap-1">
                                     <div>
                                         <i class="fa-solid fa-circle-plus text-[0.8rem]"></i>
                                     </div>
@@ -70,9 +71,8 @@
 
                 {{-- table product --}}
                 <div class="w-full bg-black/20 mt-2 rounded-md">
-
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
+                        <table class="w-full text-sm text-left rtl:text-right ">
                             <thead class="text-xs text-white uppercase bg-[#212529]">
                                 <tr>
                                     <th scope="col" class="px-6 py-3">
@@ -102,10 +102,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($products as $product)
-                                <tr class="bg-white border-b ">
-                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                        {{ $product->mas_prod_id }}
+                                @foreach ($products as $index => $product)
+                                <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer"
+                                    onclick="onclick_product_details('/product/managements/detail/{{ $product->mas_prod_id }}')">
+                                    <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
+                                        {{ $index+1 }}
                                     </th>
                                     <td class="px-6 py-4">
                                         {{ $product->mas_prod_no }}
@@ -133,18 +134,19 @@
                                     </td>
 
                                     <td class="px-6 py-4">
-                                        03/03/2567
-                                    </td>
-                                    <td class="px-6 py-4 flex gap-3">
-                                        <a href="#"
-                                            class="">
-                                            <i class="fa-regular fa-pen-to-square text-[1.5rem]"></i></a>
-                                            |
-                                        <a href="#"
-                                           >
-                                            <i class="fa-solid fa-circle-info text-[1.5rem]"></i></a>
+                                        {{ date('d/m/Y', strtotime($product->created_at)) }}
                                     </td>
 
+                                    <td class="px-6 py-4 flex gap-3 text-gray-500">
+                                        <a href="{{ url('/product/managements/edit/' . $product->mas_prod_id) }}"
+                                            class="">
+                                            <i
+                                                class="fa-regular fa-pen-to-square text-[1.5rem] hover:text-blue-700 hover:scale-105"></i></a>
+                                        |
+                                        <a href="{{ url('/product/managements/detail/' . $product->mas_prod_id) }}">
+                                            <i
+                                                class="fa-solid fa-circle-info text-[1.5rem] hover:text-blue-700 hover:scale-105"></i></a>
+                                    </td>
                                     @endforeach
                                 </tr>
                             </tbody>
@@ -158,4 +160,17 @@
             </div>
         </div>
     </div>
+
+    <script>
+
+        /*
+        * onclick_product_details()
+        * @author: Piyawat Wongyat 65160340
+        * @create date: 2024-03-19
+        */
+        const onclick_product_details = (location) => {
+            window.location.href = location;
+        }
+
+    </script>
     @endsection

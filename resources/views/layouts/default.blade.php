@@ -133,7 +133,7 @@
                             <div class="flex flex-col gap-2 pl-7 w-full">
 
                                 {{-- รับสินค้าเข้า --}}
-                                @if(request()->is('product/inbounds'))
+                                @if(request()->is('product/inbounds') || request()->is('product/inbounds/*'))
                                 <a href="{{ url('/product/inbounds') }}"
                                     class="px-8 py-2 rounded-md bg-blue-700 text-white w-full">
                                     <div>รับสินค้าเข้า</div>
@@ -146,7 +146,7 @@
                                 @endif
 
                                 {{-- ส่งสินค้าออก --}}
-                                @if(request()->is('product/outbounds'))
+                                @if(request()->is('product/outbounds') || request()->is('product/outbounds/*'))
                                 <a href="{{ url('/product/outbounds') }}"
                                     class="px-8 py-2 rounded-md bg-blue-700 text-white w-full">
                                     <div>ส่งสินค้าออก</div>
@@ -160,7 +160,7 @@
 
                                 @if(Auth::check() && Auth::user()->role === "warehouse_manager")
                                     {{-- จัดการสินค้า --}}
-                                    @if(request()->is('product/managements'))
+                                    @if(request()->is('product/managements/*') ||request()->is('product/managements'))
                                     <a href="{{ url('/product/managements') }}"
                                         class="px-8 py-2 rounded-md bg-blue-700 text-white w-full">
                                         <div>จัดการสินค้า</div>
@@ -255,7 +255,7 @@
     </nav>
 
     {{-- profile desktop --}}
-    <div class="relative hidden md:flex justify-end text-[#2a3547]">
+    <div class="relative hidden md:flex justify-end text-[#2a3547] z-30">
         {{-- profile box --}}
         <div id="profile-desktop"
             class="w-[15rem] h-[10rem] hidden  absolute mt-16 mr-12 rounded-md bg-white shadow-lg border">
