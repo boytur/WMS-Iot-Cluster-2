@@ -54,14 +54,17 @@
                         {{-- add product inbound --}}
                         <div class="w-full flex justify-end gap-3 mt-2">
                             <div class="mt-3 lg:pt-0">
-                                <button onclick="onclick_product_details('/product/managements/add-new-product')"
-                                    class="btn-primary px-4 flex items-center h-[3rem] gap-1">
-                                    <div>
-                                        <i class="fa-solid fa-circle-plus text-[0.8rem]"></i>
-                                    </div>
-                                    <div>
-                                        <p class="lg:text-sm lg:block hidden">เพิ่มสินค้า</p>
-                                    </div>
+                                <button class="btn-primary px-4 flex items-center h-[3rem] gap-1">
+                                    <a href="{{ url('/product/managements/add-new-product') }}">
+                                        <div class="flex items-center gap-1">
+                                            <i class="fa-solid fa-circle-plus text-[0.8rem] mt-[2px]"></i>
+                                            <div>
+                                                <p class="lg:text-sm lg:block hidden">เพิ่มสินค้า</p>
+                                            </div>
+                                        </div>
+
+                                    </a>
+
                                 </button>
                             </div>
                         </div>
@@ -160,17 +163,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-
-        /*
-        * onclick_product_details()
-        * @author: Piyawat Wongyat 65160340
-        * @create date: 2024-03-19
-        */
-        const onclick_product_details = (location) => {
-            window.location.href = location;
-        }
-
-    </script>
     @endsection

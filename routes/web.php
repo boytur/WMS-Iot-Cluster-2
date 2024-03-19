@@ -1,5 +1,7 @@
 <?php
 use App\Http\Controllers\Auth_controller;
+use App\Http\Controllers\Products\Inbounds\InboundIndex;
+use App\Http\Controllers\Products\Outbounds\OutboundIndex;
 use App\Http\Controllers\Products\Managements\ProductManagementIndex;
 use App\Http\Controllers\Warehouse_controller;
 use Illuminate\Support\Facades\Route;
@@ -46,13 +48,13 @@ Route::middleware(['auth'])->group(function () {
         }
     });
 
-    Route::get('/product/inbounds', function () {
-        return view('products.inbounds.v_inbound_index');
-    });
+    Route::get('/product/inbounds', [InboundIndex::class, 'inbound_index']);
+    Route::get('/product/inbounds/create-inbound-order', [InboundIndex::class, 'create_inbound_order']);
+    Route::get('/product/inbounds/view-inbound-latest', [InboundIndex::class, 'latest_inbound_order']);
 
-    Route::get('/product/outbounds', function () {
-        return view('products.outbounds.v_outbound_index');
-    });
+    Route::get('/product/outbounds', [OutboundIndex::class, 'outbound_index']);
+    Route::get('/product/outbounds/create-outbound-order', [OutboundIndex::class, 'create_outbound_order']);
+    Route::get('/product/outbounds/view-outbound-latest', [OutboundIndex::class, 'latest_outbound_order']);
 
     Route::get('/product/managements', [ProductManagementIndex::class, 'product_management_index'])->name('product_management_index');
     Route::get('/product/managements/edit/{mas_prod_id}', [ProductManagementIndex::class, 'edit_master_product_index'])->name('edit_master_product');
