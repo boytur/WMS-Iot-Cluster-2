@@ -1,9 +1,9 @@
 <?php
-use App\Http\Controllers\Auth_controller;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Products\Inbounds\InboundIndex;
 use App\Http\Controllers\Products\Outbounds\OutboundIndex;
 use App\Http\Controllers\Products\Managements\ProductManagementIndex;
-use App\Http\Controllers\Warehouse_controller;
+use App\Http\Controllers\WarehouseController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,9 +18,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 // เส้นทางที่ไม่ต้องการการยืนยันตน
-Route::get('/login', [Auth_controller::class, 'login_index']);
-Route::post('/login', [Auth_controller::class, 'login_process'])->name('login');
-Route::post('/logout', [Auth_controller::class, 'logout'])->name('logout');
+Route::get('/login', [AuthController::class, 'login_index']);
+Route::post('/login', [AuthController::class, 'login_process'])->name('login');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
 
@@ -36,7 +36,7 @@ Route::middleware(['auth'])->group(function () {
         return view('dashboards.v_all_wh');
     });
 
-    Route::post('/set-user-warehouse', [Warehouse_controller::class, 'set_user_warehouse'])->name('set-user-warehouse');
+    Route::post('/set-user-warehouse', [WarehouseController::class, 'set_user_warehouse'])->name('set-user-warehouse');
 
 
     Route::get('/dashboard/view-another', function () {

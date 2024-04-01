@@ -13,7 +13,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 
-class Auth_controller extends Controller
+class AuthController extends Controller
 {
     public function login_index()
     {
@@ -46,8 +46,8 @@ class Auth_controller extends Controller
                 $request->session()->regenerate();
                 $warehouse = Auth::user()->warehouses()->get();
 
-                Session::put('user_warehouse',$warehouse[0]->wh_id);
-                Session::put('user_warehouse_name',$warehouse[0]->wh_name);
+                Session::put('user_warehouse', $warehouse[0]->wh_id);
+                Session::put('user_warehouse_name', $warehouse[0]->wh_name);
 
                 return redirect('/dashboard/view-all');
             }
@@ -57,7 +57,7 @@ class Auth_controller extends Controller
             ]);
 
         } catch (\Exception $e) {
-            return back()->withErrors(['login' => $e->getMessage()]);
+            return back()->withErrors(['login' => 'เกิดข้อผิดพลาดที่เซิร์ฟเวอร์']);
         }
     }
 
