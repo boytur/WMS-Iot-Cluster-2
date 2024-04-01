@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
-class Warehouse_controller extends Controller
+class WarehouseController extends Controller
 {
     public function set_user_warehouse(Request $request)
     {

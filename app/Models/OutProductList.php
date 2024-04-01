@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class OutProductList extends Model
 {
     use HasFactory;
-    protected $table = 'out_product_lists';
+    protected $table = 'wms_out_product_lists';
     protected $primaryKey = "out_prod_list_id";
 
     protected $fillable = [

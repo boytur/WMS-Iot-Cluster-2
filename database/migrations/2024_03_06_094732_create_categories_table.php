@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('wms_categories', function (Blueprint $table) {
             $table->integer('cat_id')->autoIncrement()->nullable(false);
             $table->string('cat_name')->nullable(false);
             $table->timestamps();
@@ -22,6 +22,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('wms_categories');
     }
 };

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Space extends Model
 {
     use HasFactory;
-    protected $table = 'spaces';
+    protected $table = 'wms_spaces';
     protected $primaryKey = "space_id";
     protected $fillable = [
         'space_name',

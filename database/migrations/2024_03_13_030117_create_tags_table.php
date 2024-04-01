@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tags', function (Blueprint $table) {
+        Schema::create('wms_tags', function (Blueprint $table) {
             $table->integer('tag_id')->nullable(false)->autoIncrement();
             $table->string('tag_name')->nullable(false);
 
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tags');
+        Schema::dropIfExists('wms_tags');
     }
 };

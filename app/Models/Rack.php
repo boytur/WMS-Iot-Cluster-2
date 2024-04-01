@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Rack extends Model
 {
     use HasFactory;
-    protected $table = 'racks';
+    protected $table = 'wms_racks';
     protected $primaryKey = 'rack_id';
 
     protected $fillable = [

@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('master_product_tags', function (Blueprint $table) {
+        Schema::create('wms_master_product_tags', function (Blueprint $table) {
 
             $table->integer('mas_tag_id')->nullable(false)->autoIncrement();
             $table->integer('tag_id')->nullable(false);
             $table->integer('mas_prod_id')->nullable(false);
             $table->timestamps();
 
-            $table->foreign('mas_prod_id')->references('mas_prod_id')->on('master_products')->onDelete('cascade');
+            $table->foreign('mas_prod_id')->references('mas_prod_id')->on('wms_master_products')->onDelete('cascade');
         });
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('master_product_tags');
+        Schema::dropIfExists('wms_master_product_tags');
     }
 };

@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('warehouses', function (Blueprint $table) {
+        Schema::create('wms_warehouses', function (Blueprint $table) {
             $table->integer('wh_id')->autoIncrement()->nullable(false);
             $table->string('wh_name')->nullable(false);
             $table->string('wh_location', 1000)->nullable(false);
@@ -23,6 +23,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('warehouses');
+        Schema::dropIfExists('wms_warehouses');
     }
 };

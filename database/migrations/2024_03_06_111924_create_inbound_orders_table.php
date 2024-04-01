@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('inbound_orders', function (Blueprint $table) {
+        Schema::create('wms_inbound_orders', function (Blueprint $table) {
             $table->integer('inbound_id')->autoIncrement()->nullable(false);
             $table->integer('inbound_amount')->nullable(false);
             $table->string('inbound_status')->nullable(false)->default('initialize');
@@ -21,8 +21,8 @@ return new class extends Migration
             $table->integer('lot_in_id')->nullable(false);
 
             $table->timestamps();
-            $table->foreign('mas_prod_id')->references('mas_prod_id')->on('master_products')->onDelete('cascade');
-            $table->foreign('lot_in_id')->references('lot_in_id')->on('lot_ins')->onDelete('cascade');
+            $table->foreign('mas_prod_id')->references('mas_prod_id')->on('wms_master_products')->onDelete('cascade');
+            $table->foreign('lot_in_id')->references('lot_in_id')->on('wms_lot_ins')->onDelete('cascade');
         });
     }
 
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('inbound_orders');
+        Schema::dropIfExists('wms_inbound_orders');
     }
 };

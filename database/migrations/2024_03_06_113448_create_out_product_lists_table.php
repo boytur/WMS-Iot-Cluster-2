@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('out_product_lists', function (Blueprint $table) {
+        Schema::create('wms_out_product_lists', function (Blueprint $table) {
             $table->integer('out_prod_list_id')->autoIncrement()->nullable(false);
             $table->integer('out_prod_list_amount')->nullable();
 
@@ -18,8 +18,8 @@ return new class extends Migration {
             $table->integer('outbound_id')->nullable(false);
 
             $table->timestamps();
-            $table->foreign('on_prod_id')->references('on_prod_id')->on('onshelf_products')->onDelete('cascade');
-            $table->foreign('outbound_id')->references('outbound_id')->on('outbound_orders')->onDelete('cascade');
+            $table->foreign('on_prod_id')->references('on_prod_id')->on('wms_onshelf_products')->onDelete('cascade');
+            $table->foreign('outbound_id')->references('outbound_id')->on('wms_outbound_orders')->onDelete('cascade');
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('out_product_lists');
+        Schema::dropIfExists('wms_out_product_lists');
     }
 };

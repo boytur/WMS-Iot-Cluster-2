@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('onshelf_products', function (Blueprint $table) {
+        Schema::create('wms_onshelf_products', function (Blueprint $table) {
             $table->integer('on_prod_id')->autoIncrement()->nullable(false);
             $table->integer('on_prod_amount')->nullable(false);
             $table->string('on_prod_status')->nullable(false)->default('initialize');
@@ -20,8 +20,8 @@ return new class extends Migration {
             $table->integer('inbound_id')->nullable(false);
             $table->timestamps();
 
-            $table->foreign('space_id')->references('space_id')->on('spaces')->onDelete('cascade');
-            $table->foreign('inbound_id')->references('inbound_id')->on('inbound_orders')->onDelete('cascade');
+            $table->foreign('space_id')->references('space_id')->on('wms_spaces')->onDelete('cascade');
+            $table->foreign('inbound_id')->references('inbound_id')->on('wms_inbound_orders')->onDelete('cascade');
         });
     }
 
@@ -30,6 +30,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('on_shelf_products');
+        Schema::dropIfExists('wms_on_shelf_products');
     }
 };
