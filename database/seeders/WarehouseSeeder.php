@@ -16,5 +16,13 @@ class WarehouseSeeder extends Seeder
             'wh_name' => 'WH-1',
             'wh_location' => 'Location A',
         ]);
+        Warehouse::create([
+            'wh_name' => 'WH-2',
+            'wh_location' => 'Location B',
+        ]);
+        Warehouse::create([
+            'wh_name' => 'WH-3',
+            'wh_location' => 'Location C',
+        ]);
     }
 }
