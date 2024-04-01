@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('spaces', function (Blueprint $table) {
+        Schema::create('wms_spaces', function (Blueprint $table) {
             $table->integer('space_id')->autoIncrement()->nullable(false);
             $table->string('space_name',45)->nullable(false);
             $table->integer('space_capacity')->nullable(false)->default(0);
@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('rack_id')->nullable(false);
             $table->timestamps();
 
-            $table->foreign('rack_id')->references('rack_id')->on('racks')->onDelete('cascade');
+            $table->foreign('rack_id')->references('rack_id')->on('wms_racks')->onDelete('cascade');
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('spaces');
+        Schema::dropIfExists('wms_spaces');
     }
 };

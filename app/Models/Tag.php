@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Tag extends Model
 {
     use HasFactory;
+    protected $table = 'wms_tags';
+    protected $primaryKey = "tag_id";
+    protected $fillable = [
+        'tag_name',
+    ];
 }

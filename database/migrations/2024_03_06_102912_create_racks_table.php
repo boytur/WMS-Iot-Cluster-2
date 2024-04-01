@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('racks', function (Blueprint $table) {
+        Schema::create('wms_racks', function (Blueprint $table) {
             $table->integer('rack_id')->autoIncrement()->nullable(false);
             $table->string('rack_name', 45)->nullable(false);
             $table->integer('rack_height')->nullable(false);
@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->integer('wh_id')->nullable(false);
             $table->timestamps();
 
-            $table->foreign('wh_id')->references('wh_id')->on('warehouses')->onDelete('cascade');
+            $table->foreign('wh_id')->references('wh_id')->on('wms_warehouses')->onDelete('cascade');
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('racks');
+        Schema::dropIfExists('wms_racks');
     }
 };

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class LotIn extends Model
 {
     use HasFactory;
-    protected $table = 'lot_ins';
+    protected $table = 'wms_lot_ins';
     protected $fillable = [
         'lot_in_number',
         'lot_in_status',

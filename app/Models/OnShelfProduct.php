@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class OnShelfProduct extends Model
 {
     use HasFactory;
-    protected $table = 'onshelf_products';
+    protected $table = 'wms_onshelf_products';
     protected $primaryKey = "on_prod_id";
 
     protected $fillable = [

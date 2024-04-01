@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('master_products', function (Blueprint $table) {
+        Schema::create('wms_master_products', function (Blueprint $table) {
             $table->integer('mas_prod_id')->autoIncrement()->nullable(false);
             $table->string('mas_prod_no', 45)->nullable(false);
             $table->string('mas_prod_barcode', 13)->nullable();
@@ -21,7 +21,7 @@ return new class extends Migration {
             $table->integer('cat_id')->nullable(false);
             $table->timestamps();
 
-            $table->foreign('cat_id')->references('cat_id')->on('categories')->onDelete('cascade');
+            $table->foreign('cat_id')->references('cat_id')->on('wms_categories')->onDelete('cascade');
         });
     }
 
@@ -30,6 +30,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('master_products');
+        Schema::dropIfExists('wms_master_products');
     }
 };

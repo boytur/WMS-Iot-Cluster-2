@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class InboundOrder extends Model
 {
     use HasFactory;
-    protected $table = 'inbound_orders';
+    protected $table = 'wms_inbound_orders';
     protected $fillable = [
         'inbound_amount',
         'inbound_status',

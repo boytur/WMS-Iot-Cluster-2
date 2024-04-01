@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('lot_outs', function (Blueprint $table) {
+        Schema::create('wms_lot_outs', function (Blueprint $table) {
             $table->integer('lot_out_id')->autoIncrement()->nullable(false);
             $table->string('lot_out_number', 45)->nullable(false);
             $table->string('lot_out_status', 45)->nullable(false)->defaultValue('initialize');
@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->integer('user_id')->nullable(false);
             $table->timestamps();
 
-            $table->foreign('wh_id')->references('wh_id')->on('warehouses')->onDelete('cascade');
+            $table->foreign('wh_id')->references('wh_id')->on('wms_warehouses')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('lot_outs');
+        Schema::dropIfExists('wms_lot_outs');
     }
 };
