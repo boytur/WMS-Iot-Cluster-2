@@ -1,10 +1,14 @@
 <?php
+
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Products\Inbounds\InboundIndex;
 use App\Http\Controllers\Products\Outbounds\OutboundIndex;
 use App\Http\Controllers\Products\Managements\ProductManagementIndex;
 use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\Users\UserManagementIndex;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -77,11 +81,6 @@ Route::middleware(['auth'])->group(function () {
         }
     });
 
-    Route::get('/user-management', function () {
-        if (Auth::check() && Auth::user()->role === "warehouse_manager") {
-            return view('users.v_user_management');
-        } else {
-            return redirect('/dashboard/view-all');
-        }
-    });
+    Route::get('/user-management', [UserManagementIndex::class, 'user_management_index'])->name('user_management_index');;
+    Route::post('/user-management/search', [UserManagementIndex::class, 'search_user'])->name('search_user');
 });
