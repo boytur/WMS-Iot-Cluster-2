@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Products\Inbounds;
 
 use App\Http\Controllers\Controller;
+use App\Models\LotIn;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class InboundIndex extends Controller
@@ -18,8 +20,13 @@ class InboundIndex extends Controller
     }
     public function latest_inbound_order()
     {
-        return view('products.inbounds.v_view_inbound_latest');
+        try {
+            if (Auth::check()) {
+                $lot_in_products = LotIn::paginate(20);
+                return view('products.inbounds.v_view_inbound_latest', compact('lot_in_products'));
+            }
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
     }
-
-
 }
