@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Products\Outbounds;
 use App\Http\Controllers\Controller;
 use App\Models\LotOut;
 use Illuminate\Http\Request;
-use App\Models\LotOut;
 use Illuminate\Support\Facades\Auth;
 class OutboundIndex extends Controller
 {

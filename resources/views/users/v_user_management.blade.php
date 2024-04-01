@@ -3,159 +3,160 @@
 
 @section('content')
 
-    <div style="height: calc(100vh - 4rem)" class="bg-[#F6F9FC] border w-full flex flex-col h-full">
-        <div class="mt-[5rem] md:mt-0">
-            <div class=" w-full h-[3rem] ">
-                <div class="h-full flex items-center bg-white p-3 border-b-2 shadow-sm text-blue-800">
-                    <a href="">ผู้ใช้งาน > จัดการผู้ใช้งาน</a>
-                </div>
+<div style="height: calc(100vh - 4rem)" class="bg-[#F6F9FC] border w-full flex flex-col h-full">
+    <div class="mt-[5rem] md:mt-0">
+        <div class=" w-full h-[3rem] ">
+            <div class="h-full flex items-center bg-white p-3 border-b-2 shadow-sm text-blue-800">
+                <a href="">ผู้ใช้งาน > จัดการผู้ใช้งาน</a>
             </div>
-            <div class="w-full p-2">
-                <div style="height: calc(100vh - 7.7rem)" class="  rounded-sm  bg-white overflow-y-scroll">
+        </div>
+        <div class="w-full p-2">
+            <div style="height: calc(100vh - 7.7rem)" class="  rounded-sm  bg-white overflow-y-scroll">
 
-                    <div class="w-full p-5 bg-white rounded-md pb-8">
-                        {{-- box-1 --}}
-                        <div class="w-full flex">
+                <div class="w-full p-5 bg-white rounded-md pb-8">
+                    {{-- box-1 --}}
+                    <div class="w-full flex">
 
-                            {{-- search input --}}
-                            <div class="w-3/4 flex gap-2 h-full">
-                                <div class="w-full">
-                                    <div>
-                                        <p class="text-black/70 text-sm">ค้นหาผู้ใช้</p>
-                                        <input type="text" placeholder="กรอกรายละเอียดที่ต้องการค้นหา..."
-                                            class="input-primary h-[3rem]" name="user_search" id="user_search">
-                                    </div>
+                        {{-- search input --}}
+                        <div class="w-3/4 flex gap-2 h-full">
+                            <div class="w-full">
+                                <div>
+                                    <p class="text-black/70 text-sm">ค้นหาผู้ใช้</p>
+                                    <input onfocus="handle_search()" type="text"
+                                        placeholder="กรอกรายละเอียดที่ต้องการค้นหา..." class="input-primary h-[3rem]"
+                                        name="user_search" id="user_search">
                                 </div>
-                                <div class="md:w-[15rem]">
-                                    <div>
-                                        <p class="text-black/70 text-sm">ค้นหาด้วย</p>
-                                        <select name="user_attribute" id="user_attribute"
-                                            class="w-full h-[3rem] input-primary px-2 cursor-pointer">
-                                            <option value="number">รหัสพนักงาน</option>
-                                            <option value="name">ชื่อ-นามสกุล</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="md:w-[18rem]">
-                                    <div>
-                                        <p class="text-black/70 text-sm">ประเภท</p>
-                                        <select name="user_type" id="user_type"
-                                            class="w-full h-[3rem] input-primary px-2 cursor-pointer">
-                                            <option value="all">ทั้งหมด</option>
-                                            <option value="warehouse_manager">ผู้จัดการคลังสินค้า</option>
-                                            <option value="normal_employee">พนักงานคลังสินค้า</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="md:w-[10rem] h-full mt-5">
-                                    <div class="w-full">
-                                        <button onclick="handle_search()"
-                                            class="w-full h-[3rem] gap-2 btn-primary flex items-center justify-center mx-2">
-                                            <div>
-                                                <i class="fa-solid fa-magnifying-glass"></i>
-                                            </div>
-                                            <div type="submit">
-                                                ค้นหา
-                                            </div>
-                                        </button>
-                                    </div>
+                            </div>
+                            <div class="md:w-[15rem]">
+                                <div>
+                                    <p class="text-black/70 text-sm">ค้นหาด้วย</p>
+                                    <select name="user_attribute" id="user_attribute"
+                                        class="w-full h-[3rem] input-primary px-2 cursor-pointer">
+                                        <option value="number">รหัสพนักงาน</option>
+                                        <option value="name">ชื่อ-นามสกุล</option>
+                                    </select>
                                 </div>
                             </div>
 
-                            {{-- add product inbound --}}
-                            <div class="w-full flex justify-end gap-3 mt-2">
-                                <div class="mt-3 lg:pt-0">
-                                    <button class="btn-primary px-4 flex items-center h-[3rem] gap-1">
-                                        <a href="{{ url('/user-management') }}">
-                                            <div class="flex items-center gap-1">
-                                                <i class="fa-solid fa-circle-plus text-[0.8rem] mt-[2px]"></i>
-                                                <div>
-                                                    <p class="lg:text-sm lg:block hidden">เพิ่มผู้ใช้งาน</p>
-                                                </div>
-                                            </div>
-                                        </a>
+                            <div class="md:w-[18rem]">
+                                <div>
+                                    <p class="text-black/70 text-sm">ประเภท</p>
+                                    <select name="user_type" id="user_type"
+                                        class="w-full h-[3rem] input-primary px-2 cursor-pointer">
+                                        <option value="all">ทั้งหมด</option>
+                                        <option value="warehouse_manager">ผู้จัดการคลังสินค้า</option>
+                                        <option value="normal_employee">พนักงานคลังสินค้า</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="md:w-[10rem] h-full mt-5">
+                                <div class="w-full">
+                                    <button onclick="handle_search()"
+                                        class="w-full h-[3rem] gap-2 btn-primary flex items-center justify-center mx-2">
+                                        <div>
+                                            <i class="fa-solid fa-magnifying-glass"></i>
+                                        </div>
+                                        <div type="submit">
+                                            ค้นหา
+                                        </div>
                                     </button>
                                 </div>
                             </div>
                         </div>
-                        {{-- end box-1 --}}
-                    </div>
 
-                    <div class="w-full bg-black/20 mt-2 rounded-md">
-                        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                            <table class="w-full text-sm text-left rtl:text-right ">
-                                <thead class="text-xs text-white uppercase bg-[#212529]">
-                                    <tr>
-                                        <th scope="col" class="px-6 py-3">
-                                            ลำดับ
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            รหัสพนักงาน
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            ชื่อ-นามสกุล
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            ประเภท
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            คลังสินค้า
-                                        </th>
-                                    </tr>
-                                </thead>
-
-                                <tbody id="user_table">
-                                    @foreach ($users as $index => $user)
-                                        <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer"
-                                            onclick="onclick_user_details('/user/managements/detail/{{ $user->id }}')">
-                                            <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
-                                                {{ $index + 1 }}
-                                            </th>
-                                            <td class="px-6 py-4">
-                                                {{ $user->number }}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                {{ $user->fname }} {{ $user->lname }}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                @if ($user->role === 'warehouse_manager')
-                                                    ผู้จัดการคลังสินค้า
-                                                @else
-                                                    พนักงานคลังสินค้า
-                                                @endif
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                @if ($user->role === 'warehouse_manager')
-                                                    ทุกคลังสินค้า
-                                                @else
-                                                    @if ($user->warehouses == null)
-                                                        ไม่พบคลังสินค้า
-                                                    @else
-                                                        @foreach ($user->warehouses as $w)
-                                                            {{ $w->wh_name }}
-                                                        @endforeach
-                                                    @endif
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    </tr>
-                                </tbody>
-                            </table>
+                        {{-- add product inbound --}}
+                        <div class="w-full flex justify-end gap-3 mt-2">
+                            <div class="mt-3 lg:pt-0">
+                                <button class="btn-primary px-4 flex items-center h-[3rem] gap-1">
+                                    <a href="{{ url('/user-management') }}">
+                                        <div class="flex items-center gap-1">
+                                            <i class="fa-solid fa-circle-plus text-[0.8rem] mt-[2px]"></i>
+                                            <div>
+                                                <p class="lg:text-sm lg:block hidden">เพิ่มผู้ใช้งาน</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </button>
+                            </div>
                         </div>
                     </div>
+                    {{-- end box-1 --}}
                 </div>
 
-                <div class="flex justify-center my-4">
-                    {{ $users->links('pagination::custom-pagination') }}
+                <div class="w-full bg-black/20 mt-2 rounded-md">
+                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                        <table class="w-full text-sm text-left rtl:text-right ">
+                            <thead class="text-xs text-white uppercase bg-[#212529]">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">
+                                        ลำดับ
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        รหัสพนักงาน
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        ชื่อ-นามสกุล
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        ประเภท
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        คลังสินค้า
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="user_table">
+                                @foreach ($users as $index => $user)
+                                <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer"
+                                    onclick="onclick_user_details('/user/managements/detail/{{ $user->id }}')">
+                                    <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
+                                        {{ $index + 1 }}
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        {{ $user->number }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ $user->fname }} {{ $user->lname }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        @if ($user->role === 'warehouse_manager')
+                                        ผู้จัดการคลังสินค้า
+                                        @else
+                                        พนักงานคลังสินค้า
+                                        @endif
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        @if ($user->role === 'warehouse_manager')
+                                        ทุกคลังสินค้า
+                                        @else
+                                        @if ($user->warehouses == null)
+                                        ไม่พบคลังสินค้า
+                                        @else
+                                        @foreach ($user->warehouses as $w)
+                                        {{ $w->wh_name }}
+                                        @endforeach
+                                        @endif
+                                        @endif
+                                    </td>
+                                </tr>
+                                @endforeach
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+            </div>
+
+            <div class="flex justify-center my-4">
+                {{ $users->links('pagination::custom-pagination') }}
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        const handle_search = async () => {
+<script>
+    const handle_search = async () => {
             try {
                 //ดึงค่า
                 const user_search = document.getElementById("user_search").value;
@@ -211,5 +212,5 @@
                 });
             }
         }
-    </script>
+</script>
 @endsection
