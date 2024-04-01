@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Products\Outbounds;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Models\LotOut;
+use Illuminate\Support\Facades\Auth;
 class OutboundIndex extends Controller
 {
     //
@@ -19,6 +20,13 @@ class OutboundIndex extends Controller
     }
     public function latest_outbound_order()
     {
-        return view('products.outbounds.v_view_outbound_latest');
+     try {
+         if (Auth::check()) {
+             $lotouts = LotOut::paginate(20);
+             return view('products.outbounds.v_view_outbound_latest', compact('lotouts'));
+         }
+     } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+     }
     }
 }
