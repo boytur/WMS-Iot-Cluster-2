@@ -98,22 +98,22 @@
                         <table class="w-full text-sm text-left rtl:text-right bg-[#212529] ">
                             <thead class="text-xs text-white uppercase ">
                                 <tr>
-                                    <th scope="col" class="px-6 py-3">
+                                    <th scope="col" class="px-6 py-3 text-center">
                                         ลำดับ
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
+                                    <th scope="col" class="px-6 py-3 text-center">
                                         หมายเลขรายการส่งออก
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
+                                    <th scope="col" class="px-6 py-3 text-center">
                                         วันที่สร้าง
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
+                                    <th scope="col" class="px-6 py-3 text-center">
                                         ผู้ที่สร้าง
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
+                                    <th scope="col" class="px-6 py-3 text-center">
                                         สถานะ
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
+                                    <th scope="col" class="px-6 py-3 text-center">
                                         การกระทำ
                                     </th>
                                 </tr>
@@ -121,20 +121,20 @@
                             <tbody>
                                 @foreach ($lotouts as $index => $LotOut)
                                 <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer">
-                                    <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
+                                    <td class="px-6 text-center">
                                         {{ $index+1 }}
-                                    </th>
+                                    </td>
 
-                                    <td class="px-6">
+                                    <td class="px-6 text-center">
                                         {{ $LotOut->lot_out_number }}
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-6 py-4 text-center">
                                         {{ date('d/m/Y', strtotime($LotOut->created_at)) }}
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-6 py-4 text-center">
                                         {{ $LotOut->users->fname.' '.$LotOut->users->lname }}
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-6 py-4 text-center">
                                         @if ($LotOut->lot_out_status === 'Initialized')
                                         <div>
                                             <p class="border text-center bg-[#666666] rounded-3xl py-1 text-white">
@@ -147,11 +147,11 @@
                                         </div>
                                         @endif
                                     </td>
-                                    <td class="px-6 py-4 flex gap-3 text-gray-500">
-
-
-                                        <i
-                                            class="fa-regular fa-pen-to-square text-[1.5rem] hover:text-blue-700 hover:scale-105"></i></a>
+                                    <td class="px-6 py-4 flex gap-3 text-gray-500 justify-center">
+                                        <a href="{{ url( '/product/outbounds/edit-outbound-order'.'/'. $LotOut->lot_out_id) }}"
+                                            class="">
+                                            <i
+                                                class="fa-regular fa-pen-to-square text-[1.5rem] hover:text-blue-700 hover:scale-105"></i></a>
                                         |
 
                                         <i

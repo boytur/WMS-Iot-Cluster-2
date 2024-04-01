@@ -156,7 +156,8 @@
                                         @endif
                                     </td>
                                     <td class="px-6 py-4 flex gap-3 text-gray-500 justify-center">
-                                        {{-- <a href="{{ url($lot_in->lot_in_id) }}" class=""> --}}
+                                        <a href="{{ url( '/product/inbounds/edit-inbound-order'.'/'. $lot_in->lot_in_id) }}"
+                                            class="">
                                             <i
                                                 class="fa-regular fa-pen-to-square text-[1.5rem] hover:text-blue-700 hover:scale-105"></i></a>
                                         |
