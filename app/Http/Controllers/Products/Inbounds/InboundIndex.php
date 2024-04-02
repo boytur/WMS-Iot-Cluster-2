@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Products\Inbounds;
 
 use App\Http\Controllers\Controller;
+use App\Models\InboundOrder;
 use App\Models\LotIn;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -58,7 +59,8 @@ class InboundIndex extends Controller
         $lot_in = LotIn::where('lot_in_id', $lot_in_id)->first();
 
         if ($lot_in !== null) {
-            return view('products.inbounds.v_edit_inbound_order', compact('lot_in'));
+            $lot_in_products = InboundOrder::where('lot_in_id',$lot_in_id)->paginate(20);
+            return view('products.inbounds.v_edit_inbound_order', compact('lot_in','lot_in_products'));
         } else {
             abort(404);
         }
