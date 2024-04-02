@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Products\Outbounds;
 
 use App\Http\Controllers\Controller;
 use App\Models\LotOut;
+use Database\Seeders\OutboundOrderSeeder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use App\Models\OutBoundOrder;
 
 class OutboundIndex extends Controller
 {
@@ -59,7 +61,8 @@ class OutboundIndex extends Controller
         $lot_out = LotOut::where('lot_out_id', $lot_out_id)->first();
 
         if ($lot_out !== null) {
-            return view('products.outbounds.v_edit_outbound_order', compact('lot_out'));
+            $lot_out_prod = OutBoundOrder::where('lot_out_id', $lot_out_id)->paginate(20);
+            return view('products.outbounds.v_edit_outbound_order', compact('lot_out','lot_out_prod'));
         } else {
             abort(404);
         }
