@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="w-full p-2">
-            <div style="height: calc(100vh - 7.7rem)" class="  rounded-sm  bg-white overflow-y-scroll">
+            <div style="height: calc(100vh - 7.7rem)" class="  rounded-sm overflow-y-scroll">
 
                 <div class="w-full p-5 bg-white rounded-md pb-8">
                     {{-- box-1 --}}
@@ -83,8 +83,13 @@
                     {{-- end box-1 --}}
                 </div>
 
-                <div class="w-full bg-black/20 mt-2 rounded-md">
-                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            {{-- table product --}}
+            <div class="w-full mt-2 rounded-t-md">
+                <div class="py-2 w-full bg-[#D9D9D9] rounded-t-md">
+                    <b class="mx-2  mt-2 text-lg text-black uppercase   ">
+                        ตารางแสดงรายชื่อพนักงาน</b>
+                </div>
+                    <div class="relative overflow-x-auto shadow-md">
                         <table class="w-full text-sm text-left rtl:text-right ">
                             <thead class="text-xs text-white uppercase bg-[#212529]">
                                 <tr>
