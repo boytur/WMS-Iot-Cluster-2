@@ -43,14 +43,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/set-user-warehouse', [WarehouseController::class, 'set_user_warehouse'])->name('set-user-warehouse');
 
 
-    Route::get('/dashboard/view-another', function () {
-
-        if (Auth::check() && Auth::user()->role === "warehouse_manager") {
-            return view('dashboards.v_another_wh');
-        } else {
-            return redirect('/dashboard/view-all');
-        }
-    });
+    Route::get('/dashboard/view-another', [WarehouseController::class, 'get_user_warehouse']);
 
     // route for inbound order
     Route::get('/product/inbounds', [InboundIndex::class, 'inbound_index']);
@@ -92,7 +85,6 @@ Route::middleware(['auth'])->group(function () {
         }
     });
 
-    Route::get('/user-management', [UserManagementIndex::class, 'user_management_index'])->name('user_management_index');
-    ;
+    Route::get('/user-management', [UserManagementIndex::class, 'user_management_index'])->name('user_management_index');;
     Route::post('/user-management/search', [UserManagementIndex::class, 'search_user'])->name('search_user');
 });
