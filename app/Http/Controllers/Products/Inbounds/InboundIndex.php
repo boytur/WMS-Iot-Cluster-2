@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\LotIn;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class InboundIndex extends Controller
 {
@@ -13,7 +14,7 @@ class InboundIndex extends Controller
     {
         try {
             if (Auth::check()) {
-                $lot_in_products = LotIn::paginate(20);
+                $lot_in_products = LotIn::where('wh_id',Session::get('user_warehouse'))->paginate(20) ;
                 return view('products.inbounds.v_inbound_index', compact('lot_in_products'));
             }
         } catch (\Exception $e) {
@@ -34,7 +35,7 @@ class InboundIndex extends Controller
     {
         try {
             if (Auth::check()) {
-                $lot_in_products = LotIn::paginate(20);
+                $lot_in_products = LotIn::where('wh_id',Session::get('user_warehouse'))->paginate(20);
                 return view('products.inbounds.v_view_inbound_latest', compact('lot_in_products'));
             }
         } catch (\Exception $e) {
