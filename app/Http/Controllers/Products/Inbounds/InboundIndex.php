@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Products\Inbounds;
 
 use App\Http\Controllers\Controller;
 use App\Models\LotIn;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class InboundIndex extends Controller
 {
@@ -23,7 +25,56 @@ class InboundIndex extends Controller
 
     public function search_lot_in(Request $request)
     {
+        try {
+            $search_lot_in = $request->input('search_lot_in');
+            $search_attribute = $request->input('search_attribute');
+            $search_status = $request->input('search_status');
 
+            $query = LotIn::query();
+
+
+            // If user search is provided, apply appropriate search criteria
+            if (!empty($search_lot_in)) {
+                if ($search_attribute === 'number_lot_in') {
+                    $query->where('lot_in_number', 'like', "%$search_lot_in%");
+                } elseif ($search_attribute === 'number_emp') {
+                    $query->whereHas('users', function ($q) use ($search_lot_in) {
+                        $q->where('number', 'like', "%$search_lot_in%");
+                    });
+                }
+            }
+
+            // If user type filter is provided, filter by user role
+            if ($search_status === "all") {
+            } elseif ($search_status === "Initialized") {
+                $query->where('lot_in_status', $search_status);
+            } else {
+                $query->where('lot_in_status', $search_status);
+            }
+            $searches = $query->paginate(10);
+
+
+            $new_searches = [];
+            foreach ($searches as $search) {
+
+                $user = User::where('id', $search->user_id)->first();
+
+                if ($user !== null) {
+                    $new_searches[] = [
+                        'lot_in_id' => $search->lot_in_id,
+                        'lot_in_number' => $search->lot_in_number,
+                        'lot_in_status' => $search->lot_in_status,
+                        'wh_id' => $search->wh_id,
+                        'user_id' => $user->fname . " " . $user->lname,
+                        'created_at' => $search->created_at,
+                        'updated_at' => $search->updated_at
+                    ];
+                }
+            }
+            return response()->json(['success' => true, 'data' => $new_searches], 200);
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
     }
 
     public function create_inbound_order()
