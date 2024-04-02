@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Products\Inbounds;
 use App\Http\Controllers\Controller;
 use App\Models\LotIn;
 use Illuminate\Support\Facades\Auth;
+use App\Models\MasterProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -29,7 +30,9 @@ class InboundIndex extends Controller
 
     public function create_inbound_order()
     {
-        return view('products.inbounds.v_create_inbound_order');
+        $master_products = MasterProduct::paginate(20);
+        return view('products.inbounds.v_create_inbound_order', compact('master_products'));
+
     }
     public function latest_inbound_order()
     {
