@@ -30,7 +30,7 @@
                                             class="input-primary h-[3rem]" name="lot_out_keyword" id="lot_out_keyword">
                                     </div>
                                 </div>
-                                <div class="md:w-[15rem]">
+                                <div class="md:w-[23rem]">
                                     <div>
                                         <p class="text-black/70 text-sm">ค้นหาจาก</p>
                                         <select name="lot_out_attribute" id="lot_out_attribute"
@@ -108,12 +108,12 @@
                     </div>
                     <div class="w-full bg-black/20 mt-2 rounded-md">
                         <div class="py-2 w-full bg-[#D9D9D9] sm:rounded-lg">
-                            <b class="mx-2  mt-2 rounded-md text-black text-lg">
+                            <b class=" bg mx-2  mt-2 rounded-md text-black text-lg" id="lot_out_count">
                                 ตารางรายการสินค้าส่งออกรอจัดการ</b>
                         </div>
-                        <div class="relative overflow-x-auto shadow-md ">
-                            <table class="w-full text-sm text-left rtl:text-right bg-[#212529] ">
-                                <thead class="text-xs text-white uppercase ">
+                        <div class="relative overflow-x-auto shadow-md bg-white">
+                            <table class="w-full text-sm text-left rtl:text-right">
+                                <thead class="text-xs text-white uppercase bg-[#212529]">
                                     <tr>
                                         <th scope="col" class="px-6 py-3 text-center">
                                             ลำดับ
@@ -135,9 +135,9 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody class="lot_out_table" id="lot_out_table">
+                                <tbody class="lot_out_table bg-white" id="lot_out_table">
                                     @foreach ($lotouts as $index => $lot_out)
-                                        <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer">
+                                        <tr class="bg-white border-b w-full hover:bg-blue-100 cursor-pointer">
                                             <td class="px-6 text-center">
                                                 {{ $index + 1 }}
                                             </td>
@@ -162,7 +162,8 @@
                                                     <div>
                                                         <p
                                                             class="border text-center bg-green-700 rounded-3xl py-1 text-white">
-                                                            {{ $lot_out }}</p>
+                                                            {{ $lot_out->lot_out_status }}
+                                                            </p>
                                                     </div>
                                                 @endif
                                             </td>
@@ -189,16 +190,17 @@
             </div>
         </div>
     </div>
+
     <script>
         const lotout_serch = async () => {
             try {
                 //ดึงค่า
                 const lot_out_search = document.getElementById("lot_out_keyword").value;
-                const lot_out_attribute = document.getElementById("lot_out_attribute").value;
-                const lot_out_type = document.getElementById("lot_out_status").value;
-
+                const lot_out_type = document.getElementById("lot_out_attribute").value;
+                const lot_out_status = document.getElementById("lot_out_status").value;
+                const cluster = '{{ env('CLUSTER') }}'
                 //ส่ง req
-                const response = await fetch('/product/outbounds/search-lot-out', {
+                const response = await fetch(`${cluster}/product/outbounds/search-lot-out`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -206,25 +208,25 @@
                     },
                     body: JSON.stringify({
                         lot_out_search,
-                        lot_out_attribute,
-                        lot_out_type
+                        lot_out_type,
+                        lot_out_status
                     })
                 });
 
-                if (response.status === 200) {
-                    console.log(response.data)
+                if (response.ok) {
+
                     const responseData = await response.json();
                     const lots = responseData.data;
-                    console.log(lots)
                     const lotTableBody = document.getElementById("lot_out_table");
                     lotTableBody.innerHTML = ""; // Clear previous results
                     if (lots?.length === 0) {
                         // Display message when no results are found
-                        lotTableBody.innerHTML = `<tr>
-                            <td colspan="5">ไม่พบล็อตสินค้า</td>
-                            </tr>`;
+                        lotTableBody.innerHTML =
+                        `<tr class="bg-white text-center"><td colspan="5" class="w-full pl-[5.1rem] h-[3rem]">ไม่พบรายการค้นหา</td></tr>`;
+
                     } else {
                         lots?.map((search, index) => {
+                            const status_color = search.lot_out_status === 'closed' ? 'green-700' : '[#666666]';
                             // สร้าง element ของแต่ละ row ในตาราง
                             const row = `
                                 <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer">
@@ -234,13 +236,13 @@
                                     <td class="px-6 py-4 text-center">${search.user_id}</td> <!-- อาจจะต้องแก้ไขเป็นรหัสผู้ใช้หรือข้อมูลที่เหมาะสม -->
                                     <td class="px-6 py-4 text-center">
                                         <div>
-                                            <p class="border text-center bg-[#666666] rounded-3xl py-1 text-white">
+                                            <p class="border text-center bg-${status_color} rounded-3xl py-1 text-white">
                                                 ${search.lot_out_status}
                                             </p>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 flex gap-3 text-gray-500 justify-center">
-                                        <a href="{{ url('/product/inbounds/edit-inbound-order') }}/${search.lot_out_id}" class="">
+                                        <a href="{{ url('/product/outbounds/edit-outbound-order') }}/${search.lot_out_id}" class="">
                                             <i class="fa-regular fa-pen-to-square text-[1.5rem] hover:text-blue-700 hover:scale-105"></i>
                                         </a>
                                         |
@@ -262,6 +264,7 @@
 
                             // แสดงผลลัพธ์ใน cell ที่มี id เรากำหนดไว้
                             document.getElementById(`dateCell_${index}`).innerText = formattedDate;
+                            document.getElementById('lot_out_count').innerText = `ผลการค้นหาจำนวน ${lots.length} รายการ`;
                         });
                     }
                 } else {
