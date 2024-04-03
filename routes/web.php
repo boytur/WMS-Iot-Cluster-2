@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Products\Inbounds\InboundIndex;
 use App\Http\Controllers\Products\Outbounds\OutboundIndex;
 use App\Http\Controllers\Products\Managements\ProductManagementIndex;
+use App\Http\Controllers\Users\Profile;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\Users\UserManagementIndex;
 use Illuminate\Support\Facades\Route;
@@ -87,4 +88,5 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/user-management', [UserManagementIndex::class, 'user_management_index'])->name('user_management_index');;
     Route::post('/user-management/search', [UserManagementIndex::class, 'search_user'])->name('search_user');
+    Route::get('/profile/{number}', [Profile::class,'get_user_profile']);
 });
