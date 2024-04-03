@@ -10,7 +10,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    @vite('node_modules/jquery/dist/jquery.min.js?commonjs-entry')
     @vite('resources/css/app.css')
     <title>WMS | @yield('title', 'WMS + Iot')</title>
 </head>
@@ -73,48 +74,48 @@
                             <div class="flex flex-col gap-2 pl-7 w-full">
 
                                 @if (Auth::check() && Auth::user()->role === 'warehouse_manager')
-                                    {{-- ภาพรวมทั้งหมด --}}
-                                    @if (request()->is('dashboard/view-all'))
-                                        <a href={{ url('dashboard/view-all') }}
-                                            class="px-8 py-2 rounded-md bg-blue-700 text-white">
-                                            <div>ภาพรวมทั้งหมด</div>
-                                        </a>
-                                    @else
-                                        <a href={{ url('dashboard/view-all') }}>
-                                            <div class="px-8 py-2 rounded-md hover:bg-[#5d87ff] hover:text-white">
-                                                ภาพรวมทั้งหมด
-                                            </div>
-                                        </a>
-                                    @endif
+                                {{-- ภาพรวมทั้งหมด --}}
+                                @if (request()->is('dashboard/view-all'))
+                                <a href={{ url('dashboard/view-all') }}
+                                    class="px-8 py-2 rounded-md bg-blue-700 text-white">
+                                    <div>ภาพรวมทั้งหมด</div>
+                                </a>
+                                @else
+                                <a href={{ url('dashboard/view-all') }}>
+                                    <div class="px-8 py-2 rounded-md hover:bg-[#5d87ff] hover:text-white">
+                                        ภาพรวมทั้งหมด
+                                    </div>
+                                </a>
+                                @endif
 
-                                    {{-- ดูคลังสินค้าอื่น --}}
-                                    @if(request()->is('dashboard/view-another'))
-                                    <a href={{ url('/dashboard/view-another') }}>
-                                            <div class="px-8 py-2 rounded-md bg-blue-700 text-white">
-                                                ดูคลังสินค้าอื่น
-                                            </div>
-                                        </a>
-                                    @else
-                                        <a href={{ url('/dashboard/view-another') }}
-                                            class="px-8 py-2 rounded-md hover:bg-[#5d87ff] hover:text-white">
-                                            <div>
-                                                ดูคลังสินค้าอื่น
-                                            </div>
-                                        </a>
-                                    @endif
+                                {{-- ดูคลังสินค้าอื่น --}}
+                                @if(request()->is('dashboard/view-another'))
+                                <a href={{ url('/dashboard/view-another') }}>
+                                    <div class="px-8 py-2 rounded-md bg-blue-700 text-white">
+                                        ดูคลังสินค้าอื่น
+                                    </div>
+                                </a>
+                                @else
+                                <a href={{ url('/dashboard/view-another') }}
+                                    class="px-8 py-2 rounded-md hover:bg-[#5d87ff] hover:text-white">
+                                    <div>
+                                        ดูคลังสินค้าอื่น
+                                    </div>
+                                </a>
+                                @endif
                                 @else
                                 @if(request()->is('dashboard/view-all'))
-                                        <a href={{ url('dashboard/view-all') }}
-                                            class="px-8 py-2 rounded-md bg-blue-700 text-white">
-                                            <div>ภาพรวมทั้งหมด</div>
-                                        </a>
-                                    @else
-                                        <a href={{ url('dashboard/view-all') }}>
-                                            <div class="px-8 py-2 rounded-md hover:bg-[#5d87ff] hover:text-white">
-                                                ภาพรวมทั้งหมด
-                                            </div>
-                                        </a>
-                                    @endif
+                                <a href={{ url('dashboard/view-all') }}
+                                    class="px-8 py-2 rounded-md bg-blue-700 text-white">
+                                    <div>ภาพรวมทั้งหมด</div>
+                                </a>
+                                @else
+                                <a href={{ url('dashboard/view-all') }}>
+                                    <div class="px-8 py-2 rounded-md hover:bg-[#5d87ff] hover:text-white">
+                                        ภาพรวมทั้งหมด
+                                    </div>
+                                </a>
+                                @endif
                                 @endif
                             </div>
                         </div>
@@ -134,44 +135,43 @@
 
                                 {{-- รับสินค้าเข้า --}}
                                 @if (request()->is('product/inbounds') || request()->is('product/inbounds/*'))
-                                    <a href="{{ url('/product/inbounds') }}"
-                                        class="px-8 py-2 rounded-md bg-blue-700 text-white w-full">
-                                        <div>รับสินค้าเข้า</div>
-                                    </a>
+                                <a href="{{ url('/product/inbounds') }}"
+                                    class="px-8 py-2 rounded-md bg-blue-700 text-white w-full">
+                                    <div>รับสินค้าเข้า</div>
+                                </a>
                                 @else
-                                    <a href="{{ url('/product/inbounds') }}"
-                                        class="px-8 py-2 rounded-md w-full hover:bg-[#5d87ff] hover:text-white">
-                                        <div>รับสินค้าเข้า</div>
-                                    </a>
+                                <a href="{{ url('/product/inbounds') }}"
+                                    class="px-8 py-2 rounded-md w-full hover:bg-[#5d87ff] hover:text-white">
+                                    <div>รับสินค้าเข้า</div>
+                                </a>
                                 @endif
 
                                 {{-- ส่งสินค้าออก --}}
                                 @if (request()->is('product/outbounds') || request()->is('product/outbounds/*'))
-                                    <a href="{{ url('/product/outbounds') }}"
-                                        class="px-8 py-2 rounded-md bg-blue-700 text-white w-full">
-                                        <div>ส่งสินค้าออก</div>
-                                    </a>
+                                <a href="{{ url('/product/outbounds') }}"
+                                    class="px-8 py-2 rounded-md bg-blue-700 text-white w-full">
+                                    <div>ส่งสินค้าออก</div>
+                                </a>
                                 @else
-                                    <a href="{{ url('/product/outbounds') }}"
-                                        class="px-8 py-2 rounded-md w-full hover:bg-[#5d87ff] hover:text-white">
-                                        <div>ส่งสินค้าออก</div>
-                                    </a>
+                                <a href="{{ url('/product/outbounds') }}"
+                                    class="px-8 py-2 rounded-md w-full hover:bg-[#5d87ff] hover:text-white">
+                                    <div>ส่งสินค้าออก</div>
+                                </a>
                                 @endif
 
                                 @if (Auth::check() && Auth::user()->role === 'warehouse_manager')
-                                    {{-- จัดการสินค้า --}}
-                                    @if (request()->is('product/managements/*') || request()->is('product/managements'))
-                                        <a href="{{ url('/product/managements') }}"
-                                            class="px-8 py-2 rounded-md bg-blue-700 text-white w-full">
-                                            <div>จัดการสินค้า</div>
-                                        </a>
-                                    @else
-                                        <a href="{{ url('/product/managements') }}">
-                                            <div
-                                                class="px-8 py-2 rounded-md w-full hover:bg-[#5d87ff] hover:text-white">
-                                                จัดการสินค้า</div>
-                                        </a>
-                                    @endif
+                                {{-- จัดการสินค้า --}}
+                                @if (request()->is('product/managements/*') || request()->is('product/managements'))
+                                <a href="{{ url('/product/managements') }}"
+                                    class="px-8 py-2 rounded-md bg-blue-700 text-white w-full">
+                                    <div>จัดการสินค้า</div>
+                                </a>
+                                @else
+                                <a href="{{ url('/product/managements') }}">
+                                    <div class="px-8 py-2 rounded-md w-full hover:bg-[#5d87ff] hover:text-white">
+                                        จัดการสินค้า</div>
+                                </a>
+                                @endif
                                 @endif
                             </div>
                         </div>
@@ -179,62 +179,62 @@
                 </li>
                 {{-- คลังสินค้า --}}
                 @if (Auth::check() && Auth::user()->role === 'warehouse_manager')
-                    <li>
-                        <div class="flex flex-col gap-5">
-                            <div class="text-[1.2rem] flex items-center gap-2">
-                                <i class="fa-solid fa-boxes-stacked"></i>
-                                <p>คลังสินค้า</p>
-                            </div>
-                            <div class="flex">
-                                <div class="bg-black/20 w-[1.5px] ml-2 mb-[1rem]"></div>
-                                <div class="flex flex-col gap-2 pl-7">
+                <li>
+                    <div class="flex flex-col gap-5">
+                        <div class="text-[1.2rem] flex items-center gap-2">
+                            <i class="fa-solid fa-boxes-stacked"></i>
+                            <p>คลังสินค้า</p>
+                        </div>
+                        <div class="flex">
+                            <div class="bg-black/20 w-[1.5px] ml-2 mb-[1rem]"></div>
+                            <div class="flex flex-col gap-2 pl-7">
 
-                                    {{-- เพิ่มพื้นที่จัดเก็บ --}}
-                                    @if (request()->is('warehouse/add-space'))
-                                        <a href="{{ url('/warehouse/add-space') }}"
-                                            class="px-8 py-2 rounded-md bg-blue-700 text-white w-full">
-                                            <div>เพิ่มพื้นที่จัดเก็บ</div>
-                                        </a>
-                                    @else
-                                        <a href="{{ url('/warehouse/add-space') }}"
-                                            class="px-8 py-2 rounded-md w-full hover:bg-[#5d87ff] hover:text-white">
-                                            <div>เพิ่มพื้นที่จัดเก็บ</div>
-                                        </a>
-                                    @endif
+                                {{-- เพิ่มพื้นที่จัดเก็บ --}}
+                                @if (request()->is('warehouse/add-space'))
+                                <a href="{{ url('/warehouse/add-space') }}"
+                                    class="px-8 py-2 rounded-md bg-blue-700 text-white w-full">
+                                    <div>เพิ่มพื้นที่จัดเก็บ</div>
+                                </a>
+                                @else
+                                <a href="{{ url('/warehouse/add-space') }}"
+                                    class="px-8 py-2 rounded-md w-full hover:bg-[#5d87ff] hover:text-white">
+                                    <div>เพิ่มพื้นที่จัดเก็บ</div>
+                                </a>
+                                @endif
 
-                                    {{-- เพิ่มพื้นที่จัดเก็บ --}}
-                                    @if (request()->is('warehouse/add-wh'))
-                                        <a href="{{ url('/warehouse/add-wh') }}">
-                                            <div class="px-8 py-2 rounded-md bg-blue-700 text-white w-full">
-                                                เพิ่มคลังสินค้า
-                                            </div>
-                                        </a>
-                                    @else
-                                        <a href="{{ url('/warehouse/add-wh') }}">
-                                            <div
-                                                class="px-8 py-2 rounded-md w-full hover:bg-[#5d87ff] hover:text-white">
-                                                เพิ่มคลังสินค้า
-                                            </div>
-                                        </a>
-                                    @endif
-                                </div>
+                                {{-- เพิ่มพื้นที่จัดเก็บ --}}
+                                @if (request()->is('warehouse/add-wh'))
+                                <a href="{{ url('/warehouse/add-wh') }}">
+                                    <div class="px-8 py-2 rounded-md bg-blue-700 text-white w-full">
+                                        เพิ่มคลังสินค้า
+                                    </div>
+                                </a>
+                                @else
+                                <a href="{{ url('/warehouse/add-wh') }}">
+                                    <div class="px-8 py-2 rounded-md w-full hover:bg-[#5d87ff] hover:text-white">
+                                        เพิ่มคลังสินค้า
+                                    </div>
+                                </a>
+                                @endif
                             </div>
                         </div>
-                    </li>
-                    {{-- ผู้ใช้งาน --}}
-                    <li>
-                        <div class="flex flex-col gap-5">
-                            <div class="text-[1.2rem] flex items-center gap-2">
-                                <i class="fa-solid fa-users"></i>
-                                <p>ผู้ใช้งาน</p>
-                            </div>
-                            <div class="flex">
-                                <div class="bg-black/20 w-[1.5px] ml-2 mb-[1rem]"></div>
-                                <div class="flex flex-col gap-2 pl-7">
+                    </div>
+                </li>
+                {{-- ผู้ใช้งาน --}}
+                <li>
+                    <div class="flex flex-col gap-5">
+                        <div class="text-[1.2rem] flex items-center gap-2">
+                            <i class="fa-solid fa-users"></i>
+                            <p>ผู้ใช้งาน</p>
+                        </div>
+                        <div class="flex">
+                            <div class="bg-black/20 w-[1.5px] ml-2 mb-[1rem]"></div>
+                            <div class="flex flex-col gap-2 pl-7">
 
-                                    {{-- จัดการผู้ใช้งาน --}}
-                                    <a href="{{ url('/user-management') }}">
-                                        <div @if (request()->is('user-management')) class="px-8 py-2 rounded-md bg-blue-700 text-white w-full">จัดการผู้ใช้งาน
+                                {{-- จัดการผู้ใช้งาน --}}
+                                <a href="{{ url('/user-management') }}">
+                                    <div @if (request()->is('user-management')) class="px-8 py-2 rounded-md bg-blue-700
+                                        text-white w-full">จัดการผู้ใช้งาน
                                     </div>
                                 </a>
                                 @else
@@ -243,10 +243,10 @@
                                         จัดการผู้ใช้งาน
                                     </div>
                                 </a> @endif
-                                            </div>
-                                        </div>
-                                </div>
-                    </li>
+                            </div>
+                        </div>
+                    </div>
+                </li>
                 @endif
             </ul>
         </div>
@@ -261,17 +261,17 @@
                 class=" hover:bg-blue-100 cursor-pointer flex gap-2 items-center justify-start pl-10 py-3 text-[1.2rem] rounded-md"
                 <i class="fa-solid fa-user"></i>
                 @if (Auth::check())
-                    <span>{{ Auth::user()->fname }}</span><span>{{ Auth::user()->lname }}</span>
+                <span>{{ Auth::user()->fname }}</span><span>{{ Auth::user()->lname }}</span>
                 @endif
             </a>
             <div class="flex gap-2 items-center justify-start pl-10 mt-3 pb-2 text-[1.2rem]">
                 <i class="fa-solid fa-address-card"></i>
                 @if (Auth::check())
-                    @if (Auth::user()->role === 'normal_employee')
-                        <p>พนักงาน</p>
-                    @else
-                        <p>ผู้จัดการ</p>
-                    @endif
+                @if (Auth::user()->role === 'normal_employee')
+                <p>พนักงาน</p>
+                @else
+                <p>ผู้จัดการ</p>
+                @endif
                 @endif
             </div>
             <div class="px-2">
@@ -286,30 +286,30 @@
         <div class="w-full h-full justify-end hidden md:flex px-5 py-1 object-cover gap-2 items-center">
 
             @if (Auth::user()->warehouses()->get()->count() > 1)
-                <select name="warehouse_id" id="warehouse_id" class="input-primary w-[5rem] h-[90%] cursor-pointer"
-                    onchange="change_warehouse_user(this.value)">
+            <select name="warehouse_id" id="warehouse_id" class="input-primary w-[5rem] h-[90%] cursor-pointer"
+                onchange="change_warehouse_user(this.value)">
 
-                    @if (session('user_warehouse_name') !== null)
-                        <option value="{{ session('user_warehouse_name') }}" disabled selected>
-                            {{ session('user_warehouse_name') }}</option>
-                    @endif
-                    @foreach (Auth::user()->warehouses()->get() as $warehouse)
-                        @if ($warehouse->wh_name === session('user_warehouse_name'))
-                        @else
-                            <option value="{{ $warehouse->wh_id }}">{{ $warehouse->wh_name }}</option>
-                        @endif
-                    @endforeach
-                </select>
+                @if (session('user_warehouse_name') !== null)
+                <option value="{{ session('user_warehouse_name') }}" disabled selected>
+                    {{ session('user_warehouse_name') }}</option>
+                @endif
+                @foreach (Auth::user()->warehouses()->get() as $warehouse)
+                @if ($warehouse->wh_name === session('user_warehouse_name'))
+                @else
+                <option value="{{ $warehouse->wh_id }}">{{ $warehouse->wh_name }}</option>
+                @endif
+                @endforeach
+            </select>
             @else
-                <div class="flex items-center gap-1">
-                    <i class="fa-solid fa-house-user"></i>
-                    <p>{{ session('user_warehouse_name') }}</p>
-                </div>
+            <div class="flex items-center gap-1">
+                <i class="fa-solid fa-house-user"></i>
+                <p>{{ session('user_warehouse_name') }}</p>
+            </div>
             @endif
             @if (Auth::check())
-                <img onclick="toggle_profile_desktop()"
-                    class="w-[2.8rem] h-[2.8rem] object-cover rounded-full hover:scale-105 cursor-pointer border-[2px]"
-                    src={{ Auth::user()->image }} alt="">
+            <img onclick="toggle_profile_desktop()"
+                class="w-[2.8rem] h-[2.8rem] object-cover rounded-full hover:scale-105 cursor-pointer border-[2px]"
+                src={{ Auth::user()->image }} alt="">
             @endif
         </div>
     </div>
