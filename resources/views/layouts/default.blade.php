@@ -11,7 +11,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    @vite('node_modules/jquery/dist/jquery.min.js?commonjs-entry')
+    @vite('resources/js/app.js')
     @vite('resources/css/app.css')
     <title>WMS | @yield('title', 'WMS + Iot')</title>
 </head>
