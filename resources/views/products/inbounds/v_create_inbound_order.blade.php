@@ -1,3 +1,17 @@
+{{--
+
+*v_create_inbound_order.php
+
+*Display detail create inbound order
+
+*@auther : Phuriphat Khumsuan 65160096
+
+*@Create Date : 2024-04-02
+
+*version : 1.0.1
+
+--}}
+
 @extends('layouts.default')
 @section('title', 'เพิ่มสินค้าเข้าคลัง')
 
@@ -53,7 +67,7 @@
                         </div>
 
 
-                        {{-- add product inbound --}}
+                        {{-- cart product inbound --}}
                         <div class="w-full flex justify-end gap-3 mt-3">
                             <div class=" items-center flex h-full relative">
                                 <i class="fa-solid fa-truck lg:text-[2rem] text-sm cursor-pointer lg:mt-4"></i>
@@ -130,14 +144,13 @@
                             </thead>
                             <tbody>
                                 @foreach ($master_products as $index => $master_product)
-                                <tr class="bg-white border-b  cursor-pointer">
+                                <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer">
                                     <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-center">
                                         {{ $index + 1 }}
                                     </th>
                                     <td class="px-6 text-center">
-                                        {{$master_product->mas_prod_image }}
+                                        <img src="{{$master_product->mas_prod_image }}" class="w-20" alt="">
                                     </td>
-
                                     <td class="px-6 py-4 text-center">
                                         {{ $master_product->mas_prod_name}}
                                     </td>
@@ -152,11 +165,11 @@
                                     </td>
                                     <td class="px-6 py-4 text-center">
                                         <div class="flex justify-center items-center">
-                                            <a href="javascript:void(0)" class="bg-slate-400 rounded-l-lg hover:bg-slate-500" onclick="decreaseQuantity(this)"><i class="fa-solid fa-minus p-1"></i></a>
-                                            <div class="pl-2 pr-2 bg-white border border-slate-400">
+                                            <a href="javascript:void(0)" class="bg-slate-400 rounded-l-lg hover:bg-slate-500" onclick="decreaseQuantity(this)"><i class="fa-solid fa-minus p-1.5"></i></a>
+                                            <div class="pl-2 pr-2 pt-[2px] pb-[2.5px] bg-white border border-slate-400">
                                                 <p class="quantity"> 0 </p>
                                             </div>
-                                            <a href="javascript:void(0)" class="bg-slate-400 rounded-r-lg hover:bg-slate-500" onclick="increaseQuantity(this)"><i class="fa-solid fa-plus p-1"></i></a>
+                                            <a href="javascript:void(0)" class="bg-slate-400 rounded-r-lg hover:bg-slate-500" onclick="increaseQuantity(this)"><i class="fa-solid fa-plus p-1.5"></i></a>
                                         </div>
                                         <script>
                                             function decreaseQuantity(element) {
@@ -177,7 +190,7 @@
                                         </script>
                                     </td>
                                     <td class="px-6 py-4 text-center">
-                                        <a><i class="fa-solid fa-circle-plus text-green-500 text-lg hover:text-green-600 hover:text-[1.5em]"></i></a>
+                                        <a><i class="fa-solid fa-circle-plus text-green-500 text-[1.5rem] hover:text-green-600 hover:text-[1.8rem]"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
