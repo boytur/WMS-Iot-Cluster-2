@@ -113,7 +113,7 @@
                             ตารางสินค้า</b>
                     </div>
                     <div class="relative overflow-x-auto shadow-md">
-                        <table class="w-full text-sm text-left rtl:text-right ">
+                        <table class="w-full text-sm text-left rtl:text-right">
                             <thead class="text-xs text-white uppercase bg-[#212529]">
                                 <tr>
                                     <th scope="col" class="px-6 py-3 text-center">
@@ -148,7 +148,7 @@
                                     <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-center">
                                         {{ $index + 1 }}
                                     </th>
-                                    <td class="px-6 text-center">
+                                    <td class="flex px-6 justify-center">
                                         <img src="{{$master_product->mas_prod_image }}" class="w-20" alt="">
                                     </td>
                                     <td class="px-6 py-4 text-center">
