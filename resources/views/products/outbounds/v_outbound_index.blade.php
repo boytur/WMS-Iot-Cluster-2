@@ -1,3 +1,8 @@
+{{-- v_outbound_index.blade.php
+    Display from lot out table
+    @author : Supatsara Youraksa
+    @Create Date : 2024-04-01
+      --}}
 @extends('layouts.default')
 
 @section('title', 'ส่งออกด้วยใบจำหน่าย')
@@ -61,7 +66,7 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- add LotOut inbound --}}
+                            {{-- add lot_out inbound --}}
                             <div class="w-full flex justify-end gap-3 mt-3">
                                 <div class=" items-center flex h-full relative">
                                     <i class="fa-solid fa-truck lg:text-[2rem] text-sm cursor-pointer lg:mt-4"></i>
@@ -131,38 +136,38 @@
                                     </tr>
                                 </thead>
                                 <tbody class="lot_out_table" id="lot_out_table">
-                                    @foreach ($lotouts as $index => $LotOut)
+                                    @foreach ($lotouts as $index => $lot_out)
                                         <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer">
                                             <td class="px-6 text-center">
                                                 {{ $index + 1 }}
                                             </td>
 
                                             <td class="px-6 text-center">
-                                                {{ $LotOut->lot_out_number }}
+                                                {{ $lot_out->lot_out_number }}
                                             </td>
                                             <td class="px-6 py-4 text-center">
-                                                {{ date('d/m/Y', strtotime($LotOut->created_at)) }}
+                                                {{ date('d/m/Y', strtotime($lot_out->created_at)) }}
                                             </td>
                                             <td class="px-6 py-4 text-center">
-                                                {{ $LotOut->users->fname . ' ' . $LotOut->users->lname }}
+                                                {{ $lot_out->users->fname . ' ' . $lot_out->users->lname }}
                                             </td>
                                             <td class="px-6 py-4 text-center">
-                                                @if ($LotOut->lot_out_status === 'Initialized')
+                                                @if ($lot_out->lot_out_status === 'Initialized')
                                                     <div>
                                                         <p
                                                             class="border text-center bg-[#666666] rounded-3xl py-1 text-white">
-                                                            {{ $LotOut->lot_out_status }}</p>
+                                                            {{ $lot_out->lot_out_status }}</p>
                                                     </div>
                                                 @else
                                                     <div>
                                                         <p
                                                             class="border text-center bg-green-700 rounded-3xl py-1 text-white">
-                                                            {{ $LotOut }}</p>
+                                                            {{ $lot_out }}</p>
                                                     </div>
                                                 @endif
                                             </td>
                                             <td class="px-6 py-4 flex gap-3 text-gray-500 justify-center">
-                                                <a href="{{ url('/product/outbounds/edit-outbound-order' . '/' . $LotOut->lot_out_id) }}"
+                                                <a href="{{ url('/product/outbounds/edit-outbound-order' . '/' . $lot_out->lot_out_id) }}"
                                                     class="">
                                                     <i
                                                         class="fa-regular fa-pen-to-square text-[1.5rem] hover:text-blue-700 hover:scale-105"></i></a>
