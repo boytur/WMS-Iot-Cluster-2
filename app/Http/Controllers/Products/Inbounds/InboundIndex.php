@@ -17,7 +17,7 @@ class InboundIndex extends Controller
     {
         try {
             if (Auth::check()) {
-                $lot_in_products = LotIn::where('wh_id',Session::get('user_warehouse'))->paginate(20) ;
+                $lot_in_products = LotIn::where('wh_id', Session::get('user_warehouse'))->paginate(20);
                 return view('products.inbounds.v_inbound_index', compact('lot_in_products'));
             }
         } catch (\Exception $e) {
@@ -33,7 +33,7 @@ class InboundIndex extends Controller
             $search_status = $request->input('search_status');
 
             $query = LotIn::query();
-
+            $query->where('wh_id', Session::get('user_warehouse'))->paginate(20);
 
             // If user search is provided, apply appropriate search criteria
             if (!empty($search_lot_in)) {
@@ -83,13 +83,12 @@ class InboundIndex extends Controller
     {
         $master_products = MasterProduct::paginate(20);
         return view('products.inbounds.v_create_inbound_order', compact('master_products'));
-
     }
     public function latest_inbound_order()
     {
         try {
             if (Auth::check()) {
-                $lot_in_products = LotIn::where('wh_id',Session::get('user_warehouse'))->paginate(20);
+                $lot_in_products = LotIn::where('wh_id', Session::get('user_warehouse'))->paginate(20);
                 return view('products.inbounds.v_view_inbound_latest', compact('lot_in_products'));
             }
         } catch (\Exception $e) {
@@ -112,8 +111,8 @@ class InboundIndex extends Controller
         $lot_in = LotIn::where('lot_in_id', $lot_in_id)->first();
 
         if ($lot_in !== null) {
-            $lot_in_products = InboundOrder::where('lot_in_id',$lot_in_id)->paginate(20);
-            return view('products.inbounds.v_edit_inbound_order', compact('lot_in','lot_in_products'));
+            $lot_in_products = InboundOrder::where('lot_in_id', $lot_in_id)->paginate(20);
+            return view('products.inbounds.v_edit_inbound_order', compact('lot_in', 'lot_in_products'));
         } else {
             abort(404);
         }
