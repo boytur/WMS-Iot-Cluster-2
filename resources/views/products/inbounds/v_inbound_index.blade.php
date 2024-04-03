@@ -107,6 +107,7 @@
 
                     {{-- table product --}}
                     <div class="w-full mt-2 rounded-t-md">
+                        <div>ผลการค้นหาจำนวน <span id="lot_in_count">{{ $lot_in_products->count() }} </span> รายการ</div>
                         <div class="py-2 w-full bg-[#D9D9D9] rounded-t-md">
                             <b class="mx-2  mt-2 text-lg text-black uppercase   ">
                                 ตารางรายการสินค้านำเข้ารอจัดการ</b>
@@ -201,9 +202,9 @@
                 const search_lot_in = document.getElementById("search_lot_in").value;
                 const search_attribute = document.getElementById("search_attribute").value;
                 const search_status = document.getElementById("search_status").value;
-
+                const cluster = '{{ env('CLUSTER') }}';
                 //ส่ง req
-                const response = await fetch('/product/inbounds/search-lot-in', {
+                const response = await fetch(`${cluster}/product/inbounds/search-lot-in`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -227,7 +228,8 @@
                     if (searches?.length === 0) {
                         // Display message when no results are found
                         search_lot_in_table.innerHTML =
-                            `<tr><td colspan="5">ไม่พบผู้ใช้งาน</td></tr>`;
+                            `<tr><td colspan="5">ไม่พบรายการล็อตสินค้าเข้า</td></tr>`;
+                        document.getElementById('lot_in_count').innerText = 0;
                     } else {
 
                         searches?.map((search, index) => {
@@ -240,9 +242,9 @@
                                     <td class="px-6 py-4 text-center">${search.user_id}</td> <!-- อาจจะต้องแก้ไขเป็นรหัสผู้ใช้หรือข้อมูลที่เหมาะสม -->
                                     <td class="px-6 py-4 text-center">
                                         <div>
-                                            <p class="border text-center bg-[#666666] rounded-3xl py-1 text-white">
-                                                ${search.lot_in_status}
-                                            </p>
+                                            <p class="border text-center rounded-3xl py-1 text-white ${
+                                                search.lot_in_status === 'Initialized' ? 'bg-[#666666]' : 'bg-green-700'
+                                            }">${search.lot_in_status} </p>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 flex gap-3 text-gray-500 justify-center">
@@ -268,6 +270,7 @@
 
                             // แสดงผลลัพธ์ใน cell ที่มี id เรากำหนดไว้
                             document.getElementById(`dateCell_${index}`).innerText = formattedDate;
+                            document.getElementById('lot_in_count').innerText = searches.length;
                         });
 
                     }
