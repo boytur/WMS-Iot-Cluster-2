@@ -1,3 +1,10 @@
+{{-- v_edit_inbound_order.blade.php
+    Display from inbound order when press edit 
+    @author : Thanawan Kongchok
+    @Create 1.0.0 Date : 2024-04-02
+    @versoin 1.0.1 Date : 2024-04-03
+      --}}
+
 @extends('layouts.default')
 @section('title', 'แก้ไขรายการสินค้าเข้า')
 
@@ -86,8 +93,9 @@
                                             {{ $index + 1 }}
                                         </td>
 
-                                        <td class="px-6 py-4 text-center">
-                                            {{ $lot_in_product->master_products->mas_prod_image }}
+                                        <td class="px-6 py-4 text-center w-20">
+                                            <img src=" {{ $lot_in_product->master_products->mas_prod_image }} " alt="" >
+
                                         </td>
 
                                         <td class="px-6 py-4 text-center">
