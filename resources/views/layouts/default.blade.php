@@ -10,9 +10,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    @vite('node_modules/jquery/dist/jquery.min.js?commonjs-entry')
     @vite('resources/css/app.css')
-    <title>WMS | @yield('title',"WMS + Iot")</title>
+    <title>WMS | @yield('title', 'WMS + Iot')</title>
 </head>
 
 <body>
@@ -72,9 +73,9 @@
                             <div class="bg-black/20 w-[1.5px] ml-2 mb-[1rem]"></div>
                             <div class="flex flex-col gap-2 pl-7 w-full">
 
-                                @if(Auth::check() && Auth::user()->role === "warehouse_manager")
+                                @if (Auth::check() && Auth::user()->role === 'warehouse_manager')
                                 {{-- ภาพรวมทั้งหมด --}}
-                                @if(request()->is('dashboard/view-all'))
+                                @if (request()->is('dashboard/view-all'))
                                 <a href={{ url('dashboard/view-all') }}
                                     class="px-8 py-2 rounded-md bg-blue-700 text-white">
                                     <div>ภาพรวมทั้งหมด</div>
@@ -89,7 +90,7 @@
 
                                 {{-- ดูคลังสินค้าอื่น --}}
                                 @if(request()->is('dashboard/view-another'))
-                                <a href={{ url("/dashboard/view-another") }}>
+                                <a href={{ url('/dashboard/view-another') }}>
                                     <div class="px-8 py-2 rounded-md bg-blue-700 text-white">
                                         ดูคลังสินค้าอื่น
                                     </div>
@@ -133,7 +134,7 @@
                             <div class="flex flex-col gap-2 pl-7 w-full">
 
                                 {{-- รับสินค้าเข้า --}}
-                                @if(request()->is('product/inbounds') || request()->is('product/inbounds/*'))
+                                @if (request()->is('product/inbounds') || request()->is('product/inbounds/*'))
                                 <a href="{{ url('/product/inbounds') }}"
                                     class="px-8 py-2 rounded-md bg-blue-700 text-white w-full">
                                     <div>รับสินค้าเข้า</div>
@@ -146,7 +147,7 @@
                                 @endif
 
                                 {{-- ส่งสินค้าออก --}}
-                                @if(request()->is('product/outbounds') || request()->is('product/outbounds/*'))
+                                @if (request()->is('product/outbounds') || request()->is('product/outbounds/*'))
                                 <a href="{{ url('/product/outbounds') }}"
                                     class="px-8 py-2 rounded-md bg-blue-700 text-white w-full">
                                     <div>ส่งสินค้าออก</div>
@@ -158,9 +159,9 @@
                                 </a>
                                 @endif
 
-                                @if(Auth::check() && Auth::user()->role === "warehouse_manager")
+                                @if (Auth::check() && Auth::user()->role === 'warehouse_manager')
                                 {{-- จัดการสินค้า --}}
-                                @if(request()->is('product/managements/*') ||request()->is('product/managements'))
+                                @if (request()->is('product/managements/*') || request()->is('product/managements'))
                                 <a href="{{ url('/product/managements') }}"
                                     class="px-8 py-2 rounded-md bg-blue-700 text-white w-full">
                                     <div>จัดการสินค้า</div>
@@ -177,7 +178,7 @@
                     </div>
                 </li>
                 {{-- คลังสินค้า --}}
-                @if(Auth::check() && Auth::user()->role === "warehouse_manager")
+                @if (Auth::check() && Auth::user()->role === 'warehouse_manager')
                 <li>
                     <div class="flex flex-col gap-5">
                         <div class="text-[1.2rem] flex items-center gap-2">
@@ -189,13 +190,12 @@
                             <div class="flex flex-col gap-2 pl-7">
 
                                 {{-- เพิ่มพื้นที่จัดเก็บ --}}
-                                @if(request()->is('warehouse/add-space'))
+                                @if (request()->is('warehouse/add-space'))
                                 <a href="{{ url('/warehouse/add-space') }}"
                                     class="px-8 py-2 rounded-md bg-blue-700 text-white w-full">
                                     <div>เพิ่มพื้นที่จัดเก็บ</div>
                                 </a>
                                 @else
-
                                 <a href="{{ url('/warehouse/add-space') }}"
                                     class="px-8 py-2 rounded-md w-full hover:bg-[#5d87ff] hover:text-white">
                                     <div>เพิ่มพื้นที่จัดเก็บ</div>
@@ -203,7 +203,7 @@
                                 @endif
 
                                 {{-- เพิ่มพื้นที่จัดเก็บ --}}
-                                @if(request()->is('warehouse/add-wh'))
+                                @if (request()->is('warehouse/add-wh'))
                                 <a href="{{ url('/warehouse/add-wh') }}">
                                     <div class="px-8 py-2 rounded-md bg-blue-700 text-white w-full">
                                         เพิ่มคลังสินค้า
@@ -233,8 +233,8 @@
 
                                 {{-- จัดการผู้ใช้งาน --}}
                                 <a href="{{ url('/user-management') }}">
-                                    <div @if(request()->is('user-management'))
-                                        class="px-8 py-2 rounded-md bg-blue-700 text-white w-full">จัดการผู้ใช้งาน
+                                    <div @if (request()->is('user-management')) class="px-8 py-2 rounded-md bg-blue-700
+                                        text-white w-full">จัดการผู้ใช้งาน
                                     </div>
                                 </a>
                                 @else
@@ -242,9 +242,7 @@
                                     <div class="px-8 py-2 rounded-md w-full hover:bg-[#5d87ff] hover:text-white">
                                         จัดการผู้ใช้งาน
                                     </div>
-                                </a>
-                                @endif
-
+                                </a> @endif
                             </div>
                         </div>
                     </div>
@@ -258,17 +256,18 @@
     <div class="relative hidden md:flex justify-end text-[#2a3547] z-30">
         {{-- profile box --}}
         <div id="profile-desktop"
-            class="w-[15rem] h-[10rem] hidden  absolute mt-16 mr-12 rounded-md bg-white shadow-lg border">
-            <div class="flex gap-2 items-center justify-start pl-10 mt-6 text-[1.2rem]">
+            class=" w-[15rem] h-[11rem] hidden  absolute mt-16 mr-12 rounded-md bg-white shadow-lg border p-1">
+            <a href="{{ url('/profile/' . Auth::user()->number) }}"
+                class=" hover:bg-blue-100 cursor-pointer flex gap-2 items-center justify-start pl-10 py-3 text-[1.2rem] rounded-md"
                 <i class="fa-solid fa-user"></i>
-                @if(Auth::check())
+                @if (Auth::check())
                 <span>{{ Auth::user()->fname }}</span><span>{{ Auth::user()->lname }}</span>
                 @endif
-            </div>
-            <div class="flex gap-2 items-center justify-start pl-10 mt-3 text-[1.2rem]">
+            </a>
+            <div class="flex gap-2 items-center justify-start pl-10 mt-3 pb-2 text-[1.2rem]">
                 <i class="fa-solid fa-address-card"></i>
-                @if(Auth::check())
-                @if(Auth::user()-> role === "normal_employee")
+                @if (Auth::check())
+                @if (Auth::user()->role === 'normal_employee')
                 <p>พนักงาน</p>
                 @else
                 <p>ผู้จัดการ</p>
@@ -286,16 +285,16 @@
 
         <div class="w-full h-full justify-end hidden md:flex px-5 py-1 object-cover gap-2 items-center">
 
-            @if(Auth::user()->warehouses()->get()->count() > 1)
+            @if (Auth::user()->warehouses()->get()->count() > 1)
             <select name="warehouse_id" id="warehouse_id" class="input-primary w-[5rem] h-[90%] cursor-pointer"
                 onchange="change_warehouse_user(this.value)">
 
-                @if(session('user_warehouse_name') !== null)
-                <option value="{{ session('user_warehouse_name') }}" disabled selected>{{ session('user_warehouse_name')
-                    }}</option>
+                @if (session('user_warehouse_name') !== null)
+                <option value="{{ session('user_warehouse_name') }}" disabled selected>
+                    {{ session('user_warehouse_name') }}</option>
                 @endif
                 @foreach (Auth::user()->warehouses()->get() as $warehouse)
-                @if($warehouse->wh_name === session('user_warehouse_name'))
+                @if ($warehouse->wh_name === session('user_warehouse_name'))
                 @else
                 <option value="{{ $warehouse->wh_id }}">{{ $warehouse->wh_name }}</option>
                 @endif
@@ -307,10 +306,10 @@
                 <p>{{ session('user_warehouse_name') }}</p>
             </div>
             @endif
-            @if(Auth::check())
+            @if (Auth::check())
             <img onclick="toggle_profile_desktop()"
                 class="w-[2.8rem] h-[2.8rem] object-cover rounded-full hover:scale-105 cursor-pointer border-[2px]"
-                src={{ Auth::user()-> image }} alt="">
+                src={{ Auth::user()->image }} alt="">
             @endif
         </div>
     </div>
@@ -321,25 +320,22 @@
     </div>
 
 </body>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 <script>
     /*
-        * toggle_sidebar()
-        * @author: Piyawat Wongyat 65160340
-        * @create date: 2024-02-27
-    */
+     * toggle_sidebar()
+     * @author: Piyawat Wongyat 65160340
+     * @create date: 2024-02-27
+     */
 
-    const toggle_sidebar = ()=> {
+    const toggle_sidebar = () => {
         const sidebar = document.querySelector('#nav-bar');
         sidebar.classList.toggle('left-[-100%]');
     }
 
     /*  * toggle_profile_desktop()
-        * @author: Piyawat Wongyat 65160340
-        * @create date: 2024-02-27
-    */
+     * @author: Piyawat Wongyat 65160340
+     * @create date: 2024-02-27
+     */
 
     const toggle_profile_desktop = () => {
         const profile_desktop = document.querySelector('#profile-desktop');
@@ -347,9 +343,9 @@
     }
 
     /*  * change_warehouse_user()
-        * @author: Piyawat Wongyat 65160340
-        * @create date: 2024-03-11
-    */
+     * @author: Piyawat Wongyat 65160340
+     * @create date: 2024-03-11
+     */
 
     const change_warehouse_user = (warehouse_id) => {
 
@@ -363,7 +359,9 @@
             headers: {
                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
             },
-            data: JSON.stringify({ warehouse_id: warehouse_id }),
+            data: JSON.stringify({
+                warehouse_id: warehouse_id
+            }),
             success: function(data) {
                 window.location.reload();
             },
@@ -377,7 +375,6 @@
             }
         });
     }
-
 </script>
 
 </html>
