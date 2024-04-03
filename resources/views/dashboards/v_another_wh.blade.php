@@ -1,3 +1,8 @@
+{{-- v_another_wh.blade.php
+Displayfrom view another wh
+@author : Tanapat Supapon
+@Create Date : 2024-04-02
+@version 1.0.1 Date : 2024-04-03 --}}
 @extends('layouts.default')
 
 @section('title', 'ดูคลังสินค้าอื่น')
@@ -16,7 +21,7 @@
                     <div class="w-full mt-2 rounded-t-md">
                         <div class="py-2 w-full bg-[#D9D9D9] rounded-t-md">
                             <b class="mx-2  mt-2 text-lg text-black uppercase   ">
-                                ตารางรายการสินค้าในระบบ</b>
+                                ตารางรายการคลังสินค้าในระบบ</b>
                             </div>
                             <table class="w-full text-sm text-left rtl:text-right ">
                                 <thead class="text-xs text-white uppercase bg-[#212529]">
@@ -25,7 +30,7 @@
                                             ลำดับ
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            ชื่อสินค้า
+                                            ชื่อคลังสินค้า
                                         </th>
                                         <th scope="col" class="px-6 py-3">
                                             ตำแหน่ง
