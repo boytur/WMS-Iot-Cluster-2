@@ -352,8 +352,10 @@
         const loading_element = $('#loading');
         loading_element.toggleClass('hidden');
 
+        const cluster = '{{ env('CLUSTER') }}';
+
         $.ajax({
-            url: '/set-user-warehouse',
+            url: `${cluster}/set-user-warehouse`,
             type: 'POST',
             contentType: 'application/json',
             headers: {

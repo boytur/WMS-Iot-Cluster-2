@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -19,6 +18,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('mas_prod_id')->references('mas_prod_id')->on('wms_master_products')->onDelete('cascade');
+            $table->foreign('tag_id')->references('tag_id')->on('wms_tags')->onDelete('cascade');
         });
     }
 

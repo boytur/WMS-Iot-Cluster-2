@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->timestamps();
 
             $table->foreign('rack_id')->references('rack_id')->on('wms_racks')->onDelete('cascade');
+            $table->foreign('tag_id')->references('tag_id')->on('wms_tags')->onDelete('cascade');
         });
     }
 
