@@ -1,8 +1,14 @@
+{{-- v_edit_outbound_order.blade.php
+    Display from outbound order when press edit
+    @author : Supatsara Youraksa
+    @Create Date : 2024-04-02
+      --}}
+
 @extends('layouts.default')
 @section('title', 'แก้ไขรายการสินค้าออก')
 
 @section('content')
-    <div style="height: calc(100vh - 4rem)" class="bg-[#F6F9FC] border w-full flex flex-col h-full">
+    <div style="height: calc(100vh - 4rem)" class="bg-[#F6F9FC] border w-full flex flex-col h-full ">
         <div class="mt-[5rem] md:mt-0">
             <div class=" w-full h-[3rem] ">
                 <div class="h-full flex items-center bg-white p-3 border-b-2 shadow-sm text-blue-800">
@@ -13,11 +19,11 @@
         </div>
         <div style="height: calc(100vh - 8rem)" class="bg-[#F6F9FC] overflow-y-scroll flex flex-col w-full">
             <div class="flex justify-end">
-                <div class=" lg:pt-0">
+                <div class=" lg:pt-0 mr-2 mt-2 mb-1">
                     <a class="btn-primary px-4 flex items-center h-[3rem] gap-1"
                         href="{{ url('product/inbounds/create-inbound-order') }}">
                         <div>
-                            <div class="flex items-center gap-1">
+                           <div class="flex items-center gap-1">
                                 <i class="fa-solid fa-circle-plus text-[0.8rem] "></i>
                                 <div>
                                     <p class="lg:text-sm lg:block hidden">เพิ่มสินค้า</p>
@@ -28,7 +34,7 @@
                 </div>
             </div>
 
-            <div class="w-full mt-1 rounded-t-md mx-3">
+            <div class=" mt-1 rounded-t-md mx-2">
                 <div class="py-2 w-full bg-[#D9D9D9] rounded-t-md">
                     <b class="mx-2  mt-2 text-lg text-black   ">
                         รายละเอียด</b>
@@ -53,7 +59,7 @@
                 </div>
             </div>
 
-            <div class="w-full mt-2 rounded-t-md mx-3">
+            <div class=" mt-2 rounded-t-md mx-3">
                 <div class="py-2 w-full bg-[#D9D9D9] rounded-t-md">
                     <b class="mx-2  mt-2 text-lg text-black   ">
                         ตารางรายการสินค้า</b>
@@ -94,12 +100,13 @@
                                         {{ $index + 1 }}
                                     </td>
 
-                                    <td class="px-6 py-4">
-                                        {{ $OutBoundOrder->master_products->mas_prod_image }}
+                                    <td class="px-6 py-4 w-20">
+                                        <img src="{{ $OutBoundOrder->master_products->mas_prod_image }}" alt="">
+
                                     </td>
 
                                     <td class="px-6 py-4">
-                                        {{ $OutBoundOrder->master_products->mas_prod_name }}
+
                                     </td>
 
                                     <td class="px-6 py-4">
@@ -107,7 +114,6 @@
                                     </td>
 
                                     <td class="px-6 py-4">
-                                        {{-- {{ $OutBoundOrder->master_products->cat_id }} --}}
                                         {{ $OutBoundOrder->master_products->categories->cat_name }}
                                     </td>
 
@@ -129,10 +135,12 @@
                     </table>
                 </div>
             </div>
+
             <div class="flex justify-center my-4">
                 {{ $lot_out_prod->links('pagination::custom-pagination') }}
             </div>
         </div>
 
     </div>
+
 @endsection
