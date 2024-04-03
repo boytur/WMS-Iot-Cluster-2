@@ -1,3 +1,8 @@
+{{-- v_outbound_index.blade.php
+    Display from lot out table
+    @author : Supatsara Youraksa
+    @Create Date : 2024-04-01
+      --}}
 @extends('layouts.default')
 
 @section('title', 'ส่งออกด้วยใบจำหน่าย')
@@ -61,7 +66,7 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- add LotOut inbound --}}
+                            {{-- add lot_out inbound --}}
                             <div class="w-full flex justify-end gap-3 mt-3">
                                 <div class=" items-center flex h-full relative">
                                     <i class="fa-solid fa-truck lg:text-[2rem] text-sm cursor-pointer lg:mt-4"></i>
@@ -157,7 +162,8 @@
                                                     <div>
                                                         <p
                                                             class="border text-center bg-green-700 rounded-3xl py-1 text-white">
-                                                            {{ $lot_out->lot_out_status }}</p>
+                                                            {{ $lot_out->lot_out_status }}
+                                                            </p>
                                                     </div>
                                                 @endif
                                             </td>
