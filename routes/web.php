@@ -45,6 +45,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('/dashboard/view-another', [WarehouseController::class, 'get_user_warehouse']);
+    Route::get('/dashboard/view-another/detail/{wh_id}', [WarehouseController::class, 'get_warehouse_detail']);
 
     // route for inbound order
     Route::get('/product/inbounds', [InboundIndex::class, 'inbound_index']);
