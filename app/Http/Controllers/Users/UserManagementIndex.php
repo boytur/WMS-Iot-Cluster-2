@@ -58,4 +58,15 @@ class UserManagementIndex extends Controller
             throw new \Exception($e->getMessage());
         }
     }
+    public function user_management_detail($number)
+    {
+        try {
+            $user = User::where('number', $number)->first();
+
+            return view('users.v_user_management_detail', compact('user'));
+
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
 }
