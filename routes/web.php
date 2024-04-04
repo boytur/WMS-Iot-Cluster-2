@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Products\Inbounds\InboundIndex;
+use app\Http\Controllers\Products\Inbounds\GetLotInAnotherWh;
 use App\Http\Controllers\Products\Outbounds\OutboundIndex;
 use App\Http\Controllers\Products\Managements\ProductManagementIndex;
 use App\Http\Controllers\Users\Profile;
@@ -50,6 +51,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/product/inbounds', [InboundIndex::class, 'inbound_index']);
     Route::get('/product/inbounds/create-inbound-order', [InboundIndex::class, 'create_inbound_order']);
     Route::get('/product/inbounds/view-inbound-latest', [InboundIndex::class, 'latest_inbound_order']);
+    Route::get('/product/inbounds/view-inbound-latest/detail/{lot_in_id}', [InboundIndex::class, 'inbound_latest_detail']);
     Route::get('/product/inbounds/inbound-detail/{lot_in_id}', [InboundIndex::class, 'inbound_detail']);
     Route::get('/product/inbounds/edit-inbound-order/{lot_in_id}', [InboundIndex::class, 'edit_inbound_order']);
 
@@ -59,6 +61,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/product/outbounds', [OutboundIndex::class, 'outbound_index']);
     Route::get('/product/outbounds/create-outbound-order', [OutboundIndex::class, 'create_outbound_order']);
     Route::get('/product/outbounds/view-outbound-latest', [OutboundIndex::class, 'latest_outbound_order']);
+    Route::get('/product/outbounds/view-outbound-latest/detail/{lot_out_id}', [OutboundIndex::class, 'outbound_latest_detail']);
     Route::get('/product/outbounds/outbound-detail/{lot_out_id}', [OutboundIndex::class, 'outbound_detail']);
     Route::get('/product/outbounds/edit-outbound-order/{lot_out_id}', [OutboundIndex::class, 'edit_outbound_order']);
 
