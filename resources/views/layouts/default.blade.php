@@ -47,7 +47,7 @@
     <nav id="nav-bar"
         class="w-[15rem] h-full flex flex-col gap-3 p-3 items-center bg-white absolute md:left-0 left-[-100%] transition-all">
         <div class="h-[4rem] text-[2rem] hidden md:block">
-            <h1>LOGO</h1>
+            <img src="{{ URL::to('/assets/WMS_Cluster_2_Logo.png') }}" class="object-cover w-[10rem]">
         </div>
 
         <div class="flex items-center justify-start mt-1 gap-5 w-full pl-2 md:hidden">
