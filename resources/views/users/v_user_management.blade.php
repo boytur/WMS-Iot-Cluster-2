@@ -167,9 +167,9 @@
                 const user_search = document.getElementById("user_search").value;
                 const user_attribute = document.getElementById("user_attribute").value;
                 const user_type = document.getElementById("user_type").value;
-
+                const cluster = '{{ env('CLUSTER') }}'
                 //ส่ง req
-                const response = await fetch('/user-management/search', {
+                const response = await fetch(`/${cluster}/user-management/search`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
