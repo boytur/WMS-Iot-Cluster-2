@@ -114,7 +114,7 @@
                             <tbody id="user_table">
                                 @foreach ($users as $index => $user)
                                 <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer"
-                                    onclick="onclick_user_details('/user/managements/detail/{{ $user->id }}')">
+                                    onclick="onclick_user_details({{ $user->number }})">
                                     <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
                                         {{ $index + 1 }}
                                     </th>
@@ -161,6 +161,10 @@
 </div>
 
 <script>
+    const onclick_user_details = (user_number) => {
+        const cluster = '{{ env('CLUSTER') }}'
+        window.location.href = `${cluster}/user-management/detail/${user_number}`;
+    }
     const handle_search = async () => {
             try {
                 //ดึงค่า

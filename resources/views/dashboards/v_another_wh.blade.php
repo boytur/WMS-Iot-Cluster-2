@@ -22,45 +22,51 @@ Displayfrom view another wh
                         <div class="py-2 w-full bg-[#D9D9D9] rounded-t-md">
                             <b class="mx-2  mt-2 text-lg text-black uppercase   ">
                                 ตารางรายการคลังสินค้าในระบบ</b>
-                            </div>
-                            <table class="w-full text-sm text-left rtl:text-right ">
-                                <thead class="text-xs text-white uppercase bg-[#212529]">
-                                    <tr>
-                                        <th scope="col" class="px-6 py-3">
-                                            ลำดับ
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            ชื่อคลังสินค้า
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            ตำแหน่ง
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($warehouses as $index => $warehouse)
-                                        <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer"
-                                            onclick="onclick_product_details('/product/managements/detail/{{ $warehouse->wh_id }}')">
-                                            <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
-                                                {{ $index + 1 }}
-                                            </th>
-                                            <td class="px-6 py-4">
-                                                {{ $warehouse->wh_name }}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                {{ $warehouse->wh_location }}
-                                            </td>
-                                    @endforeach
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
-                        <div class="flex justify-center my-4">
-                            {{ $warehouses->links('pagination::custom-pagination') }}
-                        </div>
+                        <table class="w-full text-sm text-left rtl:text-right ">
+                            <thead class="text-xs text-white uppercase bg-[#212529]">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">
+                                        ลำดับ
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        ชื่อคลังสินค้า
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        ตำแหน่ง
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($warehouses as $index => $warehouse)
+                                    <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer"
+                                        onclick="onclick_wh_details({{ $warehouse->wh_id }})">
+                                        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
+                                            {{ $index + 1 }}
+                                        </th>
+                                        <td class="px-6 py-4">
+                                            {{ $warehouse->wh_name }}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{ $warehouse->wh_location }}
+                                        </td>
+                                @endforeach
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="flex justify-center my-4">
+                        {{ $warehouses->links('pagination::custom-pagination') }}
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </div>
+    <script>
+        const onclick_wh_details = (wh_id) => {
+            const cluster = '{{ env('CLUSTER') }}'
+            window.location.href = `${cluster}/dashboard/view-another/detail/${wh_id}`;
+        }
+    </script>
 @endsection
