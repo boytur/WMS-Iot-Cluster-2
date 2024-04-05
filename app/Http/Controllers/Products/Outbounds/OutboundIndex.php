@@ -102,6 +102,16 @@ class OutboundIndex extends Controller
             throw new \Exception($e->getMessage());
         }
     }
+    public function outbound_latest_detail(int $lot_out_id)
+    {
+        $lot_out = LotOut::where('lot_out_id', $lot_out_id)->first();
+
+        if ($lot_out !== null) {
+            return view('products.outbounds.v_view_outbound_latest_detail', compact('lot_out'));
+        } else {
+            abort(404);
+        }
+    }
     public function outbound_detail(int $lot_out_id)
     {
         $lot_out = LotOut::where('lot_out_id', $lot_out_id)->first();
