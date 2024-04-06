@@ -62,7 +62,7 @@
                                     {{ $LotOut->lot_out_status }}</p>
                                 @else
                                 <p class=" text-center rounded-3xl py-1 text-red-600 ">
-                                    {{ $LotOut }}</p>
+                                    {{ $LotOut->lot_out_status }}</p>
                                 @endif
                             </td>
                         </tr>
