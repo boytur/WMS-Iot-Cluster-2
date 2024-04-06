@@ -275,7 +275,7 @@
                 @endif
             </div>
             <div class="px-2">
-                <form action="{{ route('logout') }}" method="POST"
+                <form onclick="clear_cart_local_storage()" action="{{ route('logout') }}" method="POST"
                     class="btn-secondary-2 flex gap-2 items-center justify-center mt-3 text-[1.2rem] py-3 rounded-md">
                     @csrf
                     <button>ออกจากระบบ</button>
@@ -377,6 +377,16 @@
             }
         });
     }
+
+    /*clear_cart_local_storage()
+    * @author: Piyawat Wongyat 65160340
+    * @create date: 2024-04-05
+    */
+
+    const clear_cart_local_storage = () => {
+        localStorage.clear();
+    }
+
 </script>
 
 </html>
