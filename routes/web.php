@@ -38,13 +38,9 @@ Route::middleware(['auth'])->group(function () {
         }
     });
 
-    Route::get('/dashboard/view-all', function () {
-        return view('dashboards.v_all_wh');
-    });
-
     Route::post('/set-user-warehouse', [WarehouseController::class, 'set_user_warehouse'])->name('set-user-warehouse');
 
-
+    
     Route::get('/dashboard/view-another', [WarehouseController::class, 'get_user_warehouse']);
     Route::get('/dashboard/view-another/detail/{wh_id}', [WarehouseController::class, 'get_warehouse_detail']);
 
@@ -82,13 +78,8 @@ Route::middleware(['auth'])->group(function () {
         }
     });
 
-    Route::get('/warehouse/add-wh', function () {
-        if (Auth::check() && Auth::user()->role === "warehouse_manager") {
-            return view('warehouses.v_add_more_wh');
-        } else {
-            return redirect('/dashboard/view-all');
-        }
-    });
+    //    route for warehouses management
+    Route::get('/warehouse/add-wh', [WarehouseController::class,'get_add_more_warehouse']);
 
     Route::get('/user-management', [UserManagementIndex::class, 'user_management_index'])->name('user_management_index');
     Route::get('/user-management/detail/{number}', [UserManagementIndex::class, 'user_management_detail'])->name('user_management_detail');
