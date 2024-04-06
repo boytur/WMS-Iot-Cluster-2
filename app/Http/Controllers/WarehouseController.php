@@ -37,6 +37,7 @@ class WarehouseController extends Controller
             throw new \Exception($e->getMessage());
         }
     }
+    
     public function get_warehouse_detail($wh_id)
     {
         try {
@@ -45,6 +46,19 @@ class WarehouseController extends Controller
                 return view('dashboards.v_another_wh_detail', compact('warehouses'));
             } else {
                 return redirect('/dashboard/view-all');
+            }
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+    public function get_add_more_warehouse()
+    {
+        try {
+            if (Auth::check() && Auth::user()->role === "warehouse_manager") {
+                $warehouses = Warehouse::paginate(20);
+                return view('warehouses.v_add_more_wh', compact('warehouses'));
+            } else {
+                return redirect('/warehouse/view-all');
             }
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
