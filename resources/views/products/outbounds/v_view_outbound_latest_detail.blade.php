@@ -1,6 +1,6 @@
 {{-- v_outbound_latest_detail.blade.php
     Display outbound latest detail
-    @author : Pichawat Suwan
+    @author : Pichawat Suwan 65160346
     @Create date : 2024-04-05
 --}}
 @extends('layouts.default')
