@@ -133,11 +133,8 @@
 
                                     <td class="px-6 py-4">
                                         @foreach ($product->tags as $tag)
-                                        {{ $tag->tagname }}
+                                        {{ $tag['tag_name'] }}
                                         @endforeach
-                                        @if($product->tags->count() === 0)
-                                        <p>-</p>
-                                        @endif
                                     </td>
 
                                     <td class="px-6 py-4">
