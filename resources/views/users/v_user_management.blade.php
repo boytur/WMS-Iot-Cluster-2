@@ -169,6 +169,7 @@
                 const user_type = document.getElementById("user_type").value;
                 const cluster = '{{ env('CLUSTER') }}'
                 //ส่ง req
+
                 const response = await fetch(`${cluster}/user-management/search`, {
                     method: 'POST',
                     headers: {
