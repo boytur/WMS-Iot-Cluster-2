@@ -113,9 +113,83 @@
                                 <hr class="">
                             </div>
                             <div class="">
-                                <button class=" btn-danger w-40 h-[3rem] gap-2 mt-4">
+                                <button onclick="onclick_edit_pass()" class=" btn-danger w-40 h-[3rem] gap-2 mt-4">
+
                                     <i class="fa-solid fa-key"></i>
-                                    แก้ไขรหัสผ่าน</button>
+
+                                    แก้ไขรหัสผ่าน
+
+                                </button>
+
+                                <script>
+
+                                    const onclick_wh_details = (wh_id) => {
+                                        const cluster = '{{ env('CLUSTER') }}'
+                                        window.location.href = `${cluster}/dashboard/view-another/detail/${wh_id}`;
+                                    }
+
+                                    //Function - Onclick_edit_password
+                                    const onclick_edit_pass = () => {
+
+                                        Swal.fire({
+                                            title: "แก้ไขรหัสผ่าน",
+                                            html: `<hr width=100% size=3>
+
+                                            <div class="w-full mt-10">
+                                                <label for="old_password" class="block text-left text-[0.7rem] font-medium text-black"> รหัสผ่านเดิม <span class="text-red-500">*</span> </label>
+                                                <input id="old_password" type="password" class="swal2-input w-full cursor-pointer border input-primary" placeholder="**********">
+                                            </div>
+                                            <div class="w-full mt-2">
+                                                <label for="new_password" class="block mb-2 text-left text-[0.7rem] font-medium text-black"> รหัสผ่านใหม่ <span class="text-red-500">*</span> </label>
+                                                <input id="new_password" type="text" class="swal2-input w-full cursor-pointer border input-primary" placeholder="**********">
+                                            </div>
+                                            <div class="w-full mt-2">
+                                                <label for="confirm_password" class="block mb-2 text-left text-[0.7rem] font-medium text-black"> ยืนยันรหัสผ่าน <span class="text-red-500">*</span> </label>
+                                                <input id="confirm_password" type="password" class="swal2-input w-full cursor-pointer border input-primary" placeholder="**********">
+
+                                            `,
+                                            showCancelButton: true,
+                                            confirmButtonColor: '#2f67ff',
+                                            confirmButtonText: "ยืนยัน",
+                                            cancelButtonText: "ยกเลิก",
+                                            showLoaderOnConfirm: true,
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                const oldPassword = document.getElementById('old_password').value;
+                                                const newPassword = document.getElementById('new_password').value;
+                                                const confirmPassword = document.getElementById('confirm_password').value;
+
+                                                // เงื่อนไขการตรวจสอบรหัสผ่านใหม่และยืนยันรหัสผ่านใหม่
+                                                if (newPassword !== confirmPassword) {
+                                                    Swal.fire({
+                                                        icon: 'error',
+                                                        title: 'รหัสผ่านไม่ตรงกัน',
+                                                        text: 'โปรดตรวจสอบรหัสผ่านใหม่อีกครั้ง',
+                                                    });
+                                                    return; // หยุดการดำเนินการถัดไปหากรหัสผ่านไม่ตรงกัน
+                                                }
+
+                                                if (newPassword == confirmPassword) {
+                                                    Swal.fire({
+                                                        icon: 'success',
+                                                        title: 'เปลี่ยนรหัสผ่านสำเร็จ',
+                                                        text: 'รหัสผ่านได้รับการยืนยัน',
+                                                    });
+                                                    return;
+                                                }
+
+                                                // ตรวจสอบการใช้งานรหัสผ่านเดิมและรหัสผ่านใหม่ที่ถูกต้อง และปรับปรุงข้อมูลตามต้องการ
+                                                if (oldPasswordCorrect && newPasswordValid) {
+                                                    localStorage.setItem('products_cart', JSON.stringify(products_in_cart_localstorage));
+                                                    product['exp'] = document.querySelector(`#date`).value;
+                                                    refresh_cart_table();
+                                                }
+                                            }
+                                        });
+                                    }
+
+                                </script>
+
                             </div>
                         </div>
                     </div>
@@ -124,5 +198,6 @@
         </div>
     </div>
     </div>
+
 
 @endsection
