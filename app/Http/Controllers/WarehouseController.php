@@ -36,6 +36,7 @@ class WarehouseController extends Controller
             throw new \Exception($e->getMessage());
         }
     }
+    
     public function get_warehouse_detail($wh_id)
     {
         try {

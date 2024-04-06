@@ -3,6 +3,7 @@ Displayfrom view another wh
 @author : Tanapat Supapon
 @Create Date : 2024-04-05
 @version 1.0.1  --}}
+
 @extends('layouts.default')
 @section('title', 'เพิ่มคลังสินค้า')
 

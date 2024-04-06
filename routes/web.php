@@ -38,9 +38,13 @@ Route::middleware(['auth'])->group(function () {
         }
     });
 
+    Route::get('/dashboard/view-all', function () {
+        return view('dashboards.v_all_wh');
+    });
+    
     Route::post('/set-user-warehouse', [WarehouseController::class, 'set_user_warehouse'])->name('set-user-warehouse');
 
-    
+
     Route::get('/dashboard/view-another', [WarehouseController::class, 'get_user_warehouse']);
     Route::get('/dashboard/view-another/detail/{wh_id}', [WarehouseController::class, 'get_warehouse_detail']);
 
