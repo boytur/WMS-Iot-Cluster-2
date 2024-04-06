@@ -17,11 +17,10 @@ class CreateLotInOrder extends Controller
         try {
             $products = $request->products;
             $wh_id = Session::get('user_warehouse');
-
             $lot_in = LotIn::create([
-                'lot_in_number' => "lotin",
+                'lot_in_number' => "lotin" . time(),
                 'lot_in_status' => "Initialized",
-                'wh_id' => $wh_id['warehouse_id'],
+                'wh_id' => $wh_id,
                 'user_id' => Auth::user()->id,
             ]);
             foreach ($products as $product) {
