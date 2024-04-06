@@ -76,7 +76,7 @@
                 <div class="w-full bg-black/20 mt-2 rounded-md">
                     <div class="py-2 w-full bg-[#D9D9D9] rounded-t-md">
                             <b class="mx-2  mt-2 text-lg text-black uppercase   ">
-                                ตารางรายการสินค้า</b>
+                                ตารางรายการสินค้า </b>
                     </div>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <table class="w-full text-sm text-left rtl:text-right ">
