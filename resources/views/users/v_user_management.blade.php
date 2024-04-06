@@ -150,6 +150,44 @@
                                 </tbody>
                             </table>
                         </div>
+                            <tbody id="user_table">
+                                @foreach ($users as $index => $user)
+                                <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer"
+                                    onclick="onclick_user_details({{ $user->number }})">
+                                    <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
+                                        {{ $index + 1 }}
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        {{ $user->number }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ $user->fname }} {{ $user->lname }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        @if ($user->role === 'warehouse_manager')
+                                        ผู้จัดการคลังสินค้า
+                                        @else
+                                        พนักงานคลังสินค้า
+                                        @endif
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        @if ($user->role === 'warehouse_manager')
+                                        ทุกคลังสินค้า
+                                        @else
+                                        @if ($user->warehouses == null)
+                                        ไม่พบคลังสินค้า
+                                        @else
+                                        @foreach ($user->warehouses as $w)
+                                        {{ $w->wh_name }}
+                                        @endforeach
+                                        @endif
+                                        @endif
+                                    </td>
+                                </tr>
+                                @endforeach
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -160,8 +198,14 @@
         </div>
     </div>
 
-    <script>
+
+  <script>
         const handle_search = async () => {
+        const onclick_user_details = (user_number) => {
+        const cluster = '{{ env('CLUSTER') }}'
+        window.location.href = `${cluster}/user-management/detail/${user_number}`;
+    }
+    const handle_search = async () => {
             try {
                 //ดึงค่า
                 const user_search = document.getElementById("user_search").value;
