@@ -181,6 +181,7 @@
                         user_attribute,
                         user_type
                     })
+
                 });
 
                 if (response.ok) {
