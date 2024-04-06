@@ -85,6 +85,10 @@ class OutboundIndex extends Controller
         try {
 
             $master_products = MasterProduct::paginate(20);
+            foreach ($master_products as $product) {
+                $tags = $product->get_tags_name($product->mas_prod_id);
+                $product->tags = $tags;
+            }
             return view('products.outbounds.v_create_outbound_order', compact('master_products'));
 
         } catch (\Exception $e) {
