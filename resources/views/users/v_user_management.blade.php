@@ -162,11 +162,6 @@
 
 
   <script>
-        const handle_search = async () => {
-        const onclick_user_details = (user_number) => {
-        const cluster = '{{ env('CLUSTER') }}'
-        window.location.href = `${cluster}/user-management/detail/${user_number}`;
-    }
     const handle_search = async () => {
             try {
                 //ดึงค่า
