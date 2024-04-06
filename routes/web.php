@@ -94,4 +94,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user-management/detail/{number}', [UserManagementIndex::class, 'user_management_detail'])->name('user_management_detail');
     Route::post('/user-management/search', [UserManagementIndex::class, 'search_user'])->name('search_user');
     Route::get('/profile/{number}', [Profile::class,'get_user_profile']);
+
+    Route::post('/api/check-password', 'UserController@checkPassword')->name('checkPassword');
+
 });
