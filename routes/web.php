@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Products\Inbounds\CreateLotInOrder;
 use App\Http\Controllers\Products\Inbounds\InboundIndex;
 use app\Http\Controllers\Products\Inbounds\GetLotInAnotherWh;
 use App\Http\Controllers\Products\Outbounds\OutboundIndex;
@@ -57,6 +58,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/product/inbounds/edit-inbound-order/{lot_in_id}', [InboundIndex::class, 'edit_inbound_order']);
 
     Route::post('/product/inbounds/search-lot-in', [InboundIndex::class, 'search_lot_in'])->name('search_lot_in');
+    Route::post('/product/inbounds/create-inbound-order', [CreateLotInOrder::class, 'create_inbound_order']);
 
     // route for outbound order
     Route::get('/product/outbounds', [OutboundIndex::class, 'outbound_index']);
@@ -91,5 +93,4 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile/{number}', [Profile::class,'get_user_profile']);
 
     Route::post('/api/check-password', 'UserController@checkPassword')->name('checkPassword');
-
 });

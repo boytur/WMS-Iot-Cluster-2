@@ -13,6 +13,7 @@ class WarehouseController extends Controller
     {
         try {
             $warehouse_id = $request->only('warehouse_id');
+            $warehouse_id = $warehouse_id['warehouse_id'];
             Session::put('user_warehouse', $warehouse_id);
 
             $warehouses = Warehouse::where('wh_id', $warehouse_id)->first();
@@ -41,7 +42,7 @@ class WarehouseController extends Controller
     {
         try {
             if (Auth::check() && Auth::user()->role === "warehouse_manager") {
-                $warehouses = Warehouse::where('wh_id',$wh_id)->first();
+                $warehouses = Warehouse::where('wh_id', $wh_id)->first();
                 return view('dashboards.v_another_wh_detail', compact('warehouses'));
             } else {
                 return redirect('/dashboard/view-all');
