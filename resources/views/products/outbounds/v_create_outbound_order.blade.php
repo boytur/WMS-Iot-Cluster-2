@@ -171,6 +171,21 @@
                                                 {{ $master_product->categories->cat_name }}
                                             </td>
                                             <td class="px-6 py-4 text-center">
+                                                <td class="px-6 py-4 text-center">
+                                                    {{ $master_product->mas_prod_name }}
+                                                </td>
+                                                <td class="px-6 py-4 text-center">
+                                                    {{ $master_product->mas_prod_barcode }}
+                                                </td>
+                                                <td class="px-6 py-4 text-center">
+                                                    @foreach ($master_product->tags as $tag)
+                                                    {{ $tag['tag_name'] }}
+                                                    @endforeach
+                                                </td>
+                                                <td class="px-6 py-4 text-center">
+                                                    {{ $master_product->categories->cat_name }}
+                                                </td>
+                                                <td class="px-6 py-4 text-center">
 
                                                 <div class="flex justify-center items-center">
                                                     <a href="javascript:void(0)"
