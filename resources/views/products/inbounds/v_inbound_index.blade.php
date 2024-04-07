@@ -178,7 +178,7 @@
                                                 |
                                                 {{-- <a href="{{ url('/product/managements/detail/' . $lot_in->lot_in_id) }}">
                                             --}}
-                                                <i
+                                                <i onclick="delete_lot_in({{ $lot_in->lot_in_id }})"
                                                     class="fa-solid fa-trash-can text-[1.5rem] hover:text-red-500 hover:scale-105"></i></a>
                                             </td>
                                     @endforeach
@@ -284,6 +284,38 @@
                     title: `เกิดข้อผิดพลาด`,
                 });
             }
+        }
+
+        const delete_lot_in = async (lot_in_id) => {
+            const cluster = '{{ env('CLUSTER') }}'
+            Swal.fire({
+                title: "ergfesdgeg",
+                text: "dfegsgs",
+                icon: warning,
+                showCancelButton: true,
+                confirmButtonColor: ,
+                confirmButtonText: ,
+                cancelButtonColor: ,
+                cancelButtonText: ,
+            }) then.(async (result) => {
+                if (result.isConfirmrd) {
+                    const respon = await fetch(
+                        `${cluster}/product/outbounds/delete-outbound-product/${lot_out_id}`, {
+                            method: 'DELETE';
+                            headers {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                        });
+                    if (respon.status === 200) {
+                        Swal.fire({
+                            title: "sdfgss";
+                            text: "dfgdg";
+                            icon: "success";
+                        })
+                    }
+                }
+            });
         }
     </script>
 
