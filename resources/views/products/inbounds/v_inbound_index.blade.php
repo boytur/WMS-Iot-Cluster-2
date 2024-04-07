@@ -140,7 +140,7 @@
                                 </thead>
                                 <tbody id="search_lot_in_table">
                                     @foreach ($lot_in_products as $index => $lot_in)
-                                        <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer">
+                                        <tr onclick="onclick_wh_details()" class="bg-white border-b hover:bg-blue-100 cursor-pointer">
                                             <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-center">
                                                 {{ $index + 1 }}
                                             </th>
@@ -284,6 +284,12 @@
                     title: `เกิดข้อผิดพลาด`,
                 });
             }
+        }
+    </script>
+    <script>
+        const onclick_wh_details = (wh_id) => {
+            const cluster = '{{ env('CLUSTER') }}'
+            window.location.href = `${cluster}/product/inbounds/inbound-detail/1${wh_id}`;
         }
     </script>
 

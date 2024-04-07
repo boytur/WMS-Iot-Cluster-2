@@ -167,15 +167,15 @@
                                                     </div>
                                                 @endif
                                             </td>
-                                            <td class="px-6 py-4 flex gap-3 text-gray-500 justify-center">
-                                                <a href="{{ url('/product/outbounds/edit-outbound-order' . '/' . $lot_out->lot_out_id) }}"
-                                                    class="">
+                                            <td class="px-6 py-4 flex gap-5 text-gray-500 justify-center">
+                                                <div>
                                                     <i
-                                                        class="fa-regular fa-pen-to-square text-[1.5rem] hover:text-blue-700 hover:scale-105"></i></a>
-                                                |
-
-                                                <i
-                                                    class="fa-solid fa-trash-can text-[1.5rem] hover:text-red-500 hover:scale-105"></i></a>
+                                                        class="fa-regular fa-pen-to-square text-[1.5rem] hover:text-blue-700 hover:scale-105"></i>
+                                                    </>
+                                                    |
+                                                    <i onclick="delete_lot_out({{ $lot_out->lot_out_id }})"
+                                                        class="fa-solid fa-trash-can text-[1.5rem] hover:text-red-500 hover:scale-105"></i>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -222,11 +222,12 @@
                     if (lots?.length === 0) {
                         // Display message when no results are found
                         lotTableBody.innerHTML =
-                        `<tr class="bg-white text-center"><td colspan="5" class="w-full pl-[5.1rem] h-[3rem]">ไม่พบรายการค้นหา</td></tr>`;
+                            `<tr class="bg-white text-center"><td colspan="5" class="w-full pl-[5.1rem] h-[3rem]">ไม่พบรายการค้นหา</td></tr>`;
 
                     } else {
                         lots?.map((search, index) => {
-                            const status_color = search.lot_out_status === 'closed' ? 'green-700' : '[#666666]';
+                            const status_color = search.lot_out_status === 'closed' ? 'green-700' :
+                                '[#666666]';
                             // สร้าง element ของแต่ละ row ในตาราง
                             const row = `
                                 <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer">
@@ -264,7 +265,8 @@
 
                             // แสดงผลลัพธ์ใน cell ที่มี id เรากำหนดไว้
                             document.getElementById(`dateCell_${index}`).innerText = formattedDate;
-                            document.getElementById('lot_out_count').innerText = `ผลการค้นหาจำนวน ${lots.length} รายการ`;
+                            document.getElementById('lot_out_count').innerText =
+                                `ผลการค้นหาจำนวน ${lots.length} รายการ`;
                         });
                     }
                 } else {
@@ -282,6 +284,39 @@
         const onclick_outbound_details = (lot_out_id) => {
             const cluster = '{{ env('CLUSTER') }}'
             window.location.href = `${cluster}/product/outbounds/outbound-detail/${lot_out_id}`;
+            }
+        const delete_lot_out = async (lot_out_id) => {
+            const cluster = '{{ env('CLUSTER') }}'
+            Swal.fire({
+                title: "คุณต้องการลบใช่หรือไม่?",
+                text: "คุณจะไม่สามารถเรียกข้อมูลได้อีก!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                cancelButtonText: "ยกเลิก",
+                confirmButtonText: "ลบ!"
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+
+                    const response = await fetch(
+                        `${cluster}/product/outbounds/delete-outbound-product/${lot_out_id}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                        });
+                    if (response.status === 200) {
+                        Swal.fire({
+                            title: "ลบข้อมูลสำเร็จ!",
+                            text: "ข้อมูลของคุณถูกลบแล้ว.",
+                            icon: "success"
+                        });
+                        window.location.reload();
+                    }
+                }
+            });
         }
     </script>
 @endsection
