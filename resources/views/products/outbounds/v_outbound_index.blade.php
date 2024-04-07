@@ -137,7 +137,8 @@
                                 </thead>
                                 <tbody class="lot_out_table bg-white" id="lot_out_table">
                                     @foreach ($lotouts as $index => $lot_out)
-                                        <tr class="bg-white border-b w-full hover:bg-blue-100 cursor-pointer">
+                                        <tr class="bg-white border-b w-full hover:bg-blue-100 cursor-pointer"
+                                        onclick="onclick_outbound_details({{ $lot_out->lot_out_id }})">
                                             <td class="px-6 text-center">
                                                 {{ $index + 1 }}
                                             </td>
@@ -154,16 +155,15 @@
                                             <td class="px-6 py-4 text-center">
                                                 @if ($lot_out->lot_out_status === 'Initialized')
                                                     <div>
-                                                        <p
-                                                            class="border text-center bg-[#666666] rounded-3xl py-1 text-white">
-                                                            {{ $lot_out->lot_out_status }}</p>
+                                                        <p class="border text-center bg-[#666666] rounded-3xl py-1 text-white">
+                                                            {{ $lot_out->lot_out_status }}
+                                                        </p>
                                                     </div>
                                                 @else
                                                     <div>
-                                                        <p
-                                                            class="border text-center bg-green-700 rounded-3xl py-1 text-white">
+                                                        <p class="border text-center bg-green-700 rounded-3xl py-1 text-white">
                                                             {{ $lot_out->lot_out_status }}
-                                                            </p>
+                                                        </p>
                                                     </div>
                                                 @endif
                                             </td>
@@ -277,6 +277,11 @@
                     title: `เกิดข้อผิดพลาด`,
                 });
             }
+        }
+
+        const onclick_outbound_details = (lot_out_id) => {
+            const cluster = '{{ env('CLUSTER') }}'
+            window.location.href = `${cluster}/product/outbounds/outbound-detail/${lot_out_id}`;
         }
     </script>
 @endsection
