@@ -13,6 +13,7 @@ class WarehouseController extends Controller
     {
         try {
             $warehouse_id = $request->only('warehouse_id');
+            $warehouse_id = $warehouse_id['warehouse_id'];
             Session::put('user_warehouse', $warehouse_id);
 
             $warehouses = Warehouse::where('wh_id', $warehouse_id)->first();
@@ -36,14 +37,28 @@ class WarehouseController extends Controller
             throw new \Exception($e->getMessage());
         }
     }
+    
     public function get_warehouse_detail($wh_id)
     {
         try {
             if (Auth::check() && Auth::user()->role === "warehouse_manager") {
-                $warehouses = Warehouse::where('wh_id',$wh_id)->first();
+                $warehouses = Warehouse::where('wh_id', $wh_id)->first();
                 return view('dashboards.v_another_wh_detail', compact('warehouses'));
             } else {
                 return redirect('/dashboard/view-all');
+            }
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+    public function get_add_more_warehouse()
+    {
+        try {
+            if (Auth::check() && Auth::user()->role === "warehouse_manager") {
+                $warehouses = Warehouse::paginate(20);
+                return view('warehouses.v_add_more_wh', compact('warehouses'));
+            } else {
+                return redirect('/warehouse/view-all');
             }
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());

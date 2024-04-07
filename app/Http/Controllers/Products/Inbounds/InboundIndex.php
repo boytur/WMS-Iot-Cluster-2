@@ -82,6 +82,12 @@ class InboundIndex extends Controller
     public function create_inbound_order()
     {
         $master_products = MasterProduct::paginate(20);
+
+        foreach ($master_products as $product) {
+            $tags = $product->get_tags_name($product->mas_prod_id);
+            $product->tags = $tags;
+        }
+
         return view('products.inbounds.v_create_inbound_order', compact('master_products'));
     }
     public function latest_inbound_order()
@@ -106,16 +112,18 @@ class InboundIndex extends Controller
             abort(404);
         }
     }
+
     public function inbound_latest_detail(int $lot_in_id)
     {
         $lot_in = LotIn::where('lot_in_id', $lot_in_id)->first();
-
         if ($lot_in !== null) {
-            return view('products.inbounds.v_inbound_latest_detail', compact('lot_in'));
+            $inbound_prod = InboundOrder::where('inbound_id',$lot_in_id)->paginate(3);
+            return view('products.inbounds.v_inbound_latest_detail', compact('lot_in','inbound_prod'));
         } else {
             abort(404);
         }
     }
+
 
     public function edit_inbound_order(int $lot_in_id)
     {

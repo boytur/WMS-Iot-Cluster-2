@@ -1,8 +1,7 @@
 {{-- v_edit_inbound_order.blade.php
-    Display from inbound order when press edit 
+    Display from inbound order when press edit
     @author : Thanawan Kongchok
     @Create 1.0.0 Date : 2024-04-02
-    @versoin 1.0.1 Date : 2024-04-03
       --}}
 
 @extends('layouts.default')
@@ -16,6 +15,21 @@
                 <div class="h-full flex items-center bg-white p-3 border-b-2 shadow-sm text-blue-800">
                     <a href="{{ url('/product/inbounds') }}">สินค้า > รับเข้า > </a>
                     <a href="">&nbsp;แก้ไขรายการสินค้าเข้า</a>
+                </div>
+            </div>
+            <div class="flex justify-end">
+                <div class=" lg:pt-0 mr-2 mt-2 mb-1">
+                    <a class="btn-primary px-4 flex items-center h-[3rem] gap-1"
+                        href="{{ url('product/inbounds/create-inbound-order') }}">
+                        <div>
+                           <div class="flex items-center gap-1">
+                                <i class="fa-solid fa-circle-plus text-[0.8rem] "></i>
+                                <div>
+                                    <p class="lg:text-sm lg:block hidden">เพิ่มสินค้า</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
 
@@ -69,9 +83,9 @@
                                     <th scope="col" class="px-6 py-3 text-center">
                                         บาร์โคด
                                     </th>
-                                    <th scope="col" class="px-6 py-3 text-center">
+                                    {{-- <th scope="col" class="px-6 py-3 text-center">
                                         จำนวน
-                                    </th>
+                                    </th> --}}
                                     <th scope="col" class="px-6 py-3 text-center">
                                         ประเภท
                                     </th>
@@ -106,9 +120,9 @@
                                             {{ $lot_in_product->master_products->mas_prod_barcode }}
                                         </td>
 
-                                        <td class="px-6 py-4 text-center">
+                                        {{-- <td class="px-6 py-4 text-center">
                                             {{ $lot_in_product->inbound_amount }}
-                                        </td>
+                                        </td> --}}
 
 
                                         <td class="px-6 py-4 text-center">
