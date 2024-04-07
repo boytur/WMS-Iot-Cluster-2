@@ -93,7 +93,10 @@ class UserManagementIndex extends Controller
                 return response()->json(['success' => false, 'data' => 'รหัสผ่านเดิมไม่ถูกต้อง']);
             }
         } catch (\Exception $e) {
-    
+            throw new \Exception($e->getMessage());
+        }
+    }
+
     public function user_edit_index($number)
     {
         try {
