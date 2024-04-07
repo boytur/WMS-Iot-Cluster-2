@@ -73,7 +73,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/product/outbounds/search-lot-out', [DeleteLotOut::class, 'search_lot_out']);
 
-    Route::delete('/product/outbounds/delete-outbound-product/{lot_out_id}',[DeleteLotOut::class,'delete_lot_out']);
+    Route::delete('/product/outbounds/delete-outbound-product/{lot_out_id}', [DeleteLotOut::class, 'delete_lot_out']);
     // route for product management
     Route::get('/product/managements', [ProductManagementIndex::class, 'product_management_index'])->name('product_management_index');
     Route::get('/product/managements/edit/{mas_prod_id}', [ProductManagementIndex::class, 'edit_master_product_index'])->name('edit_master_product');
@@ -95,13 +95,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/user-management', [UserManagementIndex::class, 'user_management_index'])->name('user_management_index');
     Route::get('/user-management/detail/{number}', [UserManagementIndex::class, 'user_management_detail'])->name('user_management_detail');
-    Route::post('/user-management/search', [UserManagementIndex::class, 'search_user'])->name('search_user');
+    Route::put('/user-management/edit-password', [UserManagementIndex::class, 'edit_user_password']);
+    Route::post('/user-management/search', [UserManagementIndex::class, 'search_user']);
     Route::get('/profile/{number}', [Profile::class, 'get_user_profile']);
 
     Route::get('/product/managements/add-new-product', [CreateNewMasterProduct::class, 'create']);
 
     Route::post('/product/managements/add-new-product', [CreateNewMasterProduct::class, 'store']);
-    Route::get('/profile/{number}', [Profile::class,'get_user_profile']);
-
-    Route::post('/api/check-password', 'UserController@checkPassword')->name('checkPassword');
+    Route::get('/profile/{number}', [Profile::class, 'get_user_profile']);
 });
