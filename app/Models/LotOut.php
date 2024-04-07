@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,6 +11,7 @@ class LotOut extends Model
     protected $table = 'wms_lot_outs';
 
     protected $fillable = [
+        'lot_out_id',
         'lot_out_number',
         'lot_out_status',
         'wh_id',
