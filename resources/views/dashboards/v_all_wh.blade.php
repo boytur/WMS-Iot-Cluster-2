@@ -56,20 +56,13 @@ Displayfrom view all wh
                     </div>
                 </div>
                 <hr>
-                <div class="bg-white text-lg  w-full h-[40rem]  ">
-
-                    <div>
-                        {{--  <b class=" text-sm ">จำนวน (ชิ้น)</b>  --}}
-
+                <div class="bg-white text-lg  w-full h-[38rem]   ">
+                    <div class="chart-container " style=" position: relative; height:38rem; width:full ;bg : white">
                         <canvas id="myChart"></canvas>
-
                     </div>
-
                     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
                     <script>
                         const ctx = document.getElementById('myChart');
-
                         new Chart(ctx, {
                             type: 'line',
                             data: {
@@ -97,10 +90,7 @@ Displayfrom view all wh
                             }
                         });
                     </script>
-
                 </div>
-
-
             </div>
         </div>
     </div>
