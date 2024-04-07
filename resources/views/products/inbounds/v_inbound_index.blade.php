@@ -62,24 +62,94 @@
                                 </div>
                             </div>
 
-
                             {{-- add product inbound --}}
                             <div class="w-full flex justify-end gap-3 mt-3">
+
                                 <div class=" items-center flex h-full relative">
-                                    <i class="fa-solid fa-truck lg:text-[2rem] text-sm cursor-pointer lg:mt-4"></i>
+                                    {{-- icon truck --}}
+                                    <i onclick="toggle_cart_open()" class="fa-solid fa-truck lg:text-[2rem] text-sm cursor-pointer lg:mt-4"></i>
                                     <div class="absolute flex top-4 left-[-8px]">
                                         <p
                                             class="w-[1rem] h-[1rem] bg-red-500 rounded-full text-white flex items-center justify-center py-1 mb-1">
                                             1</p>
                                     </div>
                                 </div>
+
+                                <div id="cart-popup"
+                                    class="w-[45rem] mb-3 hidden absolute mt-20 mr-12 rounded-md bg-white shadow-lg border right-[18.5rem] p-1 z-40 text-black">
+                                    <div class="border-b-4 border-black">
+                                        <b> <p class="text-center border-black">รายการล็อตสินค้านำเข้า</p> </b>
+                                    </div>
+
+                                    <div class="overflow-x-auto shadow-lg max-h-[25rem] overflow-y-scroll">
+                                        <div class="flex flex-col">
+                                        <table id="cart-table" class="w-full text-sm text-left rtl:text-right border-black">
+                                            <thead class="text-xs text-white uppercase bg-[#212529]">
+                                                <tr>
+                                                    <th scope="col" class="pr-8 pl-5 w-10 px-3 py-1 text-center">
+                                                        ลำดับ
+                                                    </th>
+
+                                                    <th scope="col" class=" px-3 py-1 text-center">
+                                                        หมายเลขรายการรับเข้า
+                                                    </th>
+
+                                                    <th scope="col" class="pl-5 px-3 py-1 text-center">
+                                                        วันที่สร้าง
+                                                    </th>
+
+                                                    <th scope="col" class="pr-8 px-3 py-1 text-center">
+                                                        ผู้สร้าง
+                                                    </th>
+
+                                                    <th scope="col" class=" px-3 py-1 text-center">
+                                                        สถานะ
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                        <div class="mt-2">
+                                            <table>
+                                                <thead>
+                                                    <tbody>
+                                                        @foreach ($lot_in_products as $index => $lot_in)
+                                                            <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer">
+                                                                <td class="h-[1px] w-[80px] px-6 py-4 text-[12px]  text-center ">{{ $index + 1 }}</td>
+                                                                <td class="h-[1px] w-[500px] px-6 py-4 text-center text-[12px] ">{{ $lot_in->lot_in_number }}</td>
+                                                                <td class="h-[1px] w-[100px] px-6 py-4 text-center text-[12px] ">{{ date('d/m/Y', strtotime($lot_in->created_at)) }}</td>
+                                                                <td class="h-[1px] w-[200px] px-6 py-4 text-center text-[12px]">{{ $lot_in->users->fname . ' ' . $lot_in->users->lname }}</td>
+                                                                <td class="h-[1px] w-[100px] px-6 py-4 text-center text-[12px]">
+                                                                    @if ($lot_in->lot_in_status === 'Initialized')
+                                                                        <div>
+                                                                            <p class="border text-center bg-[#666666] rounded-3xl py-1 px-1 text-white">{{ $lot_in->lot_in_status }}</p>
+                                                                        </div>
+                                                                    @else
+                                                                        <div>
+                                                                            <p class="border text-center bg-green-700 rounded-3xl py-1 px-1 text-white ">{{ $lot_in->lot_in_status }}</p>
+                                                                        </div>
+                                                                    @endif
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+
                                 <div class="mt-3 lg:pt-0">
                                     <a class="btn-secondary px-4 flex items-center h-[3rem] gap-1"
                                         href="{{ url('/product/inbounds/view-inbound-latest') }}">
                                         <div>
                                             <div class="flex items-center gap-1">
-                                                <i
-                                                    class="fa-solid fa-clock-rotate-left cursor-pointer text-[0.8rem] mt-[2px]"></i>
+                                                <i class="fa-solid fa-clock-rotate-left cursor-pointer text-[0.8rem] mt-[2px]"></i>
                                                 <div>
                                                     <p class=" md:text-sm lg:block hidden text-[0.5]">รายการล่าสุด</p>
                                                 </div>
@@ -119,9 +189,11 @@
                                         <th scope="col" class="px-6 py-3 text-center">
                                             ลำดับ
                                         </th>
+
                                         <th scope="col" class="px-6 py-3 text-center">
                                             หมายเลขรายการรับเข้า
                                         </th>
+
                                         <th scope="col" class="px-6 py-3 text-center">
                                             วันที่สร้าง
                                         </th>
@@ -129,6 +201,7 @@
                                         <th scope="col" class="px-6 py-3 text-center">
                                             ผู้สร้าง
                                         </th>
+
                                         <th scope="col" class="px-6 py-3 text-center">
                                             สถานะ
                                         </th>
@@ -140,7 +213,7 @@
                                 </thead>
                                 <tbody id="search_lot_in_table">
                                     @foreach ($lot_in_products as $index => $lot_in)
-                                        <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer">
+                                        <tr onclick="onclick_wh_details()" class="bg-white border-b hover:bg-blue-100 cursor-pointer">
                                             <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-center">
                                                 {{ $index + 1 }}
                                             </th>
@@ -285,9 +358,48 @@
                 });
             }
         }
+
+        const refresh_cart_table = ()=> {
+
+            //ดึงข้อมูลสินค้าใน localstorage
+            let products_in_cart_localstorage = JSON.parse(localStorage.getItem('products_cart') || '[]');
+            const cart_table = document.querySelector('#cart-table tbody');
+
+            cart_table.innerHTML = '';
+
+            //สร้างตารางใหม่จากข้อมูลใน localstorage
+            products_in_cart_localstorage.forEach(function(product, index) {
+                let new_row = '<tr class="bg-white border-b hover:bg-blue-100 cursor-pointer">' +
+                    '<td class="px-6 py-1 font-medium whitespace-nowrap text-center mr-2">' +
+                        '<img class="w-[60px] object-cover" src="' + product.mas_prod_image + '">' +
+                    '</td>' +
+                    '<td class="px-6 py-1 text-center">' + product['mas_prod_name'] + '</td>' +
+                    '<td class="px-6 py-1 text-center">' + product.categories.cat_name + '</td>' +
+                    '<td class="px-6 py-1 text-center">' + product['amount'] + '</td>' +
+                    '<td class="px-6 py-1 text-center">' +
+                    '<button onclick="remove_product_from_cart(' + index + ')">' +
+                    '<i class="fa-solid fa-trash-can text-[1rem] hover:text-red-500 hover:scale-105"></i>' +
+                    '</button>' +
+                    '</td>' +
+                    '</tr>';
+                cart_table.innerHTML += new_row;
+            });
+
+            cart_amount.textContent = products_in_cart_localstorage.length;
+        }
+
+        const toggle_cart_open = ()=>{
+            const cart = document.querySelector('#cart-popup');
+            cart.classList.toggle('md:block');
+            refresh_cart_table();
+        }
+
     </script>
-
-
-
+    <script>
+        const onclick_wh_details = (wh_id) => {
+            const cluster = '{{ env('CLUSTER') }}'
+            window.location.href = `${cluster}/product/inbounds/inbound-detail/1${wh_id}`;
+        }
+    </script>
 
 @endsection
