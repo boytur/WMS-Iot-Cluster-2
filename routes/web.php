@@ -42,7 +42,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard/view-all', function () {
         return view('dashboards.v_all_wh');
     });
-    
+
     Route::post('/set-user-warehouse', [WarehouseController::class, 'set_user_warehouse'])->name('set-user-warehouse');
 
 
@@ -83,6 +83,7 @@ Route::middleware(['auth'])->group(function () {
             return redirect('/dashboard/view-all');
         }
     });
+    Route::get('/user-edit-detail/{number}', [UserManagementIndex::class, 'user_edit_index'])->name('user_edit_index');
 
     //    route for warehouses management
     Route::get('/warehouse/add-wh', [WarehouseController::class,'get_add_more_warehouse']);

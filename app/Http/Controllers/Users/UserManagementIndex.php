@@ -64,9 +64,22 @@ class UserManagementIndex extends Controller
             $user = User::where('number', $number)->first();
 
             return view('users.v_user_management_detail', compact('user'));
-
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
     }
+    public function user_edit_index($number)
+    {
+        try {
+            if (Auth::check() && Auth::user()->role === "warehouse_manager"){
+                $user = User::where('number', $number)->first();
+                return view('users.v_user_edit_detail', compact('user'));
+            } else {
+            return redirect('/');
+            }
+        }catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
 }
+

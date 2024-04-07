@@ -110,15 +110,14 @@
                                         </th>
                                     </tr>
                                 </thead>
-
                                 <tbody id="user_table">
                                     @foreach ($users as $index => $user)
                                         <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer"
-                                            onclick="onclick_user_details('/user/managements/detail/{{ $user->id }}')">
+                                            onclick="onclick_user_details({{ $user->number }})">
                                             <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
                                                 {{ $index + 1 }}
                                             </th>
-                                            <td class="px-6 py-4">
+                                            <td class="px-6 py-4" onclick="">
                                                 {{ $user->number }}
                                             </td>
                                             <td class="px-6 py-4">
@@ -152,7 +151,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="flex justify-center my-4">
                     {{ $users->links('pagination::custom-pagination') }}
                 </div>
@@ -161,8 +159,8 @@
     </div>
 
 
-  <script>
-    const handle_search = async () => {
+    <script>
+        const handle_search = async () => {
             try {
                 //ดึงค่า
                 const user_search = document.getElementById("user_search").value;
@@ -219,6 +217,11 @@
                     title: `เกิดข้อผิดพลาด`,
                 });
             }
+        }
+    </script>
+    <script>
+        const onclick_user_details = (id_user) => {
+            window.location.href = `/user-edit-detail/${id_user}`;
         }
     </script>
 @endsection
