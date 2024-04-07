@@ -33,29 +33,17 @@
                                         <option value="name">ชื่อ-นามสกุล</option>
                                     </select>
                                 </div>
-                                <div class="md:w-[18rem]">
-                                    <div>
-                                        <p class="text-black/70 text-sm">ประเภท</p>
-                                        <select name="user_type" id="user_type"
-                                            class="w-full h-[3rem] input-primary px-2 cursor-pointer">
-                                            <option value="all">ทั้งหมด</option>
-                                            <option value="warehouse_manager">ผู้จัดการคลังสินค้า</option>
-                                            <option value="normal_employee">พนักงานคลังสินค้า</option>
-                                        </select>
-                                    </div>
+                            </div>
+
+                            <div class="md:w-[18rem]">
+                                <div>
+                                    <p class="text-black/70 text-sm">ประเภท</p>
+                                    <select name="user_type" id="user_type" class="w-full h-[3rem] input-primary px-2 cursor-pointer">
+                                        <option value="all">ทั้งหมด</option>
+                                        <option value="warehouse_manager">ผู้จัดการคลังสินค้า</option>
+                                        <option value="normal_employee">พนักงานคลังสินค้า</option>
+                                    </select>
                                 </div>
-                                <div class="md:w-[10rem] h-full mt-5">
-                                    <div class="w-full">
-                                        <button onclick="handle_search()"
-                                            class="w-full h-[3rem] gap-2 btn-primary flex items-center justify-center mx-2">
-                                            <div>
-                                                <i class="fa-solid fa-magnifying-glass"></i>
-                                            </div>
-                                            <div type="submit">
-                                                ค้นหา
-                                            </div>
-                                        </button>
-                                    </div>
                             </div>
                             <div class="md:w-[10rem] h-full mt-5">
                                 <div class="w-full">
@@ -71,73 +59,6 @@
                             </div>
                         </div>
 
-<<<<<<<<< Temporary merge branch 1
-                    {{-- table product --}}
-                    <div class="w-full mt-2 rounded-t-md">
-                        <div class="py-2 w-full bg-[#D9D9D9] rounded-t-md">
-                            <b class="mx-2  mt-2 text-lg text-black uppercase   ">
-                                ตารางแสดงรายชื่อพนักงาน</b>
-                        </div>
-                        <div class="relative overflow-x-auto shadow-md">
-                            <table class="w-full text-sm text-left rtl:text-right ">
-                                <thead class="text-xs text-white uppercase bg-[#212529]">
-                                    <tr>
-                                        <th scope="col" class="px-6 py-3">
-                                            ลำดับ
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            รหัสพนักงาน
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            ชื่อ-นามสกุล
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            ประเภท
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            คลังสินค้า
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody id="user_table">
-                                    @foreach ($users as $index => $user)
-                                        <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer"
-                                            onclick="onclick_user_details({{ $user->number }})">
-                                            <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
-                                                {{ $index + 1 }}
-                                            </th>
-                                            <td class="px-6 py-4" onclick="">
-                                                {{ $user->number }}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                {{ $user->fname }} {{ $user->lname }}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                @if ($user->role === 'warehouse_manager')
-                                                    ผู้จัดการคลังสินค้า
-                                                @else
-                                                    พนักงานคลังสินค้า
-                                                @endif
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                @if ($user->role === 'warehouse_manager')
-                                                    ทุกคลังสินค้า
-                                                @else
-                                                    @if ($user->warehouses == null)
-                                                        ไม่พบคลังสินค้า
-                                                    @else
-                                                        @foreach ($user->warehouses as $w)
-                                                            {{ $w->wh_name }}
-                                                        @endforeach
-                                                    @endif
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    </tr>
-                                </tbody>
-                            </table>
-=========
                         {{-- add product inbound --}}
                         <div class="w-full flex justify-end gap-3 mt-2">
                             <div class="mt-3 lg:pt-0">
@@ -151,15 +72,12 @@
                                         </div>
                                 </button>
                             </div>
->>>>>>>>> Temporary merge branch 2
                         </div>
                     </div>
                     {{-- end box-1 --}}
                 </div>
-                <div class="flex justify-center my-4">
-                    {{ $users->links('pagination::custom-pagination') }}
-                {{-- table product --}}
 
+                {{-- table product --}}
                 <div class="w-full mt-2 rounded-t-md">
                     <div class="py-2 w-full bg-[#D9D9D9] rounded-t-md">
                         <b class="mx-2  mt-2 text-lg text-black uppercase   ">
@@ -189,7 +107,7 @@
 
                             <tbody id="user_table">
                                 @foreach ($users as $index => $user)
-                                <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer" onclick="onclick_user_details('/user/managements/detail/{{ $user->id }}')">
+                                <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer" onclick="onclick_user_details('{{ $user->number }}')">
                                     <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
                                         {{ $index + 1 }}
                                     </th>
@@ -235,6 +153,7 @@
     </div>
 </div>
 
+
 <script>
     const handle_search = async () => {
         try {
@@ -273,7 +192,7 @@
                 } else {
                     users.forEach((user, index) => {
                         const row = `
-                                <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer" onclick="onclick_user_details('/user/managements/detail/${user.id}')">
+                                <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer" onclick="onclick_user_details('${user.number}')">
                                     <td class="px-6 py-4 font-medium whitespace-nowrap">${index + 1}</td>
                                     <td class="px-6 py-4">${user.number}</td>
                                     <td class="px-6 py-4">${user.fname} ${user.lname}</td>
@@ -294,14 +213,8 @@
                 title: `เกิดข้อผิดพลาด`,
             });
         }
-        const onclick_user_details = (id_user) => {
-            window.location.href = `/user-edit-detail/${id_user}`;
-        }
-    </script>
-@endsection
-
-{{-- หน้าต่างแสดงป๊อปอัพเพิ่มผู้ใช้งาน --}}
-<script>
+    }
+    //หน้าต่างแสดงป๊อปอัพเพิ่มผู้ใช้งาน
     const onclick_add_user = () => {
         Swal.fire({
             title: "เพิ่มผู้ใช้งานใหม่",
@@ -401,12 +314,22 @@
             reverseButtons: true // สลับตำแหน่งปุ่ม
         })
     }
+    const onclick_user_details = (number)=> {
+        const cluster = '{{ env('CLUSTER') }}'
+            window.location.href = `${cluster}/user-edit-detail/${number}`;
+    }
 </script>
-
 <style>
-.swal-wide{
-    width:900px !important;
-    height: 895px;
-}
+    .swal-wide{
+        width:900px !important;
+        height: 895px;
+    }
 
-</style>
+    </style>
+@endsection
+
+
+
+
+
+
