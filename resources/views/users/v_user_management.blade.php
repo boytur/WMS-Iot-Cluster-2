@@ -37,7 +37,6 @@
                                         </select>
                                     </div>
                                 </div>
-
                                 <div class="md:w-[18rem]">
                                     <div>
                                         <p class="text-black/70 text-sm">ประเภท</p>

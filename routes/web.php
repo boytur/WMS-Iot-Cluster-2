@@ -83,10 +83,11 @@ Route::middleware(['auth'])->group(function () {
             return redirect('/dashboard/view-all');
         }
     });
-    Route::get('/user-edit-detail/{number}', [UserManagementIndex::class, 'user_edit_index'])->name('user_edit_index');
 
     //    route for warehouses management
     Route::get('/warehouse/add-wh', [WarehouseController::class,'get_add_more_warehouse']);
+   // route for user detail
+    Route::get('/user-edit-detail/{number}', [UserManagementIndex::class, 'user_edit_index'])->name('user_edit_index');
 
     Route::get('/user-management', [UserManagementIndex::class, 'user_management_index'])->name('user_management_index');
     Route::get('/user-management/detail/{number}', [UserManagementIndex::class, 'user_management_detail'])->name('user_management_detail');

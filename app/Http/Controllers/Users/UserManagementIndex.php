@@ -68,6 +68,7 @@ class UserManagementIndex extends Controller
             throw new \Exception($e->getMessage());
         }
     }
+    
     public function user_edit_index($number)
     {
         try {

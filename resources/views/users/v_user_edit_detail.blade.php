@@ -23,7 +23,6 @@ Displayfrom user_edit_detail
                             <div class="w-full">
                                 <img class="mt-5 rounded-full w-[19rem] h-[19rem] object-cover" src="{{ $user->image }}"
                                     alt="">
-
                             </div>
                         </div>
                         <div class=" w-3/4 mx-10 mt-3 ">
