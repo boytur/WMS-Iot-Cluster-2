@@ -6,7 +6,8 @@
         <div class="mt-[5rem] md:mt-0">
             <div class=" w-full h-[3rem] ">
                 <div class="h-full flex items-center bg-white p-3 border-b-2 shadow-sm text-blue-800">
-                    <a href="">แดชบอร์ด > ดูคลังสินค้าอื่น > {{ $warehouses->wh_name }}</a>
+                    <a href="{{ url('dashboard/view-another') }}">แดชบอร์ด > ดูคลังสินค้าอื่น > </a>
+                    <a href="">{{ $warehouses->wh_name }}</a>
                 </div>
             </div>
             <div class="w-full p-2">
