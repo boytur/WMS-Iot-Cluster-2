@@ -41,7 +41,7 @@
                     <tbody>
                         @foreach ($lotouts as $index => $LotOut)
                         <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer"
-                            onclick="onclick_LotOut_details({{ $LotOut->lot_out_id }})">
+                            onclick="onclick_LotOut_details('/LotOut/lotouts/detail/{{ $LotOut->lot_out_id }}')">
                             <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-center">
                                 {{ $index + 1 }}
                             </th>
@@ -62,7 +62,7 @@
                                     {{ $LotOut->lot_out_status }}</p>
                                 @else
                                 <p class=" text-center rounded-3xl py-1 text-red-600 ">
-                                    {{ $LotOut->lot_out_status }}</p>
+                                    {{ $LotOut }}</p>
                                 @endif
                             </td>
                         </tr>
@@ -76,10 +76,4 @@
         </div>
     </div>
 </div>
-<script>
-    const onclick_LotOut_details = (lot_out_id) => {
-        const cluster = '{{ env('CLUSTER') }}'
-        window.location.href = `${cluster}/product/outbounds/view-outbound-latest/detail/${lot_out_id}`;
-    }
-</script>
 @endsection

@@ -140,7 +140,7 @@
                                 </thead>
                                 <tbody id="search_lot_in_table">
                                     @foreach ($lot_in_products as $index => $lot_in)
-                                        <tr onclick="onclick_wh_details()" class="bg-white border-b hover:bg-blue-100 cursor-pointer">
+                                        <tr onclick="onclick_lot_in_details({{ $lot_in->lot_in_id }})" class="bg-white border-b hover:bg-blue-100 cursor-pointer">
                                             <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-center">
                                                 {{ $index + 1 }}
                                             </th>
@@ -178,7 +178,7 @@
                                                 |
                                                 {{-- <a href="{{ url('/product/managements/detail/' . $lot_in->lot_in_id) }}">
                                             --}}
-                                                <i
+                                                <i onclick="delete_lot_inbound({{ $lot_in->lot_in_id }})"
                                                     class="fa-solid fa-trash-can text-[1.5rem] hover:text-red-500 hover:scale-105"></i></a>
                                             </td>
                                     @endforeach
@@ -284,6 +284,26 @@
                     title: `เกิดข้อผิดพลาด`,
                 });
             }
+        }
+
+        const delete_lot_inbound = (lot_in_id) => {
+            const cluster = '{{ env('CLUSTER') }}'
+            Swal.fire({
+                title: "คุณต้องการลบใช่หรือไม่?" ,
+                text: "คุณจะไม่สามารถเรียกข้อมูลได้อีก!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                confirmButtonText: "ลบ!",
+                cancelButtonColor: "#3085d6",
+                cancelButtonText: "ยกเลิก",
+            });
+        }
+    </script>
+    <script>
+        const onclick_lot_in_details = (lot_in_id) => {
+            const cluster = '{{ env('CLUSTER') }}'
+            window.location.href = `${cluster}/product/inbounds/inbound-detail/${lot_in_id}`;
         }
     </script>
     <script>

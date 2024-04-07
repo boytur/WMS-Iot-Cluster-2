@@ -11,7 +11,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"></script>
     @vite('resources/js/app.js')
     @vite('resources/css/app.css')
     <title>WMS | @yield('title', 'WMS + Iot')</title>
@@ -90,7 +89,7 @@
                                 @endif
 
                                 {{-- ดูคลังสินค้าอื่น --}}
-                                @if(request()->is('dashboard/view-another'))
+                                @if(request()->is('dashboard/view-another/*') || request()->is('dashboard/view-another'))
                                 <a href={{ url('/dashboard/view-another') }}>
                                     <div class="px-8 py-2 rounded-md bg-blue-700 text-white">
                                         ดูคลังสินค้าอื่น
@@ -276,7 +275,7 @@
                 @endif
             </div>
             <div class="px-2">
-                <form onclick="clear_cart_local_storage()" action="{{ route('logout') }}" method="POST"
+                <form action="{{ route('logout') }}" method="POST"
                     class="btn-secondary-2 flex gap-2 items-center justify-center mt-3 text-[1.2rem] py-3 rounded-md">
                     @csrf
                     <button>ออกจากระบบ</button>
@@ -378,16 +377,6 @@
             }
         });
     }
-
-    /*clear_cart_local_storage()
-    * @author: Piyawat Wongyat 65160340
-    * @create date: 2024-04-05
-    */
-
-    const clear_cart_local_storage = () => {
-        localStorage.clear();
-    }
-
 </script>
 
 </html>
