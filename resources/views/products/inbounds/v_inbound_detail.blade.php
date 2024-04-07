@@ -78,8 +78,7 @@
 
                                     <td class="px-6 py-4 flex justify-center">
                                         <div class=" w-[3rem] h-[2rem] border">
-                                            <img class="object-cover w-full h-full"
-                                                src="{{ $inbound_product->master_products->mas_prod_image}}" alt="">
+                                            <img class="object-cover w-full h-full" src="{{ $inbound_product->master_products->mas_prod_image}}" alt="">
                                         </div>
                                     </td>
 
@@ -142,6 +141,17 @@
                         </div>
                     </button>
                 </div>
+            </div>
+            {{--ปุ่มค้นหา--}}
+            <div class="mt-3 flex items-end justify-end">
+                <button onclick="" id="search_wh" class="w-[10rem] h-[3rem] gap-2 btn-primary flex items-center justify-center mx-2">
+                    <div>
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <div type="submit">
+                        <p>หาพื้นที่จัดเก็บ</p>
+                    </div>
+                </button>
             </div>
         </div>
     </div>

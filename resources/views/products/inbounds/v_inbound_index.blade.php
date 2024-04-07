@@ -306,6 +306,12 @@
             window.location.href = `${cluster}/product/inbounds/inbound-detail/${lot_in_id}`;
         }
     </script>
+    <script>
+        const onclick_wh_details = (wh_id) => {
+            const cluster = '{{ env('CLUSTER') }}'
+            window.location.href = `${cluster}/product/inbounds/inbound-detail/1${wh_id}`;
+        }
+    </script>
 
 
 
