@@ -55,6 +55,41 @@ Displayfrom view all wh
                     </div>
                 </div>
                 <div class="bg-white -lg flex  items-center w-full h-[30rem]">
+                <hr>
+                <div class="bg-white text-lg  w-full h-[38rem]   ">
+                    <div class="chart-container " style=" position: relative; height:38rem; width:full ;bg : white">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <script>
+                        const ctx = document.getElementById('myChart');
+                        new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12 '],
+                                datasets: [{
+                                        label: 'สินค้าขาเข้า',
+                                        data: [1, 2, 2, 1, 2, 2, 1, 1, 3, 1, 1, 2],
+                                        borderWidth: 3
+                                    },
+                                    {
+                                        label: 'สินค้าขาออก',
+                                        data: [1, 2, 1, 2, 0, 1, 1, 2, 1, 2, 2, 3],
+                                        borderWidth: 3
+                                    }
+                                ]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        type: 'linear',
+                                        display: true,
+                                        position: 'left',
+                                    },
+                                }
+                            }
+                        });
+                    </script>
                 </div>
             </div>
         </div>

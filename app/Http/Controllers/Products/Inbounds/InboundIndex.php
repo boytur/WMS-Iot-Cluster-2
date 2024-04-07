@@ -100,7 +100,8 @@ class InboundIndex extends Controller
         $lot_in = LotIn::where('lot_in_id', $lot_in_id)->first();
 
         if ($lot_in !== null) {
-            return view('products.inbounds.v_inbound_detail', compact('lot_in'));
+            $inbound_products = InboundOrder::where('lot_in_id', $lot_in_id)->paginate(5);
+            return view('products.inbounds.v_inbound_detail', compact('lot_in', 'inbound_products'));
         } else {
             abort(404);
         }
