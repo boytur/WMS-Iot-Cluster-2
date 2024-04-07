@@ -8,6 +8,8 @@ use App\Http\Controllers\Products\Managements\ProductManagementIndex;
 use App\Http\Controllers\Users\Profile;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\Users\UserManagementIndex;
+use App\Http\Controllers\Products\Managements\CreateNewMasterProduct;
+use App\Models\MasterProduct;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -93,5 +95,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user-management', [UserManagementIndex::class, 'user_management_index'])->name('user_management_index');
     Route::get('/user-management/detail/{number}', [UserManagementIndex::class, 'user_management_detail'])->name('user_management_detail');
     Route::post('/user-management/search', [UserManagementIndex::class, 'search_user'])->name('search_user');
-    Route::get('/profile/{number}', [Profile::class,'get_user_profile']);
+    Route::get('/profile/{number}', [Profile::class, 'get_user_profile']);
+
+    Route::get('/product/managements/add-new-product', [CreateNewMasterProduct::class, 'create']);
+
+    Route::post('/product/managements/add-new-product', [CreateNewMasterProduct::class, 'store']);
 });
