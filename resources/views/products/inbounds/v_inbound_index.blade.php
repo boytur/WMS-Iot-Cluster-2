@@ -178,7 +178,7 @@
                                                 |
                                                 {{-- <a href="{{ url('/product/managements/detail/' . $lot_in->lot_in_id) }}">
                                             --}}
-                                                <i
+                                                <i onclick="delete_lot_inbound({{ $lot_in->lot_in_id }})"
                                                     class="fa-solid fa-trash-can text-[1.5rem] hover:text-red-500 hover:scale-105"></i></a>
                                             </td>
                                     @endforeach
@@ -284,6 +284,20 @@
                     title: `เกิดข้อผิดพลาด`,
                 });
             }
+        }
+
+        const delete_lot_inbound = (lot_in_id) => {
+            const cluster = '{{ env('CLUSTER') }}'
+            Swal.fire({
+                title: "คุณต้องการลบใช่หรือไม่?" ,
+                text: "คุณจะไม่สามารถเรียกข้อมูลได้อีก!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                confirmButtonText: "ลบ!",
+                cancelButtonColor: "#3085d6",
+                cancelButtonText: "ยกเลิก",
+            });
         }
     </script>
     <script>

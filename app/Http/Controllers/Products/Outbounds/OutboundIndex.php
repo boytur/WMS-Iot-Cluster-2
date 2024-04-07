@@ -85,10 +85,6 @@ class OutboundIndex extends Controller
         try {
 
             $master_products = MasterProduct::paginate(20);
-            foreach ($master_products as $product) {
-                $tags = $product->get_tags_name($product->mas_prod_id);
-                $product->tags = $tags;
-            }
             return view('products.outbounds.v_create_outbound_order', compact('master_products'));
 
         } catch (\Exception $e) {
@@ -108,29 +104,12 @@ class OutboundIndex extends Controller
     }
     public function outbound_latest_detail(int $lot_out_id)
     {
-        try {
-            if(!empty($lot_out_id)){
-                $lot_out = LotOut::where('lot_out_id', $lot_out_id)->first();
-                $outbound_orders = OutBoundOrder::where('lot_out_id', $lot_out_id)->get();
-                $products = MasterProduct::all();
+        $lot_out = LotOut::where('lot_out_id', $lot_out_id)->first();
 
-                foreach ($products as $product) {
-                    $tags = $product->get_tags_name($product->mas_prod_id);
-                    $product->tags = $tags;
-                }
-                if ($lot_out !== null) {
-                    $user = User::where('id', $lot_out->user_id)->first();
-                    if ($user !== null) {
-                        $user = $user->fname . " " . $user->lname;
-                    }
-                    return view('products.outbounds.v_view_outbound_latest_detail', compact('outbound_orders', 'user', 'lot_out','products'));
-                } else {
-                    abort(404);
-                }
-
-            }
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
+        if ($lot_out !== null) {
+            return view('products.outbounds.v_view_outbound_latest_detail', compact('lot_out'));
+        } else {
+            abort(404);
         }
     }
     public function outbound_detail(int $lot_out_id)

@@ -100,6 +100,10 @@
                             <div class=" text-[0.7rem] mt-2 text-gray-500 ">
                                 <b>เบอร์โทรศัพท์</b>
                             </div>
+                            <div class="">
+                                <button class=" btn-danger w-40 h-[3rem] gap-2 mt-4">
+                                    <i class="fa-solid fa-key"></i>
+                                    แก้ไขรหัสผ่าน</button>
                             <div>
 
                                 {{-- <a class="text-[1.5rem] text-black" href="tel:123-456-7890">{{ $user->phone }}</a>
@@ -124,6 +128,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </div>
 <script>
