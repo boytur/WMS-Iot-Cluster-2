@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 
 class UserManagementIndex extends Controller
@@ -64,9 +65,50 @@ class UserManagementIndex extends Controller
             $user = User::where('number', $number)->first();
 
             return view('users.v_user_management_detail', compact('user'));
-
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
     }
+
+    public function edit_user_password(Request $request)
+    {
+        try {
+            if ($request->new_password == null || $request->old_password === null) {
+                return response()->json(['success' => false, 'data' => 'กรุณาเช็ครหัสผ่านอีกครั้ง']);
+            }
+            $hashed_password = User::find(Auth::user()->id)->password;
+
+            $new_password = $request->new_password;
+
+            if (Hash::check($request->old_password, $hashed_password)) {
+
+                $user = User::find(Auth::user()->id);
+
+                $user->update([
+                    'password' => Hash::make($new_password)
+                ]);
+
+                return response()->json(['success' => true, 'data' => 'เปลี่ยนรหัสผ่านสำเร็จ']);
+            } else {
+                return response()->json(['success' => false, 'data' => 'รหัสผ่านเดิมไม่ถูกต้อง']);
+            }
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    public function user_edit_index($number)
+    {
+        try {
+            if (Auth::check() && Auth::user()->role === "warehouse_manager"){
+                $user = User::where('number', $number)->first();
+                return view('users.v_user_edit_detail', compact('user'));
+            } else {
+            return redirect('/');
+            }
+        }catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
 }
+

@@ -18,7 +18,8 @@ class InboundIndex extends Controller
         try {
             if (Auth::check()) {
                 $lot_in_products = LotIn::where('wh_id', Session::get('user_warehouse'))->paginate(20);
-                return view('products.inbounds.v_inbound_index', compact('lot_in_products'));
+                $products = MasterProduct::paginate(20);
+                return view('products.inbounds.v_inbound_index', compact('lot_in_products', 'products'));
             }
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
@@ -106,7 +107,8 @@ class InboundIndex extends Controller
         $lot_in = LotIn::where('lot_in_id', $lot_in_id)->first();
 
         if ($lot_in !== null) {
-            return view('products.inbounds.v_inbound_detail', compact('lot_in'));
+            $inbound_products = InboundOrder::where('lot_in_id', $lot_in_id)->paginate(5);
+            return view('products.inbounds.v_inbound_detail', compact('lot_in', 'inbound_products'));
         } else {
             abort(404);
         }
@@ -127,10 +129,14 @@ class InboundIndex extends Controller
     public function edit_inbound_order(int $lot_in_id)
     {
         $lot_in = LotIn::where('lot_in_id', $lot_in_id)->first();
-
+        $master_products = MasterProduct::paginate(5);
+        foreach ($master_products as $product) {
+            $tags = $product->get_tags_name($product->mas_prod_id);
+            $product->tags = $tags;
+        }
         if ($lot_in !== null) {
             $lot_in_products = InboundOrder::where('lot_in_id', $lot_in_id)->paginate(20);
-            return view('products.inbounds.v_edit_inbound_order', compact('lot_in', 'lot_in_products'));
+            return view('products.inbounds.v_edit_inbound_order', compact('lot_in', 'lot_in_products','master_products'));
         } else {
             abort(404);
         }
