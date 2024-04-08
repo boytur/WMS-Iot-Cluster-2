@@ -355,10 +355,10 @@
             }
         }
 
-        const onclick_outbound_details = (lot_out_id) => {
-            const cluster = '{{ env('CLUSTER') }}'
-            window.location.href = `${cluster}/product/outbounds/outbound-detail/${lot_out_id}`;
-            }
+        // const onclick_outbound_details = (lot_out_id) => {
+        //     const cluster = '{{ env('CLUSTER') }}'
+        //     window.location.href = `${cluster}/product/outbounds/outbound-detail/${lot_out_id}`;
+        //     }
         const delete_lot_out = async (lot_out_id) => {
             const cluster = '{{ env('CLUSTER') }}'
             Swal.fire({
@@ -366,8 +366,8 @@
                 text: "คุณจะไม่สามารถเรียกข้อมูลได้อีก!",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
+                confirmButtonColor:"#d33" ,
+                cancelButtonColor: "#3085d6",
                 cancelButtonText: "ยกเลิก",
                 confirmButtonText: "ลบ!"
             }).then(async (result) => {
@@ -388,6 +388,11 @@
                             icon: "success"
                         });
                         window.location.reload();
+                    }else if(response.status ===201){
+                        Swal.fire({
+                            title: "ลบข้อมูลไม่สำเร็จ!",
+                            icon: "warning"
+                        });
                     }
                 }
             });
