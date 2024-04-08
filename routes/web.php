@@ -12,6 +12,7 @@ use App\Http\Controllers\Users\Profile;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\Users\UserManagementIndex;
 use App\Http\Controllers\Products\Managements\CreateNewMasterProduct;
+use App\Http\Controllers\Products\Outbounds\EditByAddProductLotOutOrder;
 use App\Models\MasterProduct;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -74,6 +75,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/product/outbounds/view-outbound-latest/detail/{lot_out_id}', [OutboundIndex::class, 'outbound_latest_detail']);
     Route::get('/product/outbounds/outbound-detail/{lot_out_id}', [OutboundIndex::class, 'outbound_detail']);
     Route::get('/product/outbounds/edit-outbound-order/{lot_out_id}', [OutboundIndex::class, 'edit_outbound_order']);
+    Route::post('/product/outbounds/edit-outbound-order/{lot_out_id}', [EditByAddProductLotOutOrder::class, 'add_product_to_lot_out'])->name('add_product_to_lot_out');
 
     Route::post('/product/outbounds/search-lot-out', [OutboundIndex::class, 'search_lot_out']);
     Route::post('/product/outbounds/create-outbound-order/search-product', [OutboundIndex::class, 'search_product_lot_out']);
@@ -95,8 +97,8 @@ Route::middleware(['auth'])->group(function () {
     });
 
     //    route for warehouses management
-    Route::get('/warehouse/add-wh', [WarehouseController::class,'get_add_more_warehouse']);
-   // route for user detail
+    Route::get('/warehouse/add-wh', [WarehouseController::class, 'get_add_more_warehouse']);
+    // route for user detail
     Route::get('/user-edit-detail/{number}', [UserManagementIndex::class, 'user_edit_index'])->name('user_edit_index');
 
     Route::get('/user-management', [UserManagementIndex::class, 'user_management_index'])->name('user_management_index');
