@@ -19,7 +19,9 @@ class OutboundIndex extends Controller
     {
         try {
             if (Auth::check()) {
-                $lotouts = LotOut::where('wh_id', Session::get('user_warehouse'))->paginate(20);
+                $lotouts = LotOut::where('wh_id', Session::get('user_warehouse'))
+                ->where('lot_out_status','Initialized')
+                ->paginate(20);
                 return view('products.outbounds.v_outbound_index', compact('lotouts'));
             }
         } catch (\Exception $e) {

@@ -65,9 +65,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/product/inbounds/create-inbound-order', [CreateLotInOrder::class, 'create_inbound_order']);
     Route::post('/product/inbounds/create-inbound-order/search-product', [InboundIndex::class, 'search_product_lot_in']);
 
-    Route::post('/product/inbounds/search-lot-in', [DeleteLotOut::class, 'search_lot_in']);
-
-    Route::delete('/product/inbouns/delete-inbound-product/{lot_in_id}', [DeleteLotIn::class, 'delete_lot_in']);
+    Route::post('/product/inbounds/search-lot-in', [InboundIndex::class, 'search_lot_in']);
 
     // route for outbound order
     Route::get('/product/outbounds', [OutboundIndex::class, 'outbound_index']);
@@ -77,10 +75,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/product/outbounds/outbound-detail/{lot_out_id}', [OutboundIndex::class, 'outbound_detail']);
     Route::get('/product/outbounds/edit-outbound-order/{lot_out_id}', [OutboundIndex::class, 'edit_outbound_order']);
 
-    Route::post('/product/outbounds/search-lot-out', [DeleteLotOut::class, 'search_lot_out']);
+    Route::post('/product/outbounds/search-lot-out', [OutboundIndex::class, 'search_lot_out']);
 
     Route::delete('/product/outbounds/delete-outbound-product/{lot_out_id}', [DeleteLotOut::class, 'delete_lot_out']);
-    Route::post('/product/inbounds/create-outbound-order/search-product', [OutboundIndex::class, 'search_product_lot_out']);
+
     // route for product management
     Route::get('/product/managements', [ProductManagementIndex::class, 'product_management_index'])->name('product_management_index');
     Route::get('/product/managements/edit/{mas_prod_id}', [ProductManagementIndex::class, 'edit_master_product_index'])->name('edit_master_product');

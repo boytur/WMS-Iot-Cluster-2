@@ -17,7 +17,7 @@
                         <div class=" w-full flex">
 
                             {{-- search input --}}
-                            <div class="w-3/4 flex gap-2 h-full">
+                            <div class="w-2/4 flex gap-2 h-full">
                                 <div class="w-full">
                                     <div>
                                         <p class="text-black/70 text-sm">ค้นหา</p>
@@ -105,10 +105,6 @@
                                                         <th scope="col" class="pr-8 px-3 py-1 text-center">
                                                             ผู้สร้าง
                                                         </th>
-
-                                                        <th scope="col" class=" px-3 py-1 text-center">
-                                                            สถานะ
-                                                        </th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -134,21 +130,6 @@
                                                                 {{ date('d/m/Y', strtotime($lot_in->created_at)) }}</td>
                                                             <td class="h-[1px] w-[200px] px-6 py-4 text-center text-[12px]">
                                                                 {{ $lot_in->users->fname . ' ' . $lot_in->users->lname }}
-                                                            </td>
-                                                            <td class="h-[1px] w-[100px] px-6 py-4 text-center text-[12px]">
-                                                                @if ($lot_in->lot_in_status === 'Initialized')
-                                                                    <div>
-                                                                        <p
-                                                                            class="border text-center bg-[#666666] rounded-3xl py-1 px-1 text-white">
-                                                                            {{ $lot_in->lot_in_status }}</p>
-                                                                    </div>
-                                                                @else
-                                                                    <div>
-                                                                        <p
-                                                                            class="border text-center bg-green-700 rounded-3xl py-1 px-1 text-white ">
-                                                                            {{ $lot_in->lot_in_status }}</p>
-                                                                    </div>
-                                                                @endif
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -253,13 +234,13 @@
                                                     <div>
                                                         <p
                                                             class="border text-center bg-[#666666] rounded-3xl py-1 text-white">
-                                                            {{ $lot_in->lot_in_status }}</p>
+                                                            รอดำเนินการ</p>
                                                     </div>
                                                 @else
                                                     <div>
                                                         <p
                                                             class="border text-center bg-green-700 rounded-3xl py-1 text-white ">
-                                                            {{ $lot_in->lot_in_status }}</p>
+                                                            ปิดล็อต</p>
                                                     </div>
                                                 @endif
                                             </td>

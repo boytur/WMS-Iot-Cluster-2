@@ -230,13 +230,13 @@
                                                 @if ($lot_out->lot_out_status === 'Initialized')
                                                     <div>
                                                         <p class="border text-center bg-[#666666] rounded-3xl py-1 text-white">
-                                                            {{ $lot_out->lot_out_status }}
+                                                            รอดำเนินการ
                                                         </p>
                                                     </div>
                                                 @else
                                                     <div>
                                                         <p class="border text-center bg-green-700 rounded-3xl py-1 text-white">
-                                                            {{ $lot_out->lot_out_status }}
+                                                            ปิดล็อต
                                                         </p>
                                                     </div>
                                                 @endif
