@@ -354,12 +354,7 @@
                 });
             }
         }
-
-        const onclick_outbound_details = (lot_out_id) => {
-            const cluster = '{{ env('CLUSTER') }}'
-            window.location.href = `${cluster}/product/outbounds/outbound-detail/${lot_out_id}`;
-            }
-        const delete_lot_out = async (lot_out_id) => {
+          const delete_lot_out = async (lot_out_id) => {
             const cluster = '{{ env('CLUSTER') }}'
             Swal.fire({
                 title: "คุณต้องการลบใช่หรือไม่?",
@@ -370,6 +365,7 @@
                 cancelButtonColor: "#3085d6",
                 cancelButtonText: "ยกเลิก",
                 confirmButtonText: "ลบ!"
+
             }).then(async (result) => {
                 if (result.isConfirmed) {
 
@@ -397,6 +393,13 @@
                 }
             });
         }
+
+
+        const onclick_outbound_details = (lot_out_id) => {
+            const cluster = '{{ env('CLUSTER') }}'
+            window.location.href = `${cluster}/product/outbounds/outbound-detail/${lot_out_id}`;
+            }
+
 
         const refresh_cart_table = ()=> {
 

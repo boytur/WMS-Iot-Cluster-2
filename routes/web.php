@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Products\Inbounds\CreateLotInOrder;
+use App\Http\Controllers\Products\Inbounds\DeleteLotIn;
 use App\Http\Controllers\Products\Inbounds\InboundIndex;
 use app\Http\Controllers\Products\Inbounds\GetLotInAnotherWh;
 use App\Http\Controllers\Products\Outbounds\OutboundIndex;
@@ -63,6 +64,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/product/inbounds/search-lot-in', [InboundIndex::class, 'search_lot_in'])->name('search_lot_in');
     Route::post('/product/inbounds/create-inbound-order', [CreateLotInOrder::class, 'create_inbound_order']);
     Route::post('/product/inbounds/create-inbound-order/search-product', [InboundIndex::class, 'search_product_lot_in']);
+
+    Route::post('/product/inbounds/search-lot-in', [DeleteLotOut::class, 'search_lot_in']);
+
+    Route::delete('/product/inbouns/delete-inbound-product/{lot_in_id}', [DeleteLotIn::class, 'delete_lot_in']);
+
     // route for outbound order
     Route::get('/product/outbounds', [OutboundIndex::class, 'outbound_index']);
     Route::get('/product/outbounds/create-outbound-order', [OutboundIndex::class, 'create_outbound_order']);
