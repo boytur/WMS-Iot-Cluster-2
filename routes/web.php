@@ -13,6 +13,8 @@ use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\Users\UserManagementIndex;
 use App\Http\Controllers\Products\Managements\CreateNewMasterProduct;
 use App\Http\Controllers\Products\Outbounds\EditByAddProductLotOutOrder;
+use App\Http\Controllers\Products\Inbounds\EditAmountLotInOrder;
+use App\Http\Controllers\Products\Inbounds\EditByAddProductLotInOrder;
 use App\Models\MasterProduct;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -61,6 +63,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/product/inbounds/view-inbound-latest/detail/{lot_in_id}', [InboundIndex::class, 'inbound_latest_detail']);
     Route::get('/product/inbounds/inbound-detail/{lot_in_id}', [InboundIndex::class, 'inbound_detail']);
     Route::get('/product/inbounds/edit-inbound-order/{lot_in_id}', [InboundIndex::class, 'edit_inbound_order']);
+    Route::post('/product/inbounds/edit-inbound-order/{lot_in_id}', [EditByAddProductLotInOrder::class, 'add_product_to_lot_in'])->name('add_product_to_lot_in');
 
     Route::post('/product/inbounds/search-lot-in', [InboundIndex::class, 'search_lot_in'])->name('search_lot_in');
     Route::post('/product/inbounds/create-inbound-order', [CreateLotInOrder::class, 'create_inbound_order']);
@@ -111,9 +114,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/product/managements/add-new-product', [CreateNewMasterProduct::class, 'store']);
 
-    Route::get('/user-management/create_user',[UserManagementIndex::class, 'create_user']);
-    Route::post('/user-management/create_user',[UserManagementIndex::class,'store_user']);
-    Route::post('/user-management/create_user', [UserManagementIndex::class,'store_user'])->name('upload.image');
+    Route::get('/user-management/create_user', [UserManagementIndex::class, 'create_user']);
+    Route::post('/user-management/create_user', [UserManagementIndex::class, 'store_user']);
+    Route::post('/user-management/create_user', [UserManagementIndex::class, 'store_user'])->name('upload.image');
 
     Route::get('/profile', [Profile::class, 'get_user_profile']);
 });

@@ -133,14 +133,11 @@ class InboundIndex extends Controller
     public function edit_inbound_order(int $lot_in_id)
     {
         $lot_in = LotIn::where('lot_in_id', $lot_in_id)->first();
-        $master_products = MasterProduct::paginate(5);
-        foreach ($master_products as $product) {
-            $tags = $product->get_tags_name($product->mas_prod_id);
-            $product->tags = $tags;
-        }
+        $products = MasterProduct::all();
+
         if ($lot_in !== null) {
             $lot_in_products = InboundOrder::where('lot_in_id', $lot_in_id)->paginate(20);
-            return view('products.inbounds.v_edit_inbound_order', compact('lot_in', 'lot_in_products', 'master_products'));
+            return view('products.inbounds.v_edit_inbound_order', compact('lot_in', 'lot_in_products', 'products'));
         } else {
             abort(404);
         }
