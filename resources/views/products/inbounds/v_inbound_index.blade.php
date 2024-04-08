@@ -117,7 +117,7 @@
                                                 <thead>
                                                     <tbody>
                                                         @foreach ($lot_in_products as $index => $lot_in)
-                                                            <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer">
+                                                            <tr onclick="onclick_lot_in_detail_details({{ $lot_in->lot_in_id }})" class="bg-white border-b hover:bg-blue-100 cursor-pointer">
                                                                 <td class="h-[1px] w-[80px] px-6 py-4 text-[12px]  text-center ">{{ $index + 1 }}</td>
                                                                 <td class="h-[1px] w-[500px] px-6 py-4 text-center text-[12px] ">{{ $lot_in->lot_in_number }}</td>
                                                                 <td class="h-[1px] w-[100px] px-6 py-4 text-center text-[12px] ">{{ date('d/m/Y', strtotime($lot_in->created_at)) }}</td>
@@ -213,7 +213,7 @@
                                 </thead>
                                 <tbody id="search_lot_in_table">
                                     @foreach ($lot_in_products as $index => $lot_in)
-                                        <tr onclick="onclick_wh_details()" class="bg-white border-b hover:bg-blue-100 cursor-pointer">
+                                        <tr onclick="onclick_lot_in_detail_details({{ $lot_in->lot_in_id }})" class="bg-white border-b hover:bg-blue-100 cursor-pointer">
                                             <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-center">
                                                 {{ $index + 1 }}
                                             </th>
@@ -396,9 +396,9 @@
 
     </script>
     <script>
-        const onclick_wh_details = (wh_id) => {
+        const onclick_lot_in_detail_details = (lot_in_detail) => {
             const cluster = '{{ env('CLUSTER') }}'
-            window.location.href = `${cluster}/product/inbounds/inbound-detail/1${wh_id}`;
+            window.location.href = `${cluster}/product/inbounds/inbound-detail/${lot_in_detail}`;
         }
     </script>
 
