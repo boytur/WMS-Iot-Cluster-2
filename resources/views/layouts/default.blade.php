@@ -90,7 +90,7 @@
                                 @endif
 
                                 {{-- ดูคลังสินค้าอื่น --}}
-                                @if(request()->is('dashboard/view-another'))
+                                @if(request()->is('dashboard/view-another/*') || request()->is('dashboard/view-another'))
                                 <a href={{ url('/dashboard/view-another') }}>
                                     <div class="px-8 py-2 rounded-md bg-blue-700 text-white">
                                         ดูคลังสินค้าอื่น
