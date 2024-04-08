@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Users;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Warehouse;
+use App\Models\WarehouseUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -19,7 +20,7 @@ class UserManagementIndex extends Controller
             if (Auth::check() && Auth::user()->role === "warehouse_manager") {
                 $whs = Warehouse::all();
                 $users = User::paginate(20);
-                return view('users.v_user_management', compact('users','whs'));
+                return view('users.v_user_management', compact('users', 'whs'));
             } else {
                 return redirect('/product/inbounds');
             }
@@ -102,24 +103,31 @@ class UserManagementIndex extends Controller
     public function user_edit_index($number)
     {
         try {
-            if (Auth::check() && Auth::user()->role === "warehouse_manager"){
+            if (Auth::check() && Auth::user()->role === "warehouse_manager") {
                 $user = User::where('number', $number)->first();
                 return view('users.v_user_edit_detail', compact('user'));
             } else {
-            return redirect('/');
+                return redirect('/');
             }
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
     }
-    public function create_user()
-    {
-        return view('users.v_user_management');
-    }
+
+    //สร้างข้อมูล
     public function store_user(Request $request)
     {
-        $file = $request->file('file');
-        $validatedData = $request->validate([
+        $validatedData = $this->validateUserData($request);
+        $imageName = $this->handleImageUpload($request);
+        $newUser = $this->createNewUser($validatedData, $imageName);
+
+        return response(200);
+    }
+
+    //แก้ไขข้อมูล
+    protected function validateUserData(Request $request)
+    {
+        return $request->validate([
             'fname' => 'required',
             'lname' => 'required',
             'date' => 'required|date',
@@ -128,9 +136,33 @@ class UserManagementIndex extends Controller
             'email' => 'required|email',
             'phone' => 'required',
         ]);
-        dd($validatedData);
-        return redirect()->back();
-
     }
-}
+    //set img
+    protected function handleImageUpload(Request $request)
+    {
+        $path = $request->file('dropzone-file');
 
+        if ($path !== null) {
+            $imageName = $path->getClientOriginalName();
+            $path->move('assets/img', $imageName);
+        } else {
+            $imageName = 'default_image.jpg';
+        }
+
+        return $imageName;
+    }
+    //สร้างข้อมูลผู้ใช้
+    protected function createNewUser($validatedData, $imageName)
+    {
+        return User::create([
+            'fname' => $validatedData['fname'],
+            'lname' => $validatedData['lname'],
+            'role' => $validatedData['role'],
+            'email' => $validatedData['email'],
+            'phone' => $validatedData['phone'],
+            'password' => '1234567890',
+            'image' => $imageName,
+        ]);
+    }
+
+}

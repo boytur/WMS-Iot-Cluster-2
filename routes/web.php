@@ -113,7 +113,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/user-management/create_user',[UserManagementIndex::class, 'create_user']);
     Route::post('/user-management/create_user',[UserManagementIndex::class,'store_user']);
-    Route::post('/user-management/create_user', [UserManagementIndex::class,'store_user'])->name('upload.image');
 
     Route::get('/profile', [Profile::class, 'get_user_profile']);
 });
