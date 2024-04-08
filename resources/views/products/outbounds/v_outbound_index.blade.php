@@ -264,7 +264,8 @@
                                                     <a
                                                         href="{{ url("product/outbounds/edit-outbound-order/$lot_out->lot_out_id") }}">
                                                         <i
-                                                            class="fa-regular fa-pen-to-square text-[1.5rem] hover:text-blue-700 hover:scale-105"></i>
+                                                            class="fa-regular fa-pen-to-square text-[1.5rem] hover:text-blue-700 hover:scale-105">
+                                                        </i>
                                                     </a>
                                                     </>
                                                     |
@@ -414,13 +415,6 @@
                 }
             });
         }
-
-
-        const onclick_outbound_details = (lot_out_id) => {
-            const cluster = '{{ env('CLUSTER') }}'
-            window.location.href = `${cluster}/product/outbounds/outbound-detail/${lot_out_id}`;
-        }
-
 
 
         const onclick_outbound_details = (lot_out_id) => {
