@@ -457,7 +457,7 @@
                         const search_sort = document.getElementById("search_sort").value
                         const cluster = '{{ env('CLUSTER') }}';
                         //ส่ง req
-                        const response = await fetch(`${cluster}/product/inbounds/create-outbound-order/search-product`, {
+                        const response = await fetch(`${cluster}/product/outbounds/create-outbound-order/search-product`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
