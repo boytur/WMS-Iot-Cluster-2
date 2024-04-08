@@ -18,7 +18,10 @@ class InboundIndex extends Controller
     {
         try {
             if (Auth::check()) {
-                $lot_in_products = LotIn::where('wh_id', Session::get('user_warehouse'))->paginate(20);
+                $lot_in_products = LotIn::where('wh_id', Session::get('user_warehouse'))
+                    ->where('lot_in_status', "Initialized")
+                    ->paginate(20);
+
                 $products = MasterProduct::paginate(20);
                 return view('products.inbounds.v_inbound_index', compact('lot_in_products', 'products'));
             }
@@ -119,8 +122,8 @@ class InboundIndex extends Controller
     {
         $lot_in = LotIn::where('lot_in_id', $lot_in_id)->first();
         if ($lot_in !== null) {
-            $inbound_prod = InboundOrder::where('inbound_id',$lot_in_id)->paginate(3);
-            return view('products.inbounds.v_inbound_latest_detail', compact('lot_in','inbound_prod'));
+            $inbound_prod = InboundOrder::where('inbound_id', $lot_in_id)->paginate(3);
+            return view('products.inbounds.v_inbound_latest_detail', compact('lot_in', 'inbound_prod'));
         } else {
             abort(404);
         }
@@ -137,7 +140,7 @@ class InboundIndex extends Controller
         }
         if ($lot_in !== null) {
             $lot_in_products = InboundOrder::where('lot_in_id', $lot_in_id)->paginate(20);
-            return view('products.inbounds.v_edit_inbound_order', compact('lot_in', 'lot_in_products','master_products'));
+            return view('products.inbounds.v_edit_inbound_order', compact('lot_in', 'lot_in_products', 'master_products'));
         } else {
             abort(404);
         }
@@ -155,7 +158,7 @@ class InboundIndex extends Controller
                     $Productquery->where('mas_prod_barcode', 'like', "%$search_key%");
                 } elseif ($search_attribute === 'mas_prod_no') {
                     $Productquery->where('mas_prod_no', 'like', "%$search_key%");
-                }else {
+                } else {
                 }
             }
 
@@ -183,8 +186,7 @@ class InboundIndex extends Controller
             //         ];
             //     }
             // }
-            return response()->json(['success' => true, 'data' => $products,'cats'=>$cats], 200);
-
+            return response()->json(['success' => true, 'data' => $products, 'cats' => $cats], 200);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }

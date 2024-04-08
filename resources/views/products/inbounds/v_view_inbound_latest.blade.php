@@ -12,10 +12,8 @@
                 </div>
             </div>
             <div style="height: calc(100vh - 7.7rem)" class="w-full mt-2 rounded-md overflow-y-scroll p-2">
-                <div class="py-2 w-full sm:rounded-lg">
-                    <b class="mx-2  mt-2 rounded-md  text-black uppercase text-[1rem]  ">
-                        ตารางรายการล่าสุด</b>
-                </div>
+
+
                 {{-- table product --}}
                 <div class="w-full bg-black/20 mt-2 rounded-md">
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -27,16 +25,16 @@
                                     </div>
                                 </tr>
                                 <tr>
-                                    <th scope="col" class="px-6 py-3">
+                                    <th scope="col" class="px-6 py-3 text-center">
                                         ลำดับ
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
+                                    <th scope="col" class="px-6 py-3 text-center">
                                         หมายเลขล็อต
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
+                                    <th scope="col" class="px-6 py-3 text-center">
                                         วันรับเข้า
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
+                                    <th scope="col" class="px-6 py-3 text-center">
                                         สถานะ
                                     </th>
                                 </tr>
@@ -45,20 +43,20 @@
                                 @foreach ($lot_in_products as $index => $lot_in)
                                     <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer"
                                         onclick="onclick_inbound_lastest_detail_details({{ $lot_in->lot_in_id }})">
-                                        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
+                                        <th scope="row" class="text-center px-6 py-4 font-medium whitespace-nowrap">
                                             {{ $index + 1 }}
                                         </th>
-                                        <td class="px-6 py-4">
+                                        <td class="px-6 py-4 text-center">
                                             {{ $lot_in->lot_in_number }}
                                         </td>
-                                        <td class="px-6 py-4">
+                                        <td class="px-6 py-4 text-center">
                                             {{ date('d/m/Y', strtotime($lot_in->created_at)) }}
                                         </td>
-                                        <td class="px-6 py-4">
+                                        <td class="px-6 py-4 text-center">
                                             @if ($lot_in->lot_in_status == 'Initialized')
-                                                <p class=" text-gray-600"> {{ $lot_in->lot_in_status }} </p>
+                                                <p class=" text-gray-600"> รอดำเนินการ </p>
                                             @else
-                                                <p class=" text-red-600"> {{ $lot_in->lot_in_status }} </p>
+                                                <p class=" text-red-600"> ปิดล็อต </p>
                                             @endif
                                         </td>
                                 @endforeach

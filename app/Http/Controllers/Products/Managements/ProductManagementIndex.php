@@ -39,7 +39,8 @@ class ProductManagementIndex extends Controller
 
                 if ($mas_prod_id !== null) {
                     $product = MasterProduct::where('mas_prod_id', $mas_prod_id)->first();
-
+                    $tags = $product->get_tags_name($product->mas_prod_id);
+                    $product->tags = $tags;
                 } else {
                     return redirect('/product/managements');
                 }
