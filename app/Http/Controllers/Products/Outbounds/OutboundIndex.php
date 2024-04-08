@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Products\Outbounds;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\LotOut;
 use App\Models\User;
 use App\Models\MasterProduct;
@@ -166,6 +167,35 @@ class OutboundIndex extends Controller
             return view('products.outbounds.v_edit_outbound_order', compact('lot_out', 'lot_out_prod'));
         } else {
             abort(404);
+        }
+    }
+    public function search_product_lot_out(Request $request)
+    {
+        try {
+            $search_key = $request->input('search_key');
+            $search_attribute = $request->input('search_attribute');
+            $search_sort = $request->input('search_sort');
+            $Productquery = MasterProduct::query();
+
+            if (!empty($search_key)) {
+                if ($search_attribute === 'mas_prod_barcode') {
+                    $Productquery->where('mas_prod_barcode', 'like', "%$search_key%");
+                } elseif ($search_attribute === 'mas_prod_no') {
+                    $Productquery->where('mas_prod_no', 'like', "%$search_key%");
+                }else {
+                }
+            }
+
+            $products = $Productquery->get();
+            foreach ($products as $product) {
+                $tags = $product->get_tags_name($product->mas_prod_id);
+                $product->tags = $tags;
+            }
+            $cats = Category::all();
+            return response()->json(['success' => true, 'data' => $products,'cats'=>$cats,'sort'=>$search_sort], 200);
+
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
         }
     }
 }

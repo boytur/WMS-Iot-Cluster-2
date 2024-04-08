@@ -80,6 +80,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/product/outbounds/search-lot-out', [DeleteLotOut::class, 'search_lot_out']);
 
     Route::delete('/product/outbounds/delete-outbound-product/{lot_out_id}', [DeleteLotOut::class, 'delete_lot_out']);
+    Route::post('/product/inbounds/create-outbound-order/search-product', [OutboundIndex::class, 'search_product_lot_out']);
     // route for product management
     Route::get('/product/managements', [ProductManagementIndex::class, 'product_management_index'])->name('product_management_index');
     Route::get('/product/managements/edit/{mas_prod_id}', [ProductManagementIndex::class, 'edit_master_product_index'])->name('edit_master_product');
