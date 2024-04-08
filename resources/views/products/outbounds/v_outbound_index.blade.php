@@ -212,7 +212,7 @@
                                 <tbody class="lot_out_table bg-white" id="lot_out_table">
                                     @foreach ($lotouts as $index => $lot_out)
                                         <tr class="bg-white border-b w-full hover:bg-blue-100 cursor-pointer"
-                                        onclick="onclick_outbound_details({{ $lot_out->lot_out_id }})">
+                                        ondblclick="onclick_outbound_details({{ $lot_out->lot_out_id }})">
                                             <td class="px-6 text-center">
                                                 {{ $index + 1 }}
                                             </td>
@@ -355,10 +355,10 @@
             }
         }
 
-        // const onclick_outbound_details = (lot_out_id) => {
-        //     const cluster = '{{ env('CLUSTER') }}'
-        //     window.location.href = `${cluster}/product/outbounds/outbound-detail/${lot_out_id}`;
-        //     }
+        const onclick_outbound_details = (lot_out_id) => {
+            const cluster = '{{ env('CLUSTER') }}'
+            window.location.href = `${cluster}/product/outbounds/outbound-detail/${lot_out_id}`;
+            }
         const delete_lot_out = async (lot_out_id) => {
             const cluster = '{{ env('CLUSTER') }}'
             Swal.fire({

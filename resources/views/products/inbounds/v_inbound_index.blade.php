@@ -213,7 +213,7 @@
                                 </thead>
                                 <tbody id="search_lot_in_table">
                                     @foreach ($lot_in_products as $index => $lot_in)
-                                        <tr onclick="onclick_lot_in_detail_details({{ $lot_in->lot_in_id }})" class="bg-white border-b hover:bg-blue-100 cursor-pointer">
+                                        <tr ondblclick="onclick_lot_in_detail_details({{ $lot_in->lot_in_id }})" class="bg-white border-b hover:bg-blue-100 cursor-pointer">
                                             <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-center">
                                                 {{ $index + 1 }}
                                             </th>
