@@ -508,7 +508,7 @@
                                             ${categories.map((cats, index) => {return search.cat_id === cats.cat_id ? cats.cat_name : ''}).join('')}
                                         </td>
                                         <td class="px-6 py-4 text-center">
-                                            ${search.tags.map(tag => tag.tag_name).join(', ')}
+                                            ${search.tags.map(tag => tag.tag_name).join(' ')}
                                         </td>
                                         <td class="px-6 py-4 text-center">
                                             <div class="flex justify-center items-center">
