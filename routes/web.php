@@ -62,7 +62,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/product/inbounds/search-lot-in', [InboundIndex::class, 'search_lot_in'])->name('search_lot_in');
     Route::post('/product/inbounds/create-inbound-order', [CreateLotInOrder::class, 'create_inbound_order']);
-
+    Route::post('/product/inbounds/create-inbound-order/search-product', [InboundIndex::class, 'search_product_lot_in']);
     // route for outbound order
     Route::get('/product/outbounds', [OutboundIndex::class, 'outbound_index']);
     Route::get('/product/outbounds/create-outbound-order', [OutboundIndex::class, 'create_outbound_order']);
@@ -79,6 +79,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/product/managements/edit/{mas_prod_id}', [ProductManagementIndex::class, 'edit_master_product_index'])->name('edit_master_product');
     Route::get('/product/managements/detail/{mas_prod_id}', [ProductManagementIndex::class, 'detail_master_product_index'])->name('edit_master_product');
     Route::get('/product/managements/add-new-product', [ProductManagementIndex::class, 'add_master_product_index'])->name('edit_master_product');
+    Route::post('/product/managements/search-product', [ProductManagementIndex::class, 'search_product'])->name('search_product');
 
     Route::get('/warehouse/add-space', function () {
         if (Auth::check() && Auth::user()->role === "warehouse_manager") {
