@@ -40,8 +40,7 @@
                     </thead>
                     <tbody>
                         @foreach ($lotouts as $index => $LotOut)
-                        <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer"
-                            onclick="onclick_LotOut_details({{ $LotOut->lot_out_id }})">
+                        <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer" onclick="onclick_LotOut_details({{ $LotOut->lot_out_id }})">
                             <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-center">
                                 {{ $index + 1 }}
                             </th>
@@ -59,10 +58,10 @@
                             <td class="px-6 py-4 text-center">
                                 @if ($LotOut->lot_out_status == 'Initialized')
                                 <p class="  py-1 text-gray-600">
-                                    {{ $LotOut->lot_out_status }}</p>
+                                    รอดำเนินการ</p>
                                 @else
                                 <p class=" text-center rounded-3xl py-1 text-red-600 ">
-                                    {{ $LotOut->lot_out_status }}</p>
+                                    ปิดล็อต </p>
                                 @endif
                             </td>
                         </tr>
@@ -78,7 +77,8 @@
 </div>
 <script>
     const onclick_LotOut_details = (lot_out_id) => {
-        const cluster = '{{ env('CLUSTER') }}'
+        const cluster = '{{ env('
+        CLUSTER ') }}'
         window.location.href = `${cluster}/product/outbounds/view-outbound-latest/detail/${lot_out_id}`;
     }
 </script>

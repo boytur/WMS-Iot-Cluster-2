@@ -127,10 +127,62 @@
     </div>
 </div>
 <script>
-        /*onclick_edit_pass()
-        * @author: Piyawat Wongyat 65160340
-        * @create date: 2024-04-07
+
+        /* togglepassword()
+        * @author: Phuriphat Khumsuan 65160096
+        * @create date: 2024-04-08
         */
+
+        /* Function Toggle Password
+        * Btn : old_password
+        */
+
+        function toggle_old_password() {
+        const password_input = document.getElementById('old_password');
+        const eye_icon = document.getElementById('eye_icon_old');
+
+            if (password_input.type === 'password') {
+                password_input.type = 'text';
+                eye_icon.classList.remove('fa-eye');
+                eye_icon.classList.add('fa-eye-slash');
+            } else {
+                password_input.type = 'password';
+                eye_icon.classList.remove('fa-eye-slash');
+                eye_icon.classList.add('fa-eye');
+            }
+        }
+
+        /* togglepassword()
+        * @author: Phuriphat Khumsuan 65160096
+        * @create date: 2024-04-08
+        */
+
+        /* Function Toggle Password
+        * Btn : new_password & confirm_password
+        */
+
+        function toggle_password() {
+        const password_input = document.getElementById('new_password');
+        const confirm_input = document.getElementById('confirm_password');
+        const eye_icon_new = document.getElementById('eye_icon_new');
+        const eye_icon_confirm = document.getElementById('eye_icon_confirm');
+
+        if (password_input.type === 'password') {
+            password_input.type = 'text';
+            confirm_input.type = 'text';
+            eye_icon_new.classList.remove('fa-eye');
+            eye_icon_confirm.classList.remove('fa-eye');
+            eye_icon_new.classList.add('fa-eye-slash');
+            eye_icon_confirm.classList.add('fa-eye-slash');
+        } else {
+            password_input.type = 'password';
+            confirm_input.type = 'password';
+            eye_icon_new.classList.remove('fa-eye-slash');
+            eye_icon_confirm.classList.remove('fa-eye-slash');
+            eye_icon_new.classList.add('fa-eye');
+            eye_icon_confirm.classList.add('fa-eye');
+        }
+    }
 
         const onclick_edit_pass = () => {
             Swal.fire({
@@ -139,15 +191,30 @@
 
                 <div class="w-full mt-10">
                     <label for="old_password" class="block text-left text-[0.7rem] font-medium text-black"> รหัสผ่านเดิม <span class="text-red-500">*</span> </label>
-                    <input id="old_password" type="password" class="swal2-input w-full cursor-pointer border input-primary" placeholder="**********">
+                    <div class="relative">
+                        <input id="old_password" type="password" class="swal2-input w-full cursor-pointer border input-primary pr-10" placeholder="**********">
+                        <button id="toggle_password" onclick="toggle_old_password()" class="absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 focus:outline-none">
+                            <i id="eye_icon_old" class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="w-full mt-2">
                     <label for="new_password" class="block mb-2 text-left text-[0.7rem] font-medium text-black"> รหัสผ่านใหม่ <span class="text-red-500">*</span> </label>
-                    <input id="new_password" type="password" class="swal2-input w-full cursor-pointer border input-primary" placeholder="**********">
+                    <div class="relative">
+                        <input id="new_password" type="password" class="swal2-input w-full cursor-pointer border input-primary pr-10" placeholder="**********">
+                        <button id="toggle_password" onclick="toggle_password()" class="absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 focus:outline-none">
+                            <i id="eye_icon_new" class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="w-full mt-2">
                     <label for="confirm_password" class="block mb-2 text-left text-[0.7rem] font-medium text-black"> ยืนยันรหัสผ่าน <span class="text-red-500">*</span> </label>
-                    <input id="confirm_password" type="password" class="swal2-input w-full cursor-pointer border input-primary" placeholder="**********">
+                    <div class="relative">
+                        <input id="confirm_password" type="password" class="swal2-input w-full cursor-pointer border input-primary pr-10" placeholder="**********">
+                        <button id="toggle_password" onclick="toggle_password()" class="absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 focus:outline-none">
+                            <i id="eye_icon_confirm" class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
 
                 `,
                 showCancelButton: true,
