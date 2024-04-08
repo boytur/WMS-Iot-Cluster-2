@@ -145,5 +145,10 @@
         </div>
     </div>
 </div>
-
+<script>
+    const onclick_inbound_lastest_deatil = (lot_in_id) => {
+        const cluster = '{{ env('CLUSTER') }}'
+        window.location.href = `${cluster}/product/inbounds/inbound-detail/${lot_in_id}`;
+    }
+</script>
 @endsection

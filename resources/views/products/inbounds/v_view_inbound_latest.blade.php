@@ -44,7 +44,7 @@
                             <tbody>
                                 @foreach ($lot_in_products as $index => $lot_in)
                                     <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer"
-                                        onclick="onclick_inbound_latest_details({{ $lot_in->lot_in_id }})">
+                                        onclick="onclick_inbound_lastest_detail_details({{ $lot_in->lot_in_id }})">
                                         <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
                                             {{ $index + 1 }}
                                         </th>
@@ -73,5 +73,10 @@
             </div>
         </div>
     </div>
-
+    <script>
+        const onclick_inbound_lastest_detail_details = (lot_in_id) => {
+            const cluster = '{{ env('CLUSTER') }}'
+            window.location.href = `${cluster}/product/inbounds/view-inbound-latest/detail/${lot_in_id}`;
+        }
+    </script>
 @endsection
