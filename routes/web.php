@@ -108,5 +108,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/product/managements/add-new-product', [CreateNewMasterProduct::class, 'create']);
 
     Route::post('/product/managements/add-new-product', [CreateNewMasterProduct::class, 'store']);
-    Route::get('/profile/{number}', [Profile::class, 'get_user_profile']);
+
+    Route::get('/user-management/create_user',[UserManagementIndex::class, 'create_user']);
+    Route::post('/user-management/create_user',[UserManagementIndex::class,'store_user']);
+    Route::post('/user-management/create_user', [UserManagementIndex::class,'store_user'])->name('upload.image');
+
+    Route::get('/profile', [Profile::class, 'get_user_profile']);
 });
