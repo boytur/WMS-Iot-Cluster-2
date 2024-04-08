@@ -66,16 +66,88 @@
                                     </div>
                                 </div>
                             </div>
+
                             {{-- add lot_out inbound --}}
                             <div class="w-full flex justify-end gap-3 mt-3">
                                 <div class=" items-center flex h-full relative">
-                                    <i class="fa-solid fa-truck lg:text-[2rem] text-sm cursor-pointer lg:mt-4"></i>
+
+                                    {{-- icon truck --}}
+                                    <i onclick="toggle_cart_open()" class="fa-solid fa-truck lg:text-[2rem] text-sm cursor-pointer lg:mt-4"></i>
                                     <div class="absolute flex top-4 left-[-8px]">
                                         <p
                                             class="w-[1rem] h-[1rem] bg-red-500 rounded-full text-white flex items-center justify-center py-1 mb-1">
                                             1</p>
                                     </div>
                                 </div>
+
+                                <div id="cart-popup"
+                                class="w-[45rem] mb-3 hidden absolute mt-20 mr-12 rounded-md bg-white shadow-lg border right-[18.5rem] p-1 z-40 text-black">
+                                <div class="border-b-4 border-black">
+                                    <b> <p class="text-center border-black">รายการล็อตสินค้าส่งออก</p> </b>
+                                </div>
+
+                                <div class="overflow-x-auto shadow-lg max-h-[25rem] overflow-y-scroll">
+                                    <div class="flex flex-col">
+                                    <table id="cart-table" class="w-full text-sm text-left rtl:text-right border-black">
+                                        <thead class="text-xs text-white uppercase bg-[#212529]">
+                                            <tr>
+                                                <th scope="col" class="pr-8 pl-5 w-10 px-3 py-1 text-center">
+                                                    ลำดับ
+                                                </th>
+
+                                                <th scope="col" class=" px-3 py-1 text-center">
+                                                    หมายเลขรายการรับเข้า
+                                                </th>
+
+                                                <th scope="col" class="pl-5 px-3 py-1 text-center">
+                                                    วันที่สร้าง
+                                                </th>
+
+                                                <th scope="col" class="pr-8 px-3 py-1 text-center">
+                                                    ผู้สร้าง
+                                                </th>
+
+                                                <th scope="col" class=" px-3 py-1 text-center">
+                                                    สถานะ
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                    <div class="mt-2">
+                                        <table>
+                                            <thead>
+                                                <tbody>
+                                                    @foreach ($lotouts as $index => $lot_out)
+                                                        <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer">
+                                                            <td class="h-[1px] w-[80px] px-6 py-4 text-[12px]  text-center ">{{ $index + 1 }}</td>
+                                                            <td class="h-[1px] w-[500px] px-6 py-4 text-center text-[12px] ">{{ $lot_out->lot_out_number }}</td>
+                                                            <td class="h-[1px] w-[100px] px-6 py-4 text-center text-[12px] ">{{ date('d/m/Y', strtotime($lot_out->created_at)) }}</td>
+                                                            <td class="h-[1px] w-[200px] px-6 py-4 text-center text-[12px]">{{ $lot_out->users->fname . ' ' . $lot_out->users->lname }}</td>
+                                                            <td class="h-[1px] w-[100px] px-6 py-4 text-center text-[12px]">
+                                                                @if ($lot_out->lot_out_status === 'Initialized')
+                                                                    <div>
+                                                                        <p class="border text-center bg-[#666666] rounded-3xl py-1 px-1 text-white">{{ $lot_out->lot_out_status }}</p>
+                                                                    </div>
+                                                                @else
+                                                                    <div>
+                                                                        <p class="border text-center bg-green-700 rounded-3xl py-1 px-1 text-white ">{{ $lot_out->lot_out_status }}</p>
+                                                                    </div>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
                                 <div class="mt-3 lg:pt-0">
                                     <a class="btn-secondary px-4 flex items-center h-[3rem] gap-1"
                                         href="{{ url('product/outbounds/view-outbound-latest') }}">
@@ -106,6 +178,8 @@
                             </div>
                         </div>
                     </div>
+
+                    {{-- table --}}
                     <div class="w-full bg-black/20 mt-2 rounded-md">
                         <div class="py-2 w-full bg-[#D9D9D9] sm:rounded-lg">
                             <b class=" bg mx-2  mt-2 rounded-md text-black text-lg" id="lot_out_count">
@@ -137,7 +211,8 @@
                                 </thead>
                                 <tbody class="lot_out_table bg-white" id="lot_out_table">
                                     @foreach ($lotouts as $index => $lot_out)
-                                        <tr class="bg-white border-b w-full hover:bg-blue-100 cursor-pointer">
+                                        <tr class="bg-white border-b w-full hover:bg-blue-100 cursor-pointer"
+                                        onclick="onclick_outbound_details({{ $lot_out->lot_out_id }})">
                                             <td class="px-6 text-center">
                                                 {{ $index + 1 }}
                                             </td>
@@ -154,14 +229,13 @@
                                             <td class="px-6 py-4 text-center">
                                                 @if ($lot_out->lot_out_status === 'Initialized')
                                                     <div>
-                                                        <p
-                                                            class="border text-center bg-[#666666] rounded-3xl py-1 text-white">
-                                                            {{ $lot_out->lot_out_status }}</p>
+                                                        <p class="border text-center bg-[#666666] rounded-3xl py-1 text-white">
+                                                            {{ $lot_out->lot_out_status }}
+                                                        </p>
                                                     </div>
                                                 @else
                                                     <div>
-                                                        <p
-                                                            class="border text-center bg-green-700 rounded-3xl py-1 text-white">
+                                                        <p class="border text-center bg-green-700 rounded-3xl py-1 text-white">
                                                             {{ $lot_out->lot_out_status }}
                                                         </p>
                                                     </div>
@@ -281,6 +355,10 @@
             }
         }
 
+        const onclick_outbound_details = (lot_out_id) => {
+            const cluster = '{{ env('CLUSTER') }}'
+            window.location.href = `${cluster}/product/outbounds/outbound-detail/${lot_out_id}`;
+            }
         const delete_lot_out = async (lot_out_id) => {
             const cluster = '{{ env('CLUSTER') }}'
             Swal.fire({
@@ -314,5 +392,41 @@
                 }
             });
         }
+
+        const refresh_cart_table = ()=> {
+
+            //ดึงข้อมูลสินค้าใน localstorage
+            let products_in_cart_localstorage = JSON.parse(localStorage.getItem('products_cart') || '[]');
+            const cart_table = document.querySelector('#cart-table tbody');
+
+            cart_table.innerHTML = '';
+
+            //สร้างตารางใหม่จากข้อมูลใน localstorage
+            products_in_cart_localstorage.forEach(function(product, index) {
+                let new_row = '<tr class="bg-white border-b hover:bg-blue-100 cursor-pointer">' +
+                    '<td class="px-6 py-1 font-medium whitespace-nowrap text-center mr-2">' +
+                        '<img class="w-[60px] object-cover" src="' + product.mas_prod_image + '">' +
+                    '</td>' +
+                    '<td class="px-6 py-1 text-center">' + product['mas_prod_name'] + '</td>' +
+                    '<td class="px-6 py-1 text-center">' + product.categories.cat_name + '</td>' +
+                    '<td class="px-6 py-1 text-center">' + product['amount'] + '</td>' +
+                    '<td class="px-6 py-1 text-center">' +
+                    '<button onclick="remove_product_from_cart(' + index + ')">' +
+                    '<i class="fa-solid fa-trash-can text-[1rem] hover:text-red-500 hover:scale-105"></i>' +
+                    '</button>' +
+                    '</td>' +
+                    '</tr>';
+                cart_table.innerHTML += new_row;
+            });
+
+            cart_amount.textContent = products_in_cart_localstorage.length;
+            }
+
+            const toggle_cart_open = ()=>{
+            const cart = document.querySelector('#cart-popup');
+            cart.classList.toggle('md:block');
+            refresh_cart_table();
+        }
+
     </script>
 @endsection

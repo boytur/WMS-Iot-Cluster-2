@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\InboundOrder;
 use App\Models\LotIn;
 use App\Models\User;
+use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use App\Models\MasterProduct;
 use Illuminate\Http\Request;
@@ -18,7 +19,8 @@ class InboundIndex extends Controller
         try {
             if (Auth::check()) {
                 $lot_in_products = LotIn::where('wh_id', Session::get('user_warehouse'))->paginate(20);
-                return view('products.inbounds.v_inbound_index', compact('lot_in_products'));
+                $products = MasterProduct::paginate(20);
+                return view('products.inbounds.v_inbound_index', compact('lot_in_products', 'products'));
             }
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
@@ -128,12 +130,63 @@ class InboundIndex extends Controller
     public function edit_inbound_order(int $lot_in_id)
     {
         $lot_in = LotIn::where('lot_in_id', $lot_in_id)->first();
-
+        $master_products = MasterProduct::paginate(5);
+        foreach ($master_products as $product) {
+            $tags = $product->get_tags_name($product->mas_prod_id);
+            $product->tags = $tags;
+        }
         if ($lot_in !== null) {
             $lot_in_products = InboundOrder::where('lot_in_id', $lot_in_id)->paginate(20);
-            return view('products.inbounds.v_edit_inbound_order', compact('lot_in', 'lot_in_products'));
+            return view('products.inbounds.v_edit_inbound_order', compact('lot_in', 'lot_in_products','master_products'));
         } else {
             abort(404);
+        }
+    }
+    public function search_product_lot_in(Request $request)
+    {
+        try {
+            $search_key = $request->input('search_key');
+            $search_attribute = $request->input('search_attribute');
+
+            $Productquery = MasterProduct::query();
+
+            if (!empty($search_key)) {
+                if ($search_attribute === 'mas_prod_barcode') {
+                    $Productquery->where('mas_prod_barcode', 'like', "%$search_key%");
+                } elseif ($search_attribute === 'mas_prod_no') {
+                    $Productquery->where('mas_prod_no', 'like', "%$search_key%");
+                }else {
+                }
+            }
+
+            $products = $Productquery->get();
+            foreach ($products as $product) {
+                $tags = $product->get_tags_name($product->mas_prod_id);
+                $product->tags = $tags;
+            }
+            $cats = Category::all();
+            // $new_searches = [];
+            // foreach ($products as $search) {
+            //     $product = Category::where('cat_id', $search->cat_id)->first();
+            //     if ($product !== null) {
+            //         $new_searches[] = [
+            //             'mas_prod_id' => $search->mas_prod_id,
+            //             'mas_prod_no' => $search->mas_prod_no,
+            //             'mas_prod_barcode' => $search->mas_prod_barcode,
+            //             'mas_prod_name' => $search->mas_prod_name,
+            //             'mas_prod_image' => $search->mas_prod_image,
+            //             'mas_prod_size' => $search->mas_prod_size,
+            //             'cat_name' => $product->cat_name,
+            //             'created_at' => $search->created_at,
+            //             'updated_at' => $search->updated_at,
+            //             'tags'=>$search->tags,
+            //         ];
+            //     }
+            // }
+            return response()->json(['success' => true, 'data' => $products,'cats'=>$cats], 200);
+
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
         }
     }
 }

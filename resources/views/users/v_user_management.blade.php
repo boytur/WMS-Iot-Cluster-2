@@ -63,7 +63,7 @@
                         <div class="w-full flex justify-end gap-3 mt-2">
                             <div class="mt-3 lg:pt-0">
                                 <button onclick="onclick_add_user()" class="btn-primary px-4 flex items-center h-[3rem] gap-1">
-                        
+
                                         <div class="flex items-center gap-1">
                                             <i class="fa-solid fa-circle-plus text-[0.8rem] mt-[2px]"></i>
                                             <div>
@@ -107,7 +107,7 @@
 
                             <tbody id="user_table">
                                 @foreach ($users as $index => $user)
-                                <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer" onclick="onclick_user_details('/user/managements/detail/{{ $user->id }}')">
+                                <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer" onclick="onclick_user_details('{{ $user->number }}')">
                                     <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
                                         {{ $index + 1 }}
                                     </th>
@@ -192,7 +192,7 @@
                 } else {
                     users.forEach((user, index) => {
                         const row = `
-                                <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer" onclick="onclick_user_details('/user/managements/detail/${user.id}')">
+                                <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer" onclick="onclick_user_details('${user.number}')">
                                     <td class="px-6 py-4 font-medium whitespace-nowrap">${index + 1}</td>
                                     <td class="px-6 py-4">${user.number}</td>
                                     <td class="px-6 py-4">${user.fname} ${user.lname}</td>
@@ -214,21 +214,17 @@
             });
         }
     }
-</script>
-@endsection
-
-{{-- หน้าต่างแสดงป๊อปอัพเพิ่มผู้ใช้งาน --}}
-<script>
+    //หน้าต่างแสดงป๊อปอัพเพิ่มผู้ใช้งาน
     const onclick_add_user = () => {
         Swal.fire({
-            title: "เพิ่มผู้ใช้งานใหม่", 
+            title: "เพิ่มผู้ใช้งานใหม่",
             customClass: 'swal-wide',
             html: `
 
             <hr class="mb-3">
 
 
-            <div class="flex justify-between w-full space-x-4"> 
+            <div class="flex justify-between w-full space-x-4">
 
             {{-- insert image --}}
                     <div class="w-1/3">
@@ -318,12 +314,22 @@
             reverseButtons: true // สลับตำแหน่งปุ่ม
         })
     }
+    const onclick_user_details = (number)=> {
+        const cluster = '{{ env('CLUSTER') }}'
+            window.location.href = `${cluster}/user-edit-detail/${number}`;
+    }
 </script>
-
 <style>
-.swal-wide{
-    width:900px !important;
-    height: 895px;
-}
+    .swal-wide{
+        width:900px !important;
+        height: 895px;
+    }
 
-</style>
+    </style>
+@endsection
+
+
+
+
+
+

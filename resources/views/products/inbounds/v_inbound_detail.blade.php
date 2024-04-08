@@ -130,22 +130,25 @@
                     {{ $inbound_products->links('pagination::custom-pagination') }}
 
                 </div>
-            </div>
-
-
-            {{--ปุ่มค้นหา--}}
-            <div class="mt-3 flex items-end justify-end">
-                <button onclick="" id="search_wh" class="w-[10rem] h-[3rem] gap-2 btn-primary flex items-center justify-center mx-2">
-                    <div>
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </div>
-                    <div type="submit">
-                        <p>หาพื้นที่จัดเก็บ</p>
-                    </div>
-                </button>
+                {{--ปุ่มค้นหา--}}
+                <div class="mt-3 flex items-end justify-end pb-3">
+                    <button onclick="" id="search_wh" class="w-[10rem] h-[3rem] gap-2 btn-primary flex items-center justify-center mx-2">
+                        <div>
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                        <div type="submit">
+                            <p>หาพื้นที่จัดเก็บ</p>
+                        </div>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
+<script>
+    const onclick_inbound_lastest_deatil = (lot_in_id) => {
+        const cluster = '{{ env('CLUSTER') }}'
+        window.location.href = `${cluster}/product/inbounds/inbound-detail/${lot_in_id}`;
+    }
+</script>
 @endsection
