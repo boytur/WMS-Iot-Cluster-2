@@ -61,7 +61,7 @@
                                             ชื่อสินค้า
                                         </th>
                                         <th scope="col" class="px-6 py-3 text-center">
-                                            บาร์โค้ด
+                                            บาร์โคด
                                         </th>
                                         <th scope="col" class="px-6 py-3 text-center">
                                             จำนวน
@@ -132,13 +132,13 @@
                                                     <div>
                                                         <p
                                                             class="border text-center bg-[#666666] rounded-3xl py-1 text-white">
-                                                            {{ $outbound_order->outbound_status }}</p>
+                                                            รอส่งออก</p>
                                                     </div>
                                                 @else
                                                     <div>
                                                         <p
                                                             class="border text-center bg-green-700 rounded-3xl py-1 text-white">
-                                                            {{ $outbound_order->outbound_status }}
+                                                            ส่งออกแล้ว
                                                         </p>
                                                     </div>
                                                 @endif

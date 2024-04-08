@@ -120,13 +120,13 @@
                                             @if ($lot_out->lot_out_status === 'Initialized')
                                                 <div>
                                                     <p class="border text-center bg-[#666666] rounded-3xl py-1 text-white">
-                                                        {{ $outbound_detail->outbound_status }}
+                                                        รอส่งออก
                                                     </p>
                                                 </div>
                                             @else
                                                 <div>
                                                     <p class="border text-center bg-green-700 rounded-3xl py-1 text-white">
-                                                        {{ $outbound_detail->outbound_status }}
+                                                        ส่งออกแล้ว
                                                     </p>
                                                 </div>
                                             @endif
