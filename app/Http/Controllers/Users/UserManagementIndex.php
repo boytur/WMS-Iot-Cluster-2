@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Users;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -16,8 +17,9 @@ class UserManagementIndex extends Controller
     {
         try {
             if (Auth::check() && Auth::user()->role === "warehouse_manager") {
+                $whs = Warehouse::all();
                 $users = User::paginate(20);
-                return view('users.v_user_management', compact('users'));
+                return view('users.v_user_management', compact('users','whs'));
             } else {
                 return redirect('/product/inbounds');
             }
@@ -109,6 +111,26 @@ class UserManagementIndex extends Controller
         }catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
+    }
+    public function create_user()
+    {
+        return view('users.v_user_management');
+    }
+    public function store_user(Request $request)
+    {
+        $file = $request->file('file');
+        $validatedData = $request->validate([
+            'fname' => 'required',
+            'lname' => 'required',
+            'date' => 'required|date',
+            'role' => 'required',
+            'wh_id' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required',
+        ]);
+        dd($validatedData);
+        return redirect()->back();
+
     }
 }
 
