@@ -212,7 +212,7 @@
                                 <tbody class="lot_out_table bg-white" id="lot_out_table">
                                     @foreach ($lotouts as $index => $lot_out)
                                         <tr class="bg-white border-b w-full hover:bg-blue-100 cursor-pointer"
-                                        onclick="onclick_outbound_details({{ $lot_out->lot_out_id }})">
+                                        ondblclick="onclick_outbound_details({{ $lot_out->lot_out_id }})">
                                             <td class="px-6 text-center">
                                                 {{ $index + 1 }}
                                             </td>
@@ -230,13 +230,13 @@
                                                 @if ($lot_out->lot_out_status === 'Initialized')
                                                     <div>
                                                         <p class="border text-center bg-[#666666] rounded-3xl py-1 text-white">
-                                                            {{ $lot_out->lot_out_status }}
+                                                            รอดำเนินการ
                                                         </p>
                                                     </div>
                                                 @else
                                                     <div>
                                                         <p class="border text-center bg-green-700 rounded-3xl py-1 text-white">
-                                                            {{ $lot_out->lot_out_status }}
+                                                            ปิดล็อต
                                                         </p>
                                                     </div>
                                                 @endif
@@ -354,22 +354,18 @@
                 });
             }
         }
-
-        const onclick_outbound_details = (lot_out_id) => {
-            const cluster = '{{ env('CLUSTER') }}'
-            window.location.href = `${cluster}/product/outbounds/outbound-detail/${lot_out_id}`;
-            }
-        const delete_lot_out = async (lot_out_id) => {
+          const delete_lot_out = async (lot_out_id) => {
             const cluster = '{{ env('CLUSTER') }}'
             Swal.fire({
                 title: "คุณต้องการลบใช่หรือไม่?",
                 text: "คุณจะไม่สามารถเรียกข้อมูลได้อีก!",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
+                confirmButtonColor:"#d33" ,
+                cancelButtonColor: "#3085d6",
                 cancelButtonText: "ยกเลิก",
                 confirmButtonText: "ลบ!"
+
             }).then(async (result) => {
                 if (result.isConfirmed) {
 
@@ -388,10 +384,22 @@
                             icon: "success"
                         });
                         window.location.reload();
+                    }else if(response.status ===201){
+                        Swal.fire({
+                            title: "ลบข้อมูลไม่สำเร็จ!",
+                            icon: "warning"
+                        });
                     }
                 }
             });
         }
+
+
+        const onclick_outbound_details = (lot_out_id) => {
+            const cluster = '{{ env('CLUSTER') }}'
+            window.location.href = `${cluster}/product/outbounds/outbound-detail/${lot_out_id}`;
+            }
+
 
         const refresh_cart_table = ()=> {
 

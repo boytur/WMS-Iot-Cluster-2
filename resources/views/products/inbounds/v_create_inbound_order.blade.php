@@ -359,6 +359,7 @@
                             <p class="font-bold">จำนวน:</p><span>${product.amount}</span>
                         </div>
                     </div>
+                    <lable>กรุณาใส่วันหมดอายุ: </label>
                     <input id="date" type="date" class="swal2-input w-full cursor-pointer border input-primary py-2 px-2">
                 </div>`,
                 showCancelButton: true,
@@ -600,6 +601,7 @@
                             <p class="font-bold">จำนวน:</p><span>${product.amount}</span>
                         </div>
                     </div>
+                    <lable>กรุณาใส่วันหมดอายุ: </label>
                     <input id="date" type="date" class="swal2-input w-full cursor-pointer border input-primary py-2 px-2">
                 </div>`,
                         showCancelButton: true,
