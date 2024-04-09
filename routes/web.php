@@ -133,10 +133,10 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/user-management/create_new_user', [UserManagementIndex::class, 'create_new_user']);
     // Route::post('/user-management/create_user', [UserManagementIndex::class, 'store_user'])->name('upload.image');
 
-
+    Route::delete('/user-management/delete-user/{id}', [UserManagementIndex::class, 'delete']);
     Route::post('/user-management/create_user', [UserManagementIndex::class, 'store_user']);
     Route::post('/user-management/create_user', [UserManagementIndex::class, 'store_user'])->name('upload.image');
-    Route::put('/user-management/edit-user-info/{id}',[UserManagementIndex::class,'edit_user_info']);
+    Route::put('/user-management/edit-user-info/{user_id}',[UserManagementIndex::class,'edit_user_info']);
     Route::get('/profile', [Profile::class, 'get_user_profile']);
 
 
