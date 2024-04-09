@@ -293,7 +293,7 @@
         const closed_lot_in = async (payload) => {
             const cluster = '{{ env('CLUSTER') }}';
             console.log(payload[0])
-            console.log(payload[1].data[0].on_prod_status)
+            console.log(payload[1]?.data[0]?.on_prod_status)
             Swal.fire({
                 title: "คุณต้องการปิดล็อตใช่หรือไม่?",
                 text: "โปรดเช็คสถานะสินค้าก่อนกดยืนยัน!",
@@ -372,6 +372,9 @@
             });
 
             console.log(response);
+            if(response.ok){
+                window.location.reload();
+            }
         }
         const cancel_prod = async (on_prod_id) => {
             const on_id = on_prod_id;
