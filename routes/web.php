@@ -67,10 +67,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/product/inbounds/edit-inbound-order/{lot_in_id}', [EditByAddProductLotInOrder::class, 'add_product_to_lot_in'])->name('add_product_to_lot_in');
 
     Route::post('/product/inbounds/find-lot-in-space/{lot_in_id}', [FindLotInSpace::class, 'find_lot_in_space']);
-
+    Route::post('/product/inbounds/inbound-detail/closed_lot_in',[InboundIndex::class, 'Closed_lot_in']);
     Route::post('/product/inbounds/search-lot-in', [InboundIndex::class, 'search_lot_in'])->name('search_lot_in');
     Route::post('/product/inbounds/create-inbound-order', [CreateLotInOrder::class, 'create_inbound_order']);
     Route::post('/product/inbounds/create-inbound-order/search-product', [InboundIndex::class, 'search_product_lot_in']);
+    Route::post('/product/inbounds/inbound-detail/cancel_on_shelf',[InboundIndex::class, 'cancel_on_shelf']);
+    Route::post('/product/inbounds/inbound-detail/confrim_on_shelf',[InboundIndex::class, 'confrim_on_shelf']);
+
 
     Route::post('/product/inbounds/search-lot-in', [InboundIndex::class, 'search_lot_in']);
     Route::delete('/product/inbouns/delete-inbound-product/{lot_in_id}', [DeleteLotIn::class, 'delete_lot_in']);
