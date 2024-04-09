@@ -17,25 +17,39 @@ Displayfrom view all wh
                 <div class="text-center justify-center flex flex-wrap gap-16">
                     <div
                         class="bg-white shadow-md rounded-lg p-4 flex flex-col items-center justify-center h-[10rem] w-[15.2rem]">
+
                         <div class="flex items-center mb-4">
                             <i class="fa-solid fa-magnifying-glass"></i>
-                            <a class="text-gray-700 font-bold text-4xl ml-2">20,000</a>
+
+                            <a class="text-gray-700 font-bold text-4xl ml-2">
+                                {{ $onshelf_products }}
+                            </a>
                         </div>
                         <a class="text-gray-700 font-bold text-1xl mb-1">ยอดสินค้ารับเข้าวันนี้</a>
                     </div>
                     <div
                         class="bg-white shadow-md rounded-lg p-4 flex flex-col items-center justify-center h-[10rem] w-[15.2rem]">
+
                         <div class="flex items-center mb-4">
                             <i class="fa-solid fa-magnifying-glass"></i>
-                            <a class="text-gray-700 font-bold text-4xl ml-2">12,467</a>
+                            <a class="text-gray-700 font-bold text-4xl ml-2">{{ $outbound_products }}</a>
                         </div>
                         <a class="text-gray-700 font-bold text-1xl mb-1">ยอดสินค้าส่งออกวันนี้</a>
                     </div>
                     <div
                         class="bg-white shadow-md rounded-lg p-4 flex flex-col items-center justify-center h-[10rem] w-[15.2rem]">
+                        @php
+                            $total_amount_all = 0;
+                        @endphp
+
+                        @foreach ($onshelf_all as $onshelf)
+                            @php
+                                $total_amount_all += $onshelf->on_prod_amount;
+                            @endphp
+                        @endforeach
                         <div class="flex items-center mb-4">
                             <i class="fa-solid fa-magnifying-glass"></i>
-                            <a class="text-gray-700 font-bold text-4xl ml-2">10,300</a>
+                            <a class="text-gray-700 font-bold text-4xl ml-2">{{ $total_amount_all }}</a>
                         </div>
                         <a class="text-gray-700 font-bold text-1xl mb-1">สินค้าทั้งหมด</a>
                     </div>
@@ -43,12 +57,12 @@ Displayfrom view all wh
                         class="bg-white shadow-md rounded-lg p-4 flex flex-col items-center justify-center h-[10rem] w-[15.2rem]">
                         <div class="flex items-center mb-4">
                             <i class="fa-solid fa-magnifying-glass"></i>
-                            <a class="text-gray-700 font-bold text-4xl ml-2">5</a>
+                            <a class="text-gray-700 font-bold text-4xl ml-2">{{ $count_warehouses}}</a>
                         </div>
                         <a class="text-gray-700 font-bold text-1xl mb-1">คลังสินค้าทั้งหมด</a>
                     </div>
                 </div>
-                <div class="w-full mt-2 rounded-t-md">
+                <div class="w-full mt-6 rounded-t-md">
                     <div class="py-2 w-full bg-white rounded-t-md">
                         <b class="mx-3  mt-2 text-lg text-black uppercase   ">
                             รายการการสินค้าเข้า - ออก
@@ -56,32 +70,48 @@ Displayfrom view all wh
                     </div>
                 </div>
                 <hr>
-                <div class="bg-white text-lg  w-full h-[40rem]  ">
+                <div class="bg-white text-lg  w-full h-[35rem]  ">
 
-                    <div>
+                    <div class="chart-container"
+                        style="position: relative; display: flex;
+                    justify-content: center;  ; height:34rem; width:full">
                         {{--  <b class=" text-sm ">จำนวน (ชิ้น)</b>  --}}
 
                         <canvas id="myChart"></canvas>
 
                     </div>
 
+
                     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+
                     <script>
+                        const total = 0;
+
                         const ctx = document.getElementById('myChart');
 
                         new Chart(ctx, {
                             type: 'line',
                             data: {
-                                labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12 '],
+                                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec '],
                                 datasets: [{
+
+
                                         label: 'สินค้าขาเข้า',
-                                        data: [1, 2, 2, 1, 2, 2, 1, 1, 3, 1, 1, 2],
+                                        data: [
+
+                                        {{ $onshelf_product_jan }},{{ $onshelf_product_feb }},{{ $onshelf_product_mar }}, {{ $onshelf_product_apr }},{{ $onshelf_product_may }}
+                                         , {{ $onshelf_product_jun }},  {{ $onshelf_product_jul }}, {{ $onshelf_product_aug }}, {{ $onshelf_product_sep }}, {{ $onshelf_product_oct }},{{ $onshelf_product_nov }} , {{ $onshelf_product_dec }}
+                                        ],
                                         borderWidth: 3
                                     },
                                     {
                                         label: 'สินค้าขาออก',
-                                        data: [1, 2, 1, 2, 0, 1, 1, 2, 1, 2, 2, 3],
+                                        data: [
+                                            {{ $outbound_product_jan }},{{ $outbound_product_feb }},{{$outbound_product_mar}},{{ $outbound_product_apr }},{{$outbound_product_may}}
+                                            ,{{ $outbound_product_jun }},{{ $outbound_product_jul }},{{ $outbound_product_aug }},{{ $outbound_product_sep }},{{ $outbound_product_oct }},{{ $outbound_product_nov }}
+                                            ,{{ $outbound_product_dec }}
+                                        ],
                                         borderWidth: 3
                                     }
                                 ]
