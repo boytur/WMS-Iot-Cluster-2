@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Products\Inbounds\CreateLotInOrder;
 use App\Http\Controllers\Products\Inbounds\DeleteLotIn;
+use App\Http\Controllers\Products\Inbounds\FindLotInSpace;
 use App\Http\Controllers\Products\Inbounds\InboundIndex;
 use app\Http\Controllers\Products\Inbounds\GetLotInAnotherWh;
 use App\Http\Controllers\Products\Outbounds\OutboundIndex;
@@ -64,6 +65,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/product/inbounds/inbound-detail/{lot_in_id}', [InboundIndex::class, 'inbound_detail']);
     Route::get('/product/inbounds/edit-inbound-order/{lot_in_id}', [InboundIndex::class, 'edit_inbound_order']);
     Route::post('/product/inbounds/edit-inbound-order/{lot_in_id}', [EditByAddProductLotInOrder::class, 'add_product_to_lot_in'])->name('add_product_to_lot_in');
+
+    Route::post('/product/inbounds/find-lot-in-space/{lot_in_id}', [FindLotInSpace::class, 'find_lot_in_space']);
 
     Route::post('/product/inbounds/search-lot-in', [InboundIndex::class, 'search_lot_in'])->name('search_lot_in');
     Route::post('/product/inbounds/create-inbound-order', [CreateLotInOrder::class, 'create_inbound_order']);

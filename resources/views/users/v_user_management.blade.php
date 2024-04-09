@@ -248,7 +248,7 @@
                                 <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG หรือ GIF (MAX.
                                     800x400px)</p>
                             </div>
-                                <input id="dropzone_file" type="file" class="hidden" />
+                                <input id="dropzone-file" type="file" class="hidden" />
                                 </label>
                         </div>
                     </div>
@@ -339,6 +339,7 @@
         }
 
         const fetch_create_user = async () => {
+            const dropzone_file = document.getElementById('dropzone-file').files[0];
             const fname = document.getElementById('fname').value.trim();
             const lname = document.getElementById('lname').value.trim();
             const date = document.getElementById('date').value.trim();
@@ -346,19 +347,30 @@
             const wh_id = document.getElementById('wh_id').value.trim();
             const email = document.getElementById('email').value.trim();
             const phone = document.getElementById('phone').value.trim();
-            if (fname === '' || lname === '' || date === '' || role === '' || wh_id === '' || email === '' ||
-                phone === '') {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'กรุณากรอกข้อมูลให้ครบถ้วน',
-                    text: 'โปรดตรวจสอบและกรอกข้อมูลที่จำเป็นทั้งหมด',
-                    confirmButtonText: 'ตกลง'
-                });
-            } else {
-                console.log(fname, lname, date, role, wh_id, email, phone);
-                // ดำเนินการต่อไปหากข้อมูลครบถ้วน
-                // ...
-            }
+
+            // if (fname === '' || lname === '' || date === '' || role === '' || wh_id === '' || email === '' ||
+            //     phone === '') {
+            //     Swal.fire({
+            //         icon: 'error',
+            //         title: 'กรุณากรอกข้อมูลให้ครบถ้วน',
+            //         text: 'โปรดตรวจสอบและกรอกข้อมูลที่จำเป็นทั้งหมด',
+            //         confirmButtonText: 'ตกลง'
+            //     });
+            // } else {
+            //     console.log(fname, lname, date, role, wh_id, email, phone);
+            //     // ดำเนินการต่อไปหากข้อมูลครบถ้วน
+            //     // ...
+            // }
+            const formData = new FormData();
+            formData.append('fname', fname);
+            formData.append('lname', lname);
+            formData.append('date', date);
+            formData.append('role', role);
+            formData.append('wh_id', wh_id);
+            formData.append('email', email);
+            formData.append('phone', phone);
+            formData.append('dropzone-file', dropzone_file);
+
             const cluster = "{{ env('CLUSTER') }}";
             const response = await fetch(`${cluster}/user-management/create_user`, {
                 method: 'POST',
@@ -366,15 +378,7 @@
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
-                body: JSON.stringify({
-                    fname,
-                    lname,
-                    date,
-                    role,
-                    wh_id,
-                    email,
-                    phone
-                })
+                body: formData
             })
             //console.log(response);
             const response_data = await response.json();
