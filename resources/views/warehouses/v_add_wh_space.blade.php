@@ -46,7 +46,7 @@
                                             Tag
                                         </label>
                                         <select id="tag-select" class="h-[3rem] w-[15rem] input-primary">
-                                            <option disabled selected>#เลือกแท็ก</option>
+                                            <option disabled selected value="">#เลือกแท็ก</option>
                                             @foreach ($tags as $tag)
                                                 <option value="{{ $tag->tag_id }}">{{ $tag->tag_name }}</option>
                                             @endforeach
@@ -155,7 +155,7 @@
             var shelf = document.getElementById('shelf').value;
             var rackFloor = document.getElementById('floor').value;
             var rackName = document.getElementById('rack').value;
-            if (rack_name == '') {
+            if (rackName == '') {
                 Swal.fire({
                     'icon': 'warning',
                     'title': 'กรุณาใส่ชื่อRack',
@@ -163,8 +163,7 @@
                 });
 
                 return;
-            }
-            elseif(rack_h == '') {
+            } else if (rackFloor == '') {
                 Swal.fire({
                     'icon': 'warning',
                     'title': 'กรุณาใส่Floor',
@@ -172,8 +171,7 @@
                 });
 
                 return;
-            }
-            elseif(rack_w == '') {
+            } else if (shelf == '') {
                 Swal.fire({
                     'icon': 'warning',
                     'title': 'กรุณาใส่Shelf',
@@ -181,6 +179,27 @@
                 });
 
                 return;
+            }
+            var regex = /^[A-Za-z]+$/; // regex สำหรับตัวอักษรเท่านั้น
+            if (regex.test(shelf) || regex.test(floor)) {
+                Swal.fire({
+                    'icon': 'warning',
+                    'title': 'Shelf และ Floor ต้องเป็นตัวเลขเท่านั้น',
+                    confirmButtonColor: '#2f67ff',
+                });
+
+                return
+            }
+
+            // ตรวจสอบ rackName ว่าไม่มีช่องว่าง
+            if (rackName.trim() === '' || !regex.test(rackName)) {
+                Swal.fire({
+                    'icon': 'warning',
+                    'title': 'Rack Name ต้องไม่มีช่องว่าง และเป็นตัวอักษรเท่านั้น',
+                    confirmButtonColor: '#2f67ff',
+                });
+
+                return
             }
             if (shelf != '' || rackFloor != '' || rackName != '') {
 

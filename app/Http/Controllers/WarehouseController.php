@@ -94,7 +94,7 @@ class WarehouseController extends Controller
     public function add_wh_space(Request $request)
     {
         // try{
-            // dd($request->payload['space_name']);
+            // dd($request);
             $wh_id = Session::get('user_warehouse');
             $rack = Rack::create([
                 'rack_name' => $request->payload['rack_name'],
