@@ -170,7 +170,7 @@
                 const user_type = document.getElementById("user_type").value;
                 const cluster =
                     '{{ env('
-                                                                                                CLUSTER ') }}'
+                                                                                                                    CLUSTER ') }}'
                 //ส่ง req
 
                 const response = await fetch(`${cluster}/user-management/search`, {
@@ -347,16 +347,16 @@
             const phone = document.getElementById('phone').value.trim();
 
 
-            if (dropzoneFile) {
-                dropzoneFileJson = {
-                    name: dropzoneFile.name,
-                    size: dropzoneFile.size,
-                    type: dropzoneFile.type,
-                    lastModified: dropzoneFile.lastModified
-                };
+            // if (dropzoneFile) {
+            //     dropzoneFileJson = {
+            //         name: dropzoneFile.name,
+            //         size: dropzoneFile.size,
+            //         type: dropzoneFile.type,
+            //         lastModified: dropzoneFile.lastModified
+            //     };
 
-                dropzoneFileJson = JSON.stringify(dropzoneFileJson);
-            }
+            //     dropzoneFileJson = JSON.stringify(dropzoneFileJson);
+            // }
 
 
             // if (fname === '' || lname === '' || date === '' || role === '' || wh_id === '' || email === '' ||
@@ -387,7 +387,7 @@
                     wh_id,
                     email,
                     phone,
-                    dropzoneFileJson,
+                    // dropzoneFileJson,
                 })
             })
             //console.log(response);
@@ -395,9 +395,18 @@
             if (response_data.success) {
                 Swal.fire({
                     'icon': 'success',
-                    'title': 'success',
-                    'text': response_data.data,
-                });
+                    'title': 'เพิ่มข้อมูลสำเร็จ',
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'ตกลง'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // หากผู้ใช้กดปุ่ม OK
+                        // รีโหลดหน้าเว็บ
+                        location.reload();
+                    }
+                })
+
             } else {
                 Swal.fire({
                     'icon': 'error',
