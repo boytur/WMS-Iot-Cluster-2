@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Warehouse;
+use App\Models\WarehouseUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -37,7 +39,7 @@ class WarehouseController extends Controller
             throw new \Exception($e->getMessage());
         }
     }
-    
+
     public function get_warehouse_detail($wh_id)
     {
         try {
@@ -63,5 +65,27 @@ class WarehouseController extends Controller
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
+    }
+
+    public function add_warehouse(Request $request)
+    {
+
+        $wh_name = $request->name;
+        $wh_location = $request->subdistrict . " " . $request->district . " " . $request->province . ' ' . $request->postal_code;
+        //dd($request);
+        $new_wh = Warehouse::create([
+            'wh_name' => $wh_name,
+            'wh_location' => $wh_location
+        ]);
+
+        $managers = User::where('role', 'warehouse_manager')->get();
+
+        foreach ($managers as $manager) {
+            WarehouseUser::create([
+                'wh_id' => $new_wh->wh_id,
+                'user_id' => $manager->id
+            ]);
+        }
+        return response()->json(['success' => true, 'message' => 'เพิ่มคลังสินค้าใหม่เรียบร้อยแล้ว']);
     }
 }
