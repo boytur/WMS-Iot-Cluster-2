@@ -25,18 +25,18 @@
                                             class="input-primary h-[3rem]" name="search_lot_in" id="search_lot_in">
                                     </div>
                                 </div>
-                                <div class="md:w-[23rem]">
+                                <div class="md:w-[32rem]">
                                     <div>
-                                        <p class="text-black/70 text-sm">ค้นหาด้วย</p>
+                                        <p class="text-black/70 text-sm">ค้นหาจาก</p>
                                         <select name="search_attribute" id="search_attribute"
-                                            class="w-full h-[3rem] input-primary px-2 cursor-pointer">
+                                            class="w-full h-[3rem] input-primary px-2 cursor-pointer ">
                                             <option value="number_lot_in">หมายเลขรายการรับเข้า</option>
                                             <option value="number_emp">รหัสพนักงาน</option>
 
                                         </select>
                                     </div>
                                 </div>
-                                <div class="md:w-[15rem]">
+                                <div class="md:w-[20rem]">
                                     <div>
                                         <p class="text-black/70 text-sm">สถานะ</p>
                                         <select name="search_status" id="search_status"
@@ -176,9 +176,8 @@
 
                     {{-- table product --}}
                     <div class="w-full mt-2 rounded-t-md">
-                        <div>ผลการค้นหาจำนวน <span id="lot_in_count">{{ $lot_in_products->count() }} </span> รายการ</div>
                         <div class="py-2 w-full bg-[#D9D9D9] rounded-t-md">
-                            <b class="mx-2  mt-2 text-lg text-black uppercase   ">
+                            <b class="bg mx-2  mt-2 text-lg text-black uppercase   " id="lot_in_count">
                                 ตารางรายการสินค้านำเข้ารอจัดการ</b>
                         </div>
                         <div class="relative overflow-x-auto shadow-md">
@@ -293,20 +292,23 @@
                 console.log(response.data);
 
                 if (response.ok) {
+
                     const responseData = await response.json();
                     const searches = responseData.data;
                     const search_lot_in_table = document.getElementById("search_lot_in_table");
                     search_lot_in_table.innerHTML = ""; // Clear previous results
-
                     console.log(searches);
                     if (searches?.length === 0) {
+
                         // Display message when no results are found
                         search_lot_in_table.innerHTML =
-                            `<tr><td colspan="5">ไม่พบรายการล็อตสินค้าเข้า</td></tr>`;
-                        document.getElementById('lot_in_count').innerText = 0;
+                            `<tr class="bg-white text-center"><td colspan="5" class="w-full pl-[5.1rem] h-[3rem]">ไม่พบรายการค้นหา</td></tr>`;
+                        document.getElementById('lot_in_count').innerText =
+                            `ตารางรายการสินค้านำเข้ารอจัดการ`;
                     } else {
 
-                        searches?.map((search, index) => {
+                        const initializedLots = searches.filter(search => search.lot_in_status === 'Initialized');
+                        initializedLots?.map((search, index) => {
                             // สร้าง element ของแต่ละ row ในตาราง
                             const row = `
                                 <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer">
@@ -344,7 +346,9 @@
 
                             // แสดงผลลัพธ์ใน cell ที่มี id เรากำหนดไว้
                             document.getElementById(`dateCell_${index}`).innerText = formattedDate;
-                            document.getElementById('lot_in_count').innerText = searches.length;
+
+                            document.getElementById('lot_in_count').innerText =
+                                `ผลการค้นหาจำนวน ${initializedLots.length} รายการ`;
                         });
 
                     }
@@ -367,7 +371,7 @@
                 text: "คุณจะไม่สามารถเรียกข้อมูลได้อีก!",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor:"#d33" ,
+                confirmButtonColor: "#d33",
                 cancelButtonColor: "#3085d6",
                 cancelButtonText: "ยกเลิก",
                 confirmButtonText: "ลบ!"
@@ -381,19 +385,19 @@
                                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
                             },
                         });
-                        if (response.status === 200) {
+                    if (response.status === 200) {
                         Swal.fire({
                             title: "ลบข้อมูลสำเร็จ!",
                             text: "ข้อมูลของคุณถูกลบแล้ว.",
                             icon: "success"
                         });
                         window.location.reload();
-                    }else if(response.status ===201){
+                    } else if (response.status === 201) {
                         Swal.fire({
                             title: "ลบข้อมูลไม่สำเร็จ!",
                             icon: "warning"
-                            });
-                        }
+                        });
+                    }
                 }
             });
         }
