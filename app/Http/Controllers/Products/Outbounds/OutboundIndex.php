@@ -20,8 +20,8 @@ class OutboundIndex extends Controller
         try {
             if (Auth::check()) {
                 $lotouts = LotOut::where('wh_id', Session::get('user_warehouse'))
-                ->where('lot_out_status','Initialized')
-                ->paginate(20);
+                    ->where('lot_out_status', 'Initialized')
+                    ->paginate(20);
                 return view('products.outbounds.v_outbound_index', compact('lotouts'));
             }
         } catch (\Exception $e) {
@@ -84,7 +84,6 @@ class OutboundIndex extends Controller
     public function create_outbound_order()
     {
         try {
-
             $master_products = MasterProduct::paginate(20);
             foreach ($master_products as $product) {
                 $tags = $product->get_tags_name($product->mas_prod_id);
@@ -106,6 +105,7 @@ class OutboundIndex extends Controller
             throw new \Exception($e->getMessage());
         }
     }
+
     public function outbound_latest_detail(int $lot_out_id)
     {
         try {
@@ -180,7 +180,7 @@ class OutboundIndex extends Controller
                     $Productquery->where('mas_prod_barcode', 'like', "%$search_key%");
                 } elseif ($search_attribute === 'mas_prod_no') {
                     $Productquery->where('mas_prod_no', 'like', "%$search_key%");
-                }else {
+                } else {
                 }
             }
 
@@ -190,8 +190,7 @@ class OutboundIndex extends Controller
                 $product->tags = $tags;
             }
             $cats = Category::all();
-            return response()->json(['success' => true, 'data' => $products,'cats'=>$cats,'sort'=>$search_sort], 200);
-
+            return response()->json(['success' => true, 'data' => $products, 'cats' => $cats, 'sort' => $search_sort], 200);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
