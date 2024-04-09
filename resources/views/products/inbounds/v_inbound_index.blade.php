@@ -309,6 +309,10 @@
 
                         const initializedLots = searches.filter(search => search.lot_in_status === 'Initialized');
                         initializedLots?.map((search, index) => {
+                            const status_color = search.lot_out_status === 'Initialized' ? 'green-700' :
+                                '[#666666]';
+
+
                             // สร้าง element ของแต่ละ row ในตาราง
                             const row = `
                                 <tr class="bg-white border-b hover:bg-blue-100 cursor-pointer">
@@ -317,11 +321,19 @@
                                     <td class="px-6 py-4 text-center" id="dateCell_${index}"></td> <!-- เพิ่ม id ให้กับ cell เพื่อแทนที่วันที่ในภายหลัง -->
                                     <td class="px-6 py-4 text-center">${search.user_id}</td> <!-- อาจจะต้องแก้ไขเป็นรหัสผู้ใช้หรือข้อมูลที่เหมาะสม -->
                                     <td class="px-6 py-4 text-center">
-                                        <div>
-                                            <p class="border text-center rounded-3xl py-1 text-white ${
-                                                search.lot_in_status === 'Initialized' ? 'bg-[#666666]' : 'bg-green-700'
-                                            }">${search.lot_in_status} </p>
-                                        </div>
+                                        ${
+                                            search.lot_in_status === 'Initialized' ?
+                                            `<div>
+                                                                                                                    <p class="border text-center bg-${status_color} rounded-3xl py-1 text-white">
+                                                                                                                        รอดำเนินการ
+                                                                                                                    </p>
+                                                                                                                </div>` :
+                                            `<div>
+                                                                                                                    <p class="border text-center bg-${status_color} rounded-3xl py-1 text-white">
+                                                                                                                        ปิดล็อต
+                                                                                                                    </p>
+                                                                                                                </div>`
+                                        }
                                     </td>
                                     <td class="px-6 py-4 flex gap-3 text-gray-500 justify-center">
                                         <a href="{{ url('/product/inbounds/edit-inbound-order') }}/${search.lot_in_id}" class="">
