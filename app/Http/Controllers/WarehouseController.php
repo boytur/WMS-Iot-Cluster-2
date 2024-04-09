@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Rack;
+use App\Models\RackTag;
+use App\Models\Space;
+use App\Models\Tag;
+use App\Models\User;
 use App\Models\Warehouse;
 use App\Models\WarehouseUser;
 use Illuminate\Http\Request;
