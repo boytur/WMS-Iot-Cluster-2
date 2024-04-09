@@ -78,13 +78,14 @@
 
                                     <td class="px-6 py-4 flex justify-center">
                                         <div class=" w-[3rem] h-[2rem] border">
-                                            <img class="object-cover w-full h-full" src="{{ $inbound_product->master_products->mas_prod_image}}" alt="">
+                                            <img class="object-cover w-full h-full"
+                                                src="{{ $inbound_product->master_products->mas_prod_image}}" alt="">
                                         </div>
                                     </td>
 
 
                                     <td class="px-6 py-4 text-center">
-                                        {{ $inbound_product->mas_prod_id }}
+                                        {{ $inbound_product->master_products->mas_prod_name }}
                                     </td>
 
                                     <td class="px-6 py-4 text-center">
@@ -92,7 +93,7 @@
                                     </td>
 
                                     <td class="px-6 py-4 text-center">
-                                        {{ $inbound_product->lot_in_id }}
+                                        {{ $inbound_product->inbound_amount }}
                                     </td>
 
                                     <td class="px-6 py-4 text-center">
@@ -132,7 +133,8 @@
                 </div>
                 {{--ปุ่มค้นหา--}}
                 <div class="mt-3 flex items-end justify-end pb-3">
-                    <button onclick="" id="search_wh" class="w-[10rem] h-[3rem] gap-2 btn-primary flex items-center justify-center mx-2">
+                    <button onclick="onclick_find_lot_in_space({{ $lot_in->lot_in_id }})" id="search_wh"
+                        class="w-[10rem] h-[3rem] gap-2 btn-primary flex items-center justify-center mx-2">
                         <div>
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </div>
@@ -149,6 +151,20 @@
     const onclick_inbound_lastest_deatil = (lot_in_id) => {
         const cluster = '{{ env('CLUSTER') }}'
         window.location.href = `${cluster}/product/inbounds/inbound-detail/${lot_in_id}`;
+    }
+
+    const onclick_find_lot_in_space = async (lot_in_id) => {
+        console.log('find_lot_in_space');
+        const cluster = '{{ env('CLUSTER') }}'
+        const response = await fetch(`${cluster}/product/inbounds/find-lot-in-space/${lot_in_id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            }
+        });
+
+        console.log(response);
     }
 </script>
 @endsection

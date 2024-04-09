@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('wms_spaces', function (Blueprint $table) {
             $table->integer('space_id')->autoIncrement()->nullable(false);
             $table->string('space_name',45)->nullable(false);
-            $table->integer('space_capacity')->nullable(false)->default(0);
+            $table->double('space_capacity')->nullable(false)->default(0);
 
             $table->integer('rack_id')->nullable(false);
             $table->timestamps();
