@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Products\Inbounds\CreateLotInOrder;
 use App\Http\Controllers\Products\Inbounds\DeleteLotIn;
 use App\Http\Controllers\Products\Inbounds\FindLotInSpace;
@@ -19,7 +20,7 @@ use App\Http\Controllers\Products\Inbounds\EditByAddProductLotInOrder;
 use App\Models\MasterProduct;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,9 +48,10 @@ Route::middleware(['auth'])->group(function () {
         }
     });
 
-    Route::get('/dashboard/view-all', function () {
-        return view('dashboards.v_all_wh');
-    });
+    // Route::get('/dashboard/view-all', function () {
+    //     return view('dashboards.v_all_wh');
+    // });
+    Route::get('/dashboard/view-all', [DashboardController::class, 'dashboard_index']);
 
     Route::post('/set-user-warehouse', [WarehouseController::class, 'set_user_warehouse'])->name('set-user-warehouse');
 
@@ -122,4 +124,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/user-management/create_user', [UserManagementIndex::class, 'store_user'])->name('upload.image');
 
     Route::get('/profile', [Profile::class, 'get_user_profile']);
+
+
 });
