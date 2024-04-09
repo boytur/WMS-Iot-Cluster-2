@@ -195,53 +195,74 @@ class UserManagementIndex extends Controller
     }
 
     //สร้างข้อมูล
-    public function store_user(Request $request)
+    public function create_new_user(Request $request)
     {
-        $validatedData = $this->validateUserData($request);
-        $imageName = $this->handleImageUpload($request);
-        $newUser = $this->createNewUser($validatedData, $imageName);
+        // รับข้อมูลจาก Request
+        $fname = $request->fname;
+        $lname = $request->lname;
+        $email = $request->email;
+        $role = $request->role;
+        $phone = $request->phone;
+        $wh_id = $request->wh_id;
 
-        return response(200);
-    }
+        $last_user = User::OrderBy('number', 'desc')->take(1)->first();
+        $last_number = User::max('number');
+        $new_number = $last_number + 1;
 
-    //แก้ไขข้อมูล
-    protected function validateUserData(Request $request)
-    {
-        return $request->validate([
-            'fname' => 'required',
-            'lname' => 'required',
-            'date' => 'required|date',
-            'role' => 'required',
-            'wh_id' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required',
-        ]);
-    }
-    //set img
-    protected function handleImageUpload(Request $request)
-    {
-        $path = $request->file('dropzone-file');
 
-        if ($path !== null) {
-            $imageName = $path->getClientOriginalName();
-            $path->move('assets/img', $imageName);
+        // ตรวจสอบการอัพโหลดไฟล์
+        // $path = $request->file('dropzone-file');
+        // if ($path !== null) {
+        //     $imageName = $path->getClientOriginalName();
+        //     $path->move('assets/img', $imageName);
+        // } else {
+        //     $imageName = 'default_image.jpg';
+        // }
+
+        if ($request->hasFile('image')) {
+            // บันทึกไฟล์ภาพลงในโฟลเดอร์ที่ต้องการ
+            $image = $request->file('image');
+            dd($image);
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('assets/images'), $imageName);
         } else {
             $imageName = 'default_image.jpg';
         }
 
-        return $imageName;
-    }
-    //สร้างข้อมูลผู้ใช้
-    protected function createNewUser($validatedData, $imageName)
-    {
-        return User::create([
-            'fname' => $validatedData['fname'],
-            'lname' => $validatedData['lname'],
-            'role' => $validatedData['role'],
-            'email' => $validatedData['email'],
-            'phone' => $validatedData['phone'],
-            'password' => '1234567890',
+
+
+        // สร้างผู้ใช้ใหม่
+        $newUser = User::create([
+            'fname' => $fname,
+            'lname' => $lname,
+            'email' => $email,
+            'role' => $role,
+            'phone' => $phone,
+            'wh_id' => $wh_id,
+            'password' => $email, // ตั้งค่ารหัสผ่านเริ่มต้น
             'image' => $imageName,
+            'number' => $new_number,
         ]);
+
+        //dd($role);
+        $whs = Warehouse::all();
+        if ($role == 'warehouse_manager') {
+            foreach ($whs as $wh) {
+                $new_warehouse_user = WarehouseUser::create([
+                    'wh_id' => $wh->wh_id,
+                    'user_id' => $newUser->id,
+                ]);
+            }
+        } else {
+            $new_warehouse_user = WarehouseUser::create([
+                'wh_id' => $wh_id,
+                'user_id' => $newUser->id,
+            ]);
+        }
+
+        if ($newUser->id !== null) {
+            // ส่งข้อมูลการสำเร็จกลับไปยังผู้ใช้งาน
+            return response()->json(['success' => true, 'data' => 'เพิ่มข้อมูลสำเร็จ'], 200);
+        }
     }
 }

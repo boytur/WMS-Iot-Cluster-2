@@ -168,8 +168,9 @@
                 const user_search = document.getElementById("user_search").value;
                 const user_attribute = document.getElementById("user_attribute").value;
                 const user_type = document.getElementById("user_type").value;
-                const cluster = '{{ env('
-                                                                            CLUSTER ') }}'
+                const cluster =
+                    '{{ env('
+                                                                                                CLUSTER ') }}'
                 //ส่ง req
 
                 const response = await fetch(`${cluster}/user-management/search`, {
@@ -272,17 +273,13 @@
                             <input type="text" id="lname" name="name" placeholder="กรอกนามสกุลตรงนี้..." class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5" required>
                         </div>
 
-                        {{-- ว/ด/ป --}}
-                        <div class="mb-4 px-1 w-full">
-                            <label for="name" class="block mb-1 text-left text-sm font-medium">วัน/เดือน/ปี เกิด<span class="text-sm text-red-500"> * </span></label>
-                            <input type="date" id="date" placeholder="dd/mm/yyyy" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5" required>
-                        </div>
+
                         {{-- ตำแหน่ง --}}
                         <div class="mb-4 px-1 w-full">
                            <label for="name" class="block mb-1 text-left text-sm font-medium">ตำแหน่ง<span class="text-sm text-red-500"> * </span></label>
                            <select name="positon" id="role" class="input-primary bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5" required">
-                                <option value="employee">พนักงานทั่วไป</option>
-                                <option value="wh_management">ผู้จัดการคลังสินค้า</option>
+                                <option value="normal_employee">พนักงานทั่วไป</option>
+                                <option value="warehouse_manager">ผู้จัดการคลังสินค้า</option>
                             </select>
                         </div>
                         {{-- warehouse --}}
@@ -339,14 +336,28 @@
         }
 
         const fetch_create_user = async () => {
-            const dropzone_file = document.getElementById('dropzone-file').files[0];
+            const dropzoneFileInput = document.getElementById('dropzone-file');
+            const dropzoneFile = dropzoneFileInput && dropzoneFileInput.files.length > 0 ? dropzoneFileInput.files[
+                0] : null;
             const fname = document.getElementById('fname').value.trim();
             const lname = document.getElementById('lname').value.trim();
-            const date = document.getElementById('date').value.trim();
             const role = document.getElementById('role').value.trim();
             const wh_id = document.getElementById('wh_id').value.trim();
             const email = document.getElementById('email').value.trim();
             const phone = document.getElementById('phone').value.trim();
+
+
+            if (dropzoneFile) {
+                dropzoneFileJson = {
+                    name: dropzoneFile.name,
+                    size: dropzoneFile.size,
+                    type: dropzoneFile.type,
+                    lastModified: dropzoneFile.lastModified
+                };
+
+                dropzoneFileJson = JSON.stringify(dropzoneFileJson);
+            }
+
 
             // if (fname === '' || lname === '' || date === '' || role === '' || wh_id === '' || email === '' ||
             //     phone === '') {
@@ -361,24 +372,23 @@
             //     // ดำเนินการต่อไปหากข้อมูลครบถ้วน
             //     // ...
             // }
-            const formData = new FormData();
-            formData.append('fname', fname);
-            formData.append('lname', lname);
-            formData.append('date', date);
-            formData.append('role', role);
-            formData.append('wh_id', wh_id);
-            formData.append('email', email);
-            formData.append('phone', phone);
-            formData.append('dropzone-file', dropzone_file);
 
             const cluster = "{{ env('CLUSTER') }}";
-            const response = await fetch(`${cluster}/user-management/create_user`, {
-                method: 'POST',
+            const response = await fetch(`${cluster}/user-management/create_new_user`, {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
-                body: formData
+                body: JSON.stringify({
+                    fname,
+                    lname,
+                    role,
+                    wh_id,
+                    email,
+                    phone,
+                    dropzoneFileJson,
+                })
             })
             //console.log(response);
             const response_data = await response.json();

@@ -127,6 +127,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/product/managements/add-new-product', [CreateNewMasterProduct::class, 'store']);
 
     Route::get('/user-management/create_user', [UserManagementIndex::class, 'create_user']);
+    Route::put('/user-management/create_new_user', [UserManagementIndex::class, 'create_new_user']);
+    // Route::post('/user-management/create_user', [UserManagementIndex::class, 'store_user'])->name('upload.image');
+
+
     Route::post('/user-management/create_user', [UserManagementIndex::class, 'store_user']);
     Route::post('/user-management/create_user', [UserManagementIndex::class, 'store_user'])->name('upload.image');
     Route::put('/user-management/edit-user-info/{id}',[UserManagementIndex::class,'edit_user_info']);
