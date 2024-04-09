@@ -34,77 +34,80 @@ class FindLotInSpace extends Controller
         $inbound_prods = InboundOrder::where('lot_in_id', $lot_in->lot_in_id)->get();
 
         foreach ($inbound_prods as $inbound_prod) {
+            $this->find($inbound_prod, $racks);
+        }
+    }
 
-            $prod_tags = [];
-            $rack_tags = [];
-            $mas_prod = MasterProduct::where('mas_prod_id', $inbound_prod->mas_prod_id)->first();
+    private function find($inbound_prod, $racks)
+    {
+        $prod_tags = [];
+        $rack_tags = [];
+        $mas_prod = MasterProduct::where('mas_prod_id', $inbound_prod->mas_prod_id)->first();
+        $amount = $inbound_prod->inbound_amount;
 
-            if ($mas_prod) {
-                // Get master product tags
-                $prod_tags = $mas_prod->get_tags_name($mas_prod->mas_prod_id);
-                // Loop through racks to get rack tags
-                foreach ($racks as $rack) {
-                    $rack_tags = $rack->get_tags_name($rack->rack_id);
+        if ($mas_prod) {
+            // Get master product tags
+            $prod_tags = $mas_prod->get_tags_name($mas_prod->mas_prod_id);
+            // Loop through racks to get rack tags
+            foreach ($racks as $rack) {
 
-                    // Check if both master product tags and rack tags are not empty and not null
-                    if (!empty($prod_tags) && !empty($rack_tags) && $prod_tags[0]['tag_name'] !== null && $rack_tags[0]['tag_name'] !== null) {
-                        // Compare each tag of the master product with each tag of the rack
-                        foreach ($prod_tags as $prod_tag) {
+                $rack_tags = $rack->get_tags_name($rack->rack_id);
 
-                            foreach ($rack_tags as $rack_tag) {
+                // Check if both master product tags and rack tags are not empty and not null
+                if (!empty($prod_tags) && !empty($rack_tags) && $prod_tags[0]['tag_name'] !== null && $rack_tags[0]['tag_name'] !== null) {
+                    // Compare each tag of the master product with each tag of the rack
+                    foreach ($prod_tags as $prod_tag) {
 
-                                //if matching master product tags
-                                if ($prod_tag['tag_name'] === $rack_tag['tag_name']) {
+                        foreach ($rack_tags as $rack_tag) {
 
-                                    //dd($prod_tags, $mas_prod->mas_prod_name, $rack_tags, $rack->rack_name, $rack->warehouses->wh_name);
+                            //if matching master product tags
+                            if ($prod_tag['tag_name'] === $rack_tag['tag_name']) {
 
-                                    // find space from rack id that matches
-                                    $spaces = Space::where('rack_id', $rack->rack_id)->get();
+                                //dd($prod_tags, $mas_prod->mas_prod_name, $rack_tags, $rack->rack_name, $rack->warehouses->wh_name);
 
-                                    //check space with master product size
-                                    $mas_percent_perpiece = ($mas_prod->mas_prod_size) / 100;
-                                    $all_percent = $mas_percent_perpiece * $inbound_prod->inbound_amount;
+                                // find space from rack id that matches
+                                $spaces = Space::where('rack_id', $rack->rack_id)->get();
 
-                                    //dd($space->toArray());
-                                    //dd($mas_percent_perpiece, $all_percent,$inbound_prod->inbound_amount);
+                                //check space with master product size
+                                $mas_percent_perpiece = ($mas_prod->mas_prod_size) / 100;
+                                $all_percent = $mas_percent_perpiece * $inbound_prod->inbound_amount;
 
-                                    // ลูปใส่ของจนกว่าจะหมด
-                                    foreach ($spaces as $space) {
+                                //dd($space->toArray());
+                                //dd($mas_percent_perpiece, $all_percent,$inbound_prod->inbound_amount);
 
-                                        // กรณีเก็บได้พอดี
-                                        if ($space->space_capacity < 100 && $space->space_capacity + $all_percent < 100) {
-                                            $space->update([
-                                                'space_capacity' => $space->space_capacity + $all_percent
-                                            ]);
-                                            OnShelfProduct::create([
-                                                'on_prod_amount' => $inbound_prod->inbound_amount,
-                                                'on_prod_status' => "Transporting",
-                                                'space_id' => $space->space_id,
-                                                'inbound_id' => $inbound_prod->inbound_id
-                                            ]);
-                                            return;
-                                        } else {
+                                // ลูปใส่ของจนกว่าจะหมด
+                                foreach ($spaces as $space) {
 
-                                            // กรณีเก็บได้ไม่พอดีก็เก็บทีละตัว
-                                            $spaces_now = $space->space_capacity;
-                                            $spaces_can_kept = $spaces_now - 100;
-                                            $actual_spaces = $all_percent - $spaces_can_kept;
+                                    // กรณีเก็บได้พอดี
+                                    if ($space->space_capacity < 100 && $space->space_capacity + $all_percent < 100) {
+                                        $space->update([
+                                            'space_capacity' => $space->space_capacity + $all_percent
+                                        ]);
+                                        OnShelfProduct::create([
+                                            'on_prod_amount' => $amount,
+                                            'on_prod_status' => "Transporting",
+                                            'space_id' => $space->space_id,
+                                            'inbound_id' => $inbound_prod->inbound_id
+                                        ]);
+                                        return;
+                                    } else {
 
-                                            for ($i = 0; $i < $inbound_prod->inbound_amount; $i++) {
-                                                if ($space->space_capacity < 100 && $mas_percent_perpiece + $space->space_capacity < 100) {
+                                        // // กรณีเก็บได้ไม่พอดีก็เก็บทีละตั
+                                        for ($i = 0; $i < $amount; $i++) {
+                                            if ($space->space_capacity < 100 && $mas_percent_perpiece + $space->space_capacity < 100) {
 
-                                                    $space->update([
-                                                        'space_capacity' => $space->space_capacity + $mas_percent_perpiece
+                                                $space->update([
+                                                    'space_capacity' => $space->space_capacity + $mas_percent_perpiece
+                                                ]);
+
+                                                if ($space->space_capacity < 100.00 && $mas_percent_perpiece + $space->space_capacity >= 100.00) {
+                                                    OnShelfProduct::create([
+                                                        'on_prod_amount' => $i + 1,
+                                                        'on_prod_status' => "Transporting",
+                                                        'space_id' => $space->space_id,
+                                                        'inbound_id' => $inbound_prod->inbound_id
                                                     ]);
-
-                                                    if ($space->space_capacity < 100.00 && $mas_percent_perpiece + $space->space_capacity >= 100.00) {
-                                                        OnShelfProduct::create([
-                                                            'on_prod_amount' => $actual_spaces,
-                                                            'on_prod_status' => "Transporting",
-                                                            'space_id' => $space->space_id,
-                                                            'inbound_id' => $inbound_prod->inbound_id
-                                                        ]);
-                                                    }
+                                                    $amount -= $i + 1;
                                                 }
                                             }
                                         }
@@ -112,9 +115,56 @@ class FindLotInSpace extends Controller
                                 }
                             }
                         }
-                        //กรณีสินค้าไม่มี tags
-                    } else {
+                    }
+                    // ไม่มี tags
+                } elseif ($rack_tags[0]['tag_name'] === null) {
+                    // find space from rack id that matches
+                    $spaces = Space::where('rack_id', $rack->rack_id)->get();
 
+                    //check space with master product size
+                    $mas_percent_perpiece = ($mas_prod->mas_prod_size) / 100;
+                    $all_percent = $mas_percent_perpiece * $inbound_prod->inbound_amount;
+
+                    //dd($space->toArray());
+                    //dd($mas_percent_perpiece, $all_percent,$inbound_prod->inbound_amount);
+
+                    // ลูปใส่ของจนกว่าจะหมด
+                    foreach ($spaces as $space) {
+
+                        // กรณีเก็บได้พอดี
+                        if ($space->space_capacity < 100 && $space->space_capacity + $all_percent < 100) {
+                            $space->update([
+                                'space_capacity' => $space->space_capacity + $all_percent
+                            ]);
+                            OnShelfProduct::create([
+                                'on_prod_amount' => $amount,
+                                'on_prod_status' => "Transporting",
+                                'space_id' => $space->space_id,
+                                'inbound_id' => $inbound_prod->inbound_id
+                            ]);
+                            return;
+                        } else {
+
+                            // // กรณีเก็บได้ไม่พอดีก็เก็บทีละตั
+                            for ($i = 0; $i < $amount; $i++) {
+                                if ($space->space_capacity < 100 && $mas_percent_perpiece + $space->space_capacity < 100) {
+
+                                    $space->update([
+                                        'space_capacity' => $space->space_capacity + $mas_percent_perpiece
+                                    ]);
+
+                                    if ($space->space_capacity < 100.00 && $mas_percent_perpiece + $space->space_capacity >= 100.00) {
+                                        OnShelfProduct::create([
+                                            'on_prod_amount' => $i + 1,
+                                            'on_prod_status' => "Transporting",
+                                            'space_id' => $space->space_id,
+                                            'inbound_id' => $inbound_prod->inbound_id
+                                        ]);
+                                        $amount -= $i + 1;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
