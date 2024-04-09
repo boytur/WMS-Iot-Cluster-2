@@ -102,15 +102,95 @@ class UserManagementIndex extends Controller
 
     public function user_edit_index($number)
     {
-        try {
-            if (Auth::check() && Auth::user()->role === "warehouse_manager") {
-                $user = User::where('number', $number)->first();
-                return view('users.v_user_edit_detail', compact('user'));
+        if (Auth::check() && Auth::user()->role === "warehouse_manager") {
+            $user = User::where('number', $number)->first();
+
+            if ($user === null) {
+                return abort(404);
             } else {
-                return redirect('/');
+                $whs = Warehouse::all();
+                return view('users.v_user_edit_detail', compact('user', 'whs'));
             }
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
+        } else {
+            return redirect('/');
+        }
+    }
+
+    public function edit_user_info(Request $req, $id)
+    {
+        $user = User::find($id);
+        if ($user) {
+            $fname = $req->input('fname');
+            $lname = $req->input('lname');
+            // $role = $req->input('role');
+            $wh_id = $req->input('wh_id');
+            $email = $req->input('email');
+            $phone = $req->input('phone');
+            //dd($fname .' '. $lname .' '. $email .' '. $phone );
+            $user = User::find($id);
+
+            if ($user->id === null) {
+                return response()->json([
+                    'success' => false,
+                    'data' => 'User not found.'
+                ], 404);
+            }
+
+            $fname = $req->input('fname');
+            $lname = $req->input('lname');
+            // $role = $req->input('role');
+            // $wh_id = $req->input('wh_id');
+            $email = $req->input('email');
+            $phone = $req->input('phone');
+
+            if (!empty($fname)) {
+                $user->update([
+                    'fname' => $fname
+                ]);
+            }
+            if (!empty($lname)) {
+                $user->update([
+                    'lname' => $lname
+                ]);
+            }
+
+            if (!empty($wh_id)) {
+                $wh_id = $user->warehouses[0]->wh_id;
+                $user_wh = WarehouseUser::where('wh_id', $wh_id)->first();
+
+                if ($user_wh) {
+                    // Delete existing warehouse user record
+                    WarehouseUser::where('user_id', $user->id)->delete();
+                }
+
+                // Create new warehouse user record
+                WarehouseUser::create([
+                    "wh_id" => $wh_id,
+                    "user_id" => $user->id
+                ]);
+            }
+
+
+            // if ($req->has('fname')) {
+            //     $user->fname = $req->input('new_fname');
+            // }
+            // if ($req->has('lname')) {
+            //     $user->lname = $req->input('new_lname');
+            // }
+            // if ($req->has('email')) {
+            //     $user->email = $req->input('new_email');
+            // }
+            // if ($req->has('phone')) {
+            //     $user->phone = $req->input('new_phone');
+            // }
+
+
+
+            if ($user->wasChanged()) {
+                return response()->json(['success' => true, 'data' => 'อัปเดตชื่อสำเร็จ'], 200);
+            }
+        } else {
+            return response()->json(['success' => false, 'data' => 'User not found'], 404);
         }
     }
 
@@ -164,5 +244,4 @@ class UserManagementIndex extends Controller
             'image' => $imageName,
         ]);
     }
-
 }
