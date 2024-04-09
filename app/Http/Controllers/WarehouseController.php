@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Warehouse;
 use App\Models\WarehouseUser;
 use Illuminate\Http\Request;
@@ -40,6 +39,7 @@ class WarehouseController extends Controller
         }
     }
 
+
     public function get_warehouse_detail($wh_id)
     {
         try {
@@ -65,6 +65,62 @@ class WarehouseController extends Controller
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
+    }
+    /*
+         * add_wh_index()
+         * @author: Pichawat Suwan 65160346
+         * @create date: 2024-04-10
+         */
+    public function add_wh_space_index()
+    {
+        try {
+            if (Auth::check() && Auth::user()->role === "warehouse_manager") {
+                $tags = Tag::all();
+                return view('warehouses.v_add_wh_space', compact('tags'));
+            } else {
+                return redirect('/dashboard/view-all');
+            }
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+     /*
+         * add_wh_space()
+         * @author: Pichawat Suwan 65160346
+         * @create date: 2024-04-10
+         */
+    public function add_wh_space(Request $request)
+    {
+        // try{
+            // dd($request);
+            $wh_id = Session::get('user_warehouse');
+            $rack = Rack::create([
+                'rack_name' => $request->payload['rack_name'],
+                'rack_height' => $request->payload['rack_h'],
+                'rack_width' => $request->payload['rack_w'],
+                'wh_id' => $wh_id,
+            ]);
+            // dd($rack);
+            if ($request->payload['tag_id']!=null) {
+                RackTag::create([
+                    'tag_id'=>$request->payload['tag_id'],
+                    'rack_id'=>$rack->rack_id,
+                ]);
+            }
+            // dd($request->payload['space_name']);
+            foreach ($request->payload['space_name'] as $space_name) {
+                // dd($space_name);
+                if($space_name!='')
+                {Space::create([
+                    'space_name' => $space_name,
+                    'rack_id' => $rack->rack_id,
+                    'space_capacity'=> 0,
+                ]);}
+            }
+            return response()->json(['success' => true], 200);
+        // } catch (\Exception $e) {
+        //     throw new \Exception($e->getMessage());
+        // }
     }
 
     public function add_warehouse(Request $request)

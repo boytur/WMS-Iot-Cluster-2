@@ -119,15 +119,17 @@ class UserManagementIndex extends Controller
     public function edit_user_info(Request $req, $id)
     {
         $user = User::find($id);
+
         if ($user) {
             $fname = $req->input('fname');
             $lname = $req->input('lname');
-            // $role = $req->input('role');
+            $role = $req->input('role');
             $wh_id = $req->input('wh_id');
             $email = $req->input('email');
             $phone = $req->input('phone');
             //dd($fname .' '. $lname .' '. $email .' '. $phone );
-            $user = User::find($id);
+
+
 
             if ($user->id === null) {
                 return response()->json([
@@ -136,25 +138,37 @@ class UserManagementIndex extends Controller
                 ], 404);
             }
 
-            $fname = $req->input('fname');
-            $lname = $req->input('lname');
-            // $role = $req->input('role');
-            // $wh_id = $req->input('wh_id');
-            $email = $req->input('email');
-            $phone = $req->input('phone');
-
-            if (!empty($fname)) {
+            if (!empty($fname) && $user->fname!== $fname) {
                 $user->update([
                     'fname' => $fname
                 ]);
             }
-            if (!empty($lname)) {
+            if (!empty($lname) && $user->lname!== $lname) {
                 $user->update([
                     'lname' => $lname
                 ]);
             }
+            if (!empty($role) && $user->role!== $role) {
+                $user->update([
+                    'role'=> $role
+                    ]);
+                }
+            if (!empty($email) && $user->email!== $email) {
+                $user->update([
+                    'email' => $email
+                ]);
+            }
+            if (!empty($phone) && $user->phone!== $phone) {
+                $user->update([
+                    'phone'=> $phone
+                ]);
+            }
 
-            if (!empty($wh_id)) {
+
+
+
+
+            if (!empty($wh_id) && $wh_id !== $user->warehouses[0]->wh_id && $user->role !== "warehouse_manager") {
                 $wh_id = $user->warehouses[0]->wh_id;
                 $user_wh = WarehouseUser::where('wh_id', $wh_id)->first();
 
@@ -168,6 +182,23 @@ class UserManagementIndex extends Controller
                     "wh_id" => $wh_id,
                     "user_id" => $user->id
                 ]);
+            } else{
+                $wh_id = $user->warehouses[0]->wh_id;
+                $user_wh = WarehouseUser::where('wh_id', $wh_id)->first();
+
+                if ($user_wh) {
+                    // Delete existing warehouse user record
+                    WarehouseUser::where('user_id', $user->id)->delete();
+                }
+                $warehouses = Warehouse::all();
+
+                // สร้าง WarehouseUser record สำหรับแต่ละ warehouse
+                foreach ($warehouses as $warehouse) {
+                    WarehouseUser::create([
+                        "wh_id" => $warehouse->wh_id,
+                        "user_id" => $user->id
+                    ]);
+                }
             }
 
 
@@ -189,6 +220,7 @@ class UserManagementIndex extends Controller
             if ($user->wasChanged()) {
                 return response()->json(['success' => true, 'data' => 'อัปเดตชื่อสำเร็จ'], 200);
             }
+            return response()->json(['success' => true, 'data' => 'ไม่มีการเปลี่ยนแปลง'], 200);
         } else {
             return response()->json(['success' => false, 'data' => 'User not found'], 404);
         }
@@ -264,5 +296,21 @@ class UserManagementIndex extends Controller
             // ส่งข้อมูลการสำเร็จกลับไปยังผู้ใช้งาน
             return response()->json(['success' => true, 'data' => 'เพิ่มข้อมูลสำเร็จ'], 200);
         }
+    }
+    public function delete($user_id)
+    {
+        try {
+            // ลบข้อมูล WarehouseUser โดยใช้ id ที่ระบุ
+            $deleted = WarehouseUser::where('user_id', $user_id)->delete();
+
+            if ($deleted) {
+                return response()->json(['success' => true, 'data' => 'WarehouseUser deleted successfully'], 200);
+            } else {
+                return response()->json(['success' => false, 'data' => 'WarehouseUser not found'], 404);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'data' => 'Failed to delete WarehouseUser'], 500);
+        }
+
     }
 }

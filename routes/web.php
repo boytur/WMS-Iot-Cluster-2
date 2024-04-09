@@ -103,13 +103,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/product/managements/add-new-product', [ProductManagementIndex::class, 'add_master_product_index'])->name('edit_master_product');
     Route::post('/product/managements/search-product', [ProductManagementIndex::class, 'search_product'])->name('search_product');
 
-    Route::get('/warehouse/add-space', function () {
-        if (Auth::check() && Auth::user()->role === "warehouse_manager") {
-            return view('warehouses.v_add_wh_space');
-        } else {
-            return redirect('/dashboard/view-all');
-        }
-    });
+    Route::get('/warehouse/add-space',[WarehouseController::class,'add_wh_space_index']);
+    Route::post('/warehouse/add-space',[WarehouseController::class,'add_wh_space']);
 
     //    route for warehouses management
     Route::get('/warehouse/add-wh', [WarehouseController::class, 'get_add_more_warehouse']);
@@ -133,10 +128,10 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/user-management/create_new_user', [UserManagementIndex::class, 'create_new_user']);
     // Route::post('/user-management/create_user', [UserManagementIndex::class, 'store_user'])->name('upload.image');
 
-
+    Route::delete('/user-management/delete-user/{id}', [UserManagementIndex::class, 'delete']);
     Route::post('/user-management/create_user', [UserManagementIndex::class, 'store_user']);
     Route::post('/user-management/create_user', [UserManagementIndex::class, 'store_user'])->name('upload.image');
-    Route::put('/user-management/edit-user-info/{id}',[UserManagementIndex::class,'edit_user_info']);
+    Route::put('/user-management/edit-user-info/{user_id}',[UserManagementIndex::class,'edit_user_info']);
     Route::get('/profile', [Profile::class, 'get_user_profile']);
 
     Route::post('warehouse/add-wh',[WarehouseController::class,'add_warehouse']);
