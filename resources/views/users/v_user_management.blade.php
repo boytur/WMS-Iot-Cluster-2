@@ -387,7 +387,7 @@
                     wh_id,
                     email,
                     phone,
-                    dropzoneFileJson
+                    dropzoneFileJson,
                 })
             })
             //console.log(response);
