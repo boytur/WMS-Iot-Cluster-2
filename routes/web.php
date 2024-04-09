@@ -134,5 +134,6 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/user-management/edit-user-info/{user_id}',[UserManagementIndex::class,'edit_user_info']);
     Route::get('/profile', [Profile::class, 'get_user_profile']);
 
+    Route::post('warehouse/add-wh',[WarehouseController::class,'add_warehouse']);
 
 });

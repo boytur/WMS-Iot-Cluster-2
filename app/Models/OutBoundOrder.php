@@ -13,7 +13,6 @@ class OutBoundOrder extends Model
     protected $fillable = [
         'outbound_amount',
         'outbound_status',
-        'outbound_exp',
         'mas_prod_id',
         'lot_out_id',
     ];

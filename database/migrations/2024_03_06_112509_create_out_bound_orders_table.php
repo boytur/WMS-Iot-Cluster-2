@@ -15,7 +15,6 @@ return new class extends Migration
             $table->integer('outbound_id')->autoIncrement()->nullable(false);
             $table->integer('outbound_amount')->nullable(false);
             $table->string('outbound_status')->nullable(false)->default('initialize');
-            $table->date('outbound_exp')->nullable(false);
 
             $table->integer('mas_prod_id')->nullable(false);
             $table->integer('lot_out_id')->nullable(false);
