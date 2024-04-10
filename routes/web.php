@@ -131,14 +131,11 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/user-management/delete-user/{id}', [UserManagementIndex::class, 'delete']);
     Route::post('/user-management/create_user', [UserManagementIndex::class, 'store_user']);
     Route::post('/user-management/create_user', [UserManagementIndex::class, 'store_user'])->name('upload.image');
-<<<<<<< HEAD
     Route::put('/user-management/edit-user-info/{id}', [UserManagementIndex::class, 'edit_user_info']);
     Route::get('/profile', [Profile::class, 'get_user_profile']);
-=======
     Route::put('/user-management/edit-user-info/{user_id}',[UserManagementIndex::class,'edit_user_info']);
     Route::get('/profile', [Profile::class, 'get_user_profile']);
 
     Route::post('warehouse/add-wh',[WarehouseController::class,'add_warehouse']);
 
->>>>>>> 2f24193904e6c92162375ec1f4e58fc879b6a751
 });
