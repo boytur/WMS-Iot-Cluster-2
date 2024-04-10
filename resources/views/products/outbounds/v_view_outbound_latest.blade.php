@@ -77,8 +77,7 @@
 </div>
 <script>
     const onclick_LotOut_details = (lot_out_id) => {
-        const cluster = '{{ env('
-        CLUSTER ') }}'
+        const cluster = '{{ env('CLUSTER') }}'
         window.location.href = `${cluster}/product/outbounds/view-outbound-latest/detail/${lot_out_id}`;
     }
 </script>
