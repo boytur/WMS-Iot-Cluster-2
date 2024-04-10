@@ -79,7 +79,11 @@ Displayfrom user_edit_detail
                                             @if ($user->role === 'warehouse_manager')
                                                 <p class="text-[1.1rem] text-black">ทุกคลังสินค้า</p>
                                             @else
-                                                <p> {{ $user->warehouses[0]->wh_name }}</p>
+                                                @if ($user->warehouses->isNotEmpty())
+                                                    <p>{{ $user->warehouses[0]->wh_name }}</p>
+                                                @else
+                                                    <p>ไม่มีคลังสินค้า</p>
+                                                @endif
                                             @endif
                                         </div>
                                     </div>
@@ -112,7 +116,8 @@ Displayfrom user_edit_detail
                                         <hr class="">
                                     </div>
                                     <div class="">
-                                        <button class=" btn-danger w-40 h-[3rem] gap-2 mt-4">
+                                        <button onclick="onclick_delete_confirm({{ $user->id }})"
+                                            class=" btn-danger w-40 h-[3rem] gap-2 mt-4">
                                             <i class="fa-solid fa-trash-can text-[1.5rem]"></i>
                                             ลบพนักงาน
                                         </button>
@@ -125,6 +130,18 @@ Displayfrom user_edit_detail
                                             const onclick_wh_details = (wh_id) => {
                                                 const cluster = '{{ env('CLUSTER') }}'
                                                 window.location.href = `${cluster}/dashboard/view-another/detail/${wh_id}`;
+                                            }
+
+                                            function toggleWarehouseSection() {
+                                                var role = document.getElementById("role");
+                                                var warehouseDiv = document.getElementById("wh");
+
+                                                if (role.value === "warehouse_manager") {
+                                                    warehouseDiv.style.display = "none";
+
+                                                } else {
+                                                    warehouseDiv.style.display = "block";
+                                                }
                                             }
 
                                             //Function - Onclick_edit_password
@@ -171,43 +188,43 @@ Displayfrom user_edit_detail
                                                                 {{-- ชื่อ --}}
                                                                 <div class="mb-4 px-1 w-full">
                                                                     <label for="name" class="block mb-1 text-left text-sm font-medium">กรุณากรอกชื่อ<span class="text-sm text-red-500"> * </span></label>
-                                                                    <input type="text" id="fname" name="name" value={{ $user->fname }} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5" required>
+                                                                    <input type="text" id="fname" name="name" value={{ $user->fname }} class=" input-primary bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5" required>
                                                                 </div>
                                                                 <div class="mb-4 px-1 w-full">
                                                                     <label for="name" class="block mb-1 text-left text-sm font-medium">กรุณากรอกนามสกุล<span class="text-sm text-red-500"> * </span></label>
-                                                                    <input type="text" id="lname" name="name" value={{ $user->lname }} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5" required>
+                                                                    <input type="text" id="lname" name="name" value={{ $user->lname }} class=" input-primary bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5" required>
                                                                 </div>
 
                                                                 {{-- ว/ด/ป
                                                                 <div class="mb-4 px-1 w-full">
                                                                     <label for="name" class="block mb-1 text-left text-sm font-medium">วัน/เดือน/ปี เกิด<span class="text-sm text-red-500"> * </span></label>
-                                                                    <input type="date" id="date" placeholder="17/03/2547" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5" required>
+                                                                    <input type="date" id="date" placeholder="17/03/2547" class="input-primary bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5" required>
                                                                 </div> --}}
                                                                 {{-- ตำแหน่ง --}}
                                                                 <div class="mb-4 px-1 w-full">
                                                                 <label for="name" class="block mb-1 text-left text-sm font-medium">ตำแหน่ง<span class="text-sm text-red-500"> * </span></label>
-                                                                <select name="positon" id="role" class="input-primary bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5" required">
+                                                                <select name="positon" id="role" onchange="toggleWarehouseSection()" class="input-primary bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5" required>
                                                                     <option disabled selected>
-                                                                        @if($user->role === "normal_employee")
+                                                                        @if ($user->role === 'normal_employee')
                                                                         พนักงานคลังสินค้า
                                                                         @else
                                                                         ผู้จัดการคลังสินค้า
                                                                         @endif
                                                                     </option>
-                                                                        @if($user->role !== "warehouse_manager")
+                                                                        @if ($user->role !== 'warehouse_manager')
                                                                         <option value="normal_employee">พนักงานคลังสินค้า</option>
                                                                         <option value="warehouse_manager">ผู้จัดการคลังสินค้า</option>
                                                                         @endif
                                                                     </select>
                                                                 </div>
                                                                 {{-- warehouse --}}
-                                                                <div class="mb-4 px-1 w-full">
+                                                                <div id="wh" class="mb-4 px-1 w-full">
                                                                 <label for="name" class="block mb-1 text-left text-sm font-medium">คลังสินค้าที่ประจำการ<span class="text-sm text-red-500"> * </span></label>
-                                                                @if($user->role !== "warehouse_manager")
+                                                                @if ($user->role !== 'warehouse_manager')
                                                                 <select name="wh_management" id="wh_management" class="input-primary bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5" required">
-                                                                    <option disabled selected>{{$user->warehouses[0]['wh_name'] || ""}}</option>
+                                                                    <option disabled selected>{{ $user->warehouses->isNotEmpty() ? $user->warehouses[0]['wh_name'] : 'ไม่มีคลังสินค้า' }}</option>
                                                                     @foreach ($whs as $wh)
-                                                                        <option value="{{$wh->wh_id}}" >{{$wh->wh_name}}</option>
+                                                                        <option id="wh_input" value="{{ $wh->wh_id }}"{{ $wh->wh_id }} >{{ $wh->wh_name }}</option>
                                                                     @endforeach
                                                                 </select>
                                                                 @else
@@ -223,25 +240,29 @@ Displayfrom user_edit_detail
                                                                 <hr class="mb-3">
                                                                 <div class="mb-4 px-1 w-full">
                                                                     <label for="name" class="block mb-1 text-left text-sm font-medium">อีเมล<span class="text-sm text-red-500"> * </span></label>
-                                                                    <input type="email" id="email" name="name" value={{ $user->email }} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5" required>
+                                                                    <input type="email" id="email" name="name" value={{ $user->email }} class="input-primary bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5" required>
                                                                 </div>
                                                                 {{-- เบอร์ --}}
                                                                 <div class="mb-4 px-1 w-full">
                                                                     <label for="name" class="block mb-1 text-left text-sm font-medium">เบอร์โทรศัพท์<span class="text-sm text-red-500"> * </span></label>
-                                                                    <input type="tel" id="phone" name="name" value= {{ substr($user->phone, 0, 3) . '-' . substr($user->phone, 3, 3) . '-' . substr($user->phone, 6, 4) }} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5" required>
+                                                                    <input type="tel" id="phone" name="name" value= {{ substr($user->phone, 0, 3) . '-' . substr($user->phone, 3, 3) . '-' . substr($user->phone, 6, 4) }} class="input-primary bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5" required>
                                                                 </div>
                                                             </div>
 
                                                     </>`,
+
+
                                                     showCancelButton: true,
                                                     confirmButtonColor: '#2f67ff',
                                                     cancelButtonText: "ยกเลิก",
                                                     confirmButtonText: "ยืนยัน",
                                                     showLoaderOnConfirm: true,
                                                     reverseButtons: true,
+
                                                     preConfirm: () => { // เพิ่มส่วนนี้เพื่อเรียกใช้ onclick_edit_confirm เมื่อกดปุ่ม "ยืนยัน"
                                                         onclick_edit_confirm({{ $user->id }});
                                                     }
+
                                                 })
                                             }
                                             const onclick_edit_confirm = async (id) => {
@@ -249,8 +270,8 @@ Displayfrom user_edit_detail
                                                 const lname = document.getElementById('lname').value;
                                                 const email = document.getElementById('email').value;
                                                 const phone = document.getElementById('phone').value;
-                                                const wh_id = document.getElementById('wh_management').value;
-                                                const role = document.getElementById('role').value;
+                                                const wh_id = document.getElementById('wh_management')?.value;
+                                                const role = document.getElementById('role')?.value;
                                                 const cluster = '{{ env('CLUSTER') }}';
 
                                                 try {
@@ -277,6 +298,41 @@ Displayfrom user_edit_detail
                                                             text: responseData.data,
                                                         });
                                                         window.location.reload();
+                                                    } else {
+                                                        Swal.fire({
+                                                            icon: 'error',
+                                                            title: 'Error',
+                                                            text: responseData.data,
+                                                        });
+                                                    }
+                                                } catch (error) {
+                                                    console.error('Error:', error);
+                                                    Swal.fire({
+                                                        icon: 'error',
+                                                        title: 'Error',
+                                                        text: 'An error occurred while processing your request. Please try again later.'
+                                                    });
+                                                }
+                                            };
+
+                                            const onclick_delete_confirm = async (user_id) => {
+                                                const cluster = '{{ env('CLUSTER') }}';
+                                                try {
+                                                    const response = await fetch(`${cluster}/user-management/delete-user/${user_id}`, {
+                                                        method: 'DELETE',
+                                                        headers: {
+                                                            'Content-Type': 'application/json',
+                                                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                                        }
+                                                    });
+                                                    const responseData = await response.json();
+                                                    if (response.status === 200) {
+                                                        await Swal.fire({
+                                                            icon: 'success',
+                                                            title: 'Success',
+                                                            text: responseData.data,
+                                                        });
+                                                        window.location.reload(); // รีโหลดหน้าเว็บหลังจากการลบสำเร็จ
                                                     } else {
                                                         Swal.fire({
                                                             icon: 'error',

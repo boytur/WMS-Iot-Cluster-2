@@ -140,15 +140,19 @@ class OutboundIndex extends Controller
                 $outbound_details = OutBoundOrder::where('lot_out_id', $lot_out_id)->paginate(10);
                 $products = MasterProduct::all();
 
-                if ($lot_out !== null) {
-                    $user = User::where('id', $lot_out->user_id)->first();
-                    if ($user !== null) {
-                        $user = $user->fname . " " . $user->lname;
+                $wh_id_current = strval(Session::get('user_warehouse'));
+                $wh_id_lot_out = strval($lot_out->wh_id);
+                if ($wh_id_current === $wh_id_lot_out) {
+                    if ($lot_out !== null) {
+                        $user = User::where('id', $lot_out->user_id)->first();
+                        if ($user !== null) {
+                            $user = $user->fname . " " . $user->lname;
+                        }
+                        $lot_out_prod = OutBoundOrder::where('lot_out_id', $lot_out_id);
+                        return view('products.outbounds.v_outbound_detail', compact('outbound_details', 'user', 'lot_out', 'products'));
                     }
-                    $lot_out_prod = OutBoundOrder::where('lot_out_id', $lot_out_id);
-                    return view('products.outbounds.v_outbound_detail', compact('outbound_details', 'user', 'lot_out', 'products'));
                 } else {
-                    abort(404);
+                    return redirect('/');
                 }
             }
         } catch (\Exception $e) {

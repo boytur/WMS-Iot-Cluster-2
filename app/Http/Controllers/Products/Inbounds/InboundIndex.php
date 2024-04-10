@@ -112,63 +112,74 @@ class InboundIndex extends Controller
 
     //เรียกดูรายการสินค้าภายในล็อต
     public function inbound_detail(int $lot_in_id)
+
     {
+
         $lot_in = LotIn::where('lot_in_id', $lot_in_id)->first();
+
+        $wh_id_current = strval(Session::get('user_warehouse'));
+        $wh_id_lot_in = strval($lot_in->wh_id);
+
         $onshelf_prod = OnShelfProduct::All();
-        if ($lot_in !== null) {
-            $inbound_products = InboundOrder::where('lot_in_id', $lot_in_id)->paginate(5);
-            $inbound_ids = $inbound_products->map(function ($item) {
-                return $item->inbound_id;
-            });
-            $first_inbound_product = $inbound_products->first();
-            $type = '';//เก็บรูปแแบบที่ต้องการแสดง
 
-            //เงื่อนไขเพื่อเช็คว่ารายการสินค้าถูกจัดเก็บหรือยัง
-            if ($status_onshelf = $onshelf_prod->where('inbound_id', $first_inbound_product->inbound_id)->first()) {//เทียบไอดีของสินค้าในตารางล็อตกับตารางสินค้าที่ถูกจัดเก็บ
-                $product = $onshelf_prod->whereIn('inbound_id', $inbound_ids);//รายการสินค้าที่ถูกจัดเก็บ
-                $type = 'onshelf';
-                $currentPage = LengthAwarePaginator::resolveCurrentPage();
-                $perPage = 5;
-                $currentPageSearchResults = $product->slice(($currentPage - 1) * $perPage, $perPage)->all();
-                $product = new LengthAwarePaginator($currentPageSearchResults, count($product), $perPage);
 
-                return view('products.inbounds.v_inbound_detail', compact('lot_in', 'product', 'type'));
-            } else {
-                $product = $inbound_products;
-                $type = 'inbound';
-                return view('products.inbounds.v_inbound_detail', compact('lot_in', 'product', 'type'));
+        if ($wh_id_current === $wh_id_lot_in) {
+            if ($lot_in !== null) {
+                $inbound_products = InboundOrder::where('lot_in_id', $lot_in_id)->paginate(5);
+                $inbound_ids = $inbound_products->map(function ($item) {
+                    return $item->inbound_id;
+                });
+                $first_inbound_product = $inbound_products->first();
+                $type = ''; //เก็บรูปแแบบที่ต้องการแสดง
+
+                //เงื่อนไขเพื่อเช็คว่ารายการสินค้าถูกจัดเก็บหรือยัง
+                if ($status_onshelf = $onshelf_prod->where('inbound_id', $first_inbound_product->inbound_id)->first()) { //เทียบไอดีของสินค้าในตารางล็อตกับตารางสินค้าที่ถูกจัดเก็บ
+                    $product = $onshelf_prod->whereIn('inbound_id', $inbound_ids); //รายการสินค้าที่ถูกจัดเก็บ
+                    $type = 'onshelf';
+                    $currentPage = LengthAwarePaginator::resolveCurrentPage();
+                    $perPage = 5;
+                    $currentPageSearchResults = $product->slice(($currentPage - 1) * $perPage, $perPage)->all();
+                    $product = new LengthAwarePaginator($currentPageSearchResults, count($product), $perPage);
+
+                    return view('products.inbounds.v_inbound_detail', compact('lot_in', 'product', 'type'));
+                } else {
+                    $product = $inbound_products;
+                    $type = 'inbound';
+                    return view('products.inbounds.v_inbound_detail', compact('lot_in', 'product', 'type'));
+                }
             }
         } else {
-            abort(404);
+            return redirect('/');
         }
-
     }
-    function cancel_on_shelf(Request $request){
-        $payload =$request->json()->all();
+    function cancel_on_shelf(Request $request)
+    {
+        $payload = $request->json()->all();
         $note = $payload[1];
         $on_id = $payload[0];
-        $on_prod = OnShelfProduct::where('on_prod_id',$on_id);
+        $on_prod = OnShelfProduct::where('on_prod_id', $on_id);
         $on_prod->update([
-            'on_prod_status'=>'Fail',
-            'on_prod_note'=>$note,
+            'on_prod_status' => 'Fail',
+            'on_prod_note' => $note,
         ]);
         return response(200);
     }
-    function confrim_on_shelf(Request $request){
-        $payload =$request->json()->all();
+    function confrim_on_shelf(Request $request)
+    {
+        $payload = $request->json()->all();
         $on_id = $payload[0];
-        $on_prod = OnShelfProduct::where('on_prod_id',$on_id);
+        $on_prod = OnShelfProduct::where('on_prod_id', $on_id);
         $on_prod->update([
-            'on_prod_status'=>'Onshelf',
+            'on_prod_status' => 'Onshelf',
         ]);
         return response(200);
     }
     public function Closed_lot_in(Request $request)
     {
         $payload = $request->json()->all();
-        $lot_in=LotIn::where('lot_in_id',$payload[0]);
-        $lot_in->update(['lot_in_status'=>'closed']);
-        $lot_in_id=$payload[0];
+        $lot_in = LotIn::where('lot_in_id', $payload[0]);
+        $lot_in->update(['lot_in_status' => 'closed']);
+        $lot_in_id = $payload[0];
         return response()->json(['success' => true, 'data' => $lot_in_id], 200);
     }
 
