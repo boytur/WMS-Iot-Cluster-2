@@ -26,5 +26,9 @@ class InboundOrder extends Model
     {
         return $this->belongsTo(LotIn::class, 'lot_in_id', 'lot_in_id');
     }
+    public function on_shelf()
+    {
+        return $this->belongsTo(OnShelfProduct::class, 'inbound_id', 'inbound_id');
+    }
 
 }

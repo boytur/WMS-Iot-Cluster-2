@@ -21,7 +21,6 @@ class OutboundOrderSeeder extends Seeder
             OutBoundOrder::create([
                 'outbound_amount' => $outbound_amount,
                 'outbound_status' => 'Initialized',
-                'outbound_exp' => '2028-01-01',
                 'mas_prod_id' => $mas_prod_id,
                 'lot_out_id' => $lot_in_id
             ]);

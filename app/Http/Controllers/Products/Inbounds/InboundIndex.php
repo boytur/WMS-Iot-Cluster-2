@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Products\Inbounds;
 use App\Http\Controllers\Controller;
 use App\Models\InboundOrder;
 use App\Models\LotIn;
+use App\Models\OnShelfProduct;
 use App\Models\User;
 use App\Models\Category;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use App\Models\MasterProduct;
 use Illuminate\Http\Request;
@@ -106,23 +108,86 @@ class InboundIndex extends Controller
             throw new \Exception($e->getMessage());
         }
     }
+
+
+    //เรียกดูรายการสินค้าภายในล็อต
     public function inbound_detail(int $lot_in_id)
+
     {
+
         $lot_in = LotIn::where('lot_in_id', $lot_in_id)->first();
 
-        if ($lot_in !== null) {
-            $inbound_products = InboundOrder::where('lot_in_id', $lot_in_id)->paginate(5);
-            return view('products.inbounds.v_inbound_detail', compact('lot_in', 'inbound_products'));
+        $wh_id_current = strval(Session::get('user_warehouse'));
+        $wh_id_lot_in = strval($lot_in->wh_id);
+
+        $onshelf_prod = OnShelfProduct::All();
+
+
+        if ($wh_id_current === $wh_id_lot_in) {
+            if ($lot_in !== null) {
+                $inbound_products = InboundOrder::where('lot_in_id', $lot_in_id)->paginate(5);
+                $inbound_ids = $inbound_products->map(function ($item) {
+                    return $item->inbound_id;
+                });
+                $first_inbound_product = $inbound_products->first();
+                $type = ''; //เก็บรูปแแบบที่ต้องการแสดง
+
+                //เงื่อนไขเพื่อเช็คว่ารายการสินค้าถูกจัดเก็บหรือยัง
+                if ($status_onshelf = $onshelf_prod->where('inbound_id', $first_inbound_product->inbound_id)->first()) { //เทียบไอดีของสินค้าในตารางล็อตกับตารางสินค้าที่ถูกจัดเก็บ
+                    $product = $onshelf_prod->whereIn('inbound_id', $inbound_ids); //รายการสินค้าที่ถูกจัดเก็บ
+                    $type = 'onshelf';
+                    $currentPage = LengthAwarePaginator::resolveCurrentPage();
+                    $perPage = 5;
+                    $currentPageSearchResults = $product->slice(($currentPage - 1) * $perPage, $perPage)->all();
+                    $product = new LengthAwarePaginator($currentPageSearchResults, count($product), $perPage);
+
+                    return view('products.inbounds.v_inbound_detail', compact('lot_in', 'product', 'type'));
+                } else {
+                    $product = $inbound_products;
+                    $type = 'inbound';
+                    return view('products.inbounds.v_inbound_detail', compact('lot_in', 'product', 'type'));
+                }
+            }
         } else {
-            abort(404);
+            return redirect('/');
         }
+    }
+    function cancel_on_shelf(Request $request)
+    {
+        $payload = $request->json()->all();
+        $note = $payload[1];
+        $on_id = $payload[0];
+        $on_prod = OnShelfProduct::where('on_prod_id', $on_id);
+        $on_prod->update([
+            'on_prod_status' => 'Fail',
+            'on_prod_note' => $note,
+        ]);
+        return response(200);
+    }
+    function confrim_on_shelf(Request $request)
+    {
+        $payload = $request->json()->all();
+        $on_id = $payload[0];
+        $on_prod = OnShelfProduct::where('on_prod_id', $on_id);
+        $on_prod->update([
+            'on_prod_status' => 'Onshelf',
+        ]);
+        return response(200);
+    }
+    public function Closed_lot_in(Request $request)
+    {
+        $payload = $request->json()->all();
+        $lot_in = LotIn::where('lot_in_id', $payload[0]);
+        $lot_in->update(['lot_in_status' => 'closed']);
+        $lot_in_id = $payload[0];
+        return response()->json(['success' => true, 'data' => $lot_in_id], 200);
     }
 
     public function inbound_latest_detail(int $lot_in_id)
     {
         $lot_in = LotIn::where('lot_in_id', $lot_in_id)->first();
         if ($lot_in !== null) {
-            $inbound_prod = InboundOrder::where('inbound_id', $lot_in_id)->paginate(3);
+            $inbound_prod = InboundOrder::where('lot_in_id', $lot_in_id)->paginate(5);
             return view('products.inbounds.v_inbound_latest_detail', compact('lot_in', 'inbound_prod'));
         } else {
             abort(404);
@@ -133,14 +198,11 @@ class InboundIndex extends Controller
     public function edit_inbound_order(int $lot_in_id)
     {
         $lot_in = LotIn::where('lot_in_id', $lot_in_id)->first();
-        $master_products = MasterProduct::paginate(5);
-        foreach ($master_products as $product) {
-            $tags = $product->get_tags_name($product->mas_prod_id);
-            $product->tags = $tags;
-        }
+        $products = MasterProduct::all();
+
         if ($lot_in !== null) {
             $lot_in_products = InboundOrder::where('lot_in_id', $lot_in_id)->paginate(20);
-            return view('products.inbounds.v_edit_inbound_order', compact('lot_in', 'lot_in_products', 'master_products'));
+            return view('products.inbounds.v_edit_inbound_order', compact('lot_in', 'lot_in_products', 'products'));
         } else {
             abort(404);
         }

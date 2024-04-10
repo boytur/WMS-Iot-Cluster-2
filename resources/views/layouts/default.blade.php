@@ -10,7 +10,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"></script>
     @vite('resources/js/app.js')
     @vite('resources/css/app.css')
@@ -260,7 +259,7 @@
             class=" w-[15rem] h-[11rem] hidden  absolute mt-16 mr-12 rounded-md bg-white shadow-lg border p-1">
             <a href="{{ url('/profile/' . Auth::user()->number) }}"
                 class=" hover:bg-blue-100 cursor-pointer flex gap-2 items-center justify-start pl-10 py-3 text-[1.2rem] rounded-md"
-                <i class="fa-solid fa-user"></i>
+                <i class="fa-solid fa-user z-30"></i>
                 @if (Auth::check())
                 <span>{{ Auth::user()->fname }}</span><span>{{ Auth::user()->lname }}</span>
                 @endif
