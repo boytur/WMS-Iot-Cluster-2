@@ -14,123 +14,124 @@ Displayfrom view all wh
                 </div>
             </div>
             <div class="w-full p-2">
-                <div class="text-center justify-center flex flex-wrap gap-16">
-                    <div
-                        class="bg-white shadow-md rounded-lg p-4 flex flex-col items-center justify-center h-[10rem] w-[15.2rem]">
+                <div style="height: calc(100vh - 7.7rem)" class="  rounded-sm  overflow-y-scroll">
+                    <div class="text-center justify-center flex flex-wrap gap-16">
+                        <div
+                            class="bg-white shadow-md rounded-lg p-4 flex flex-col items-center justify-center h-[10rem] w-[15.2rem]">
 
-                        <div class="flex items-center mb-4">
-                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <div class="flex items-center mb-4">
+                                <i class="fa-solid fa-magnifying-glass"></i>
 
-                            <a class="text-gray-700 font-bold text-4xl ml-2">
-                                {{ $onshelf_products }}
-                            </a>
+                                <a class="text-gray-700 font-bold text-4xl ml-2">
+                                    {{ $onshelf_products }}
+                                </a>
+                            </div>
+                            <a class="text-gray-700 font-bold text-1xl mb-1">ยอดสินค้ารับเข้าวันนี้</a>
                         </div>
-                        <a class="text-gray-700 font-bold text-1xl mb-1">ยอดสินค้ารับเข้าวันนี้</a>
-                    </div>
-                    <div
-                        class="bg-white shadow-md rounded-lg p-4 flex flex-col items-center justify-center h-[10rem] w-[15.2rem]">
+                        <div
+                            class="bg-white shadow-md rounded-lg p-4 flex flex-col items-center justify-center h-[10rem] w-[15.2rem]">
 
-                        <div class="flex items-center mb-4">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                            <a class="text-gray-700 font-bold text-4xl ml-2">{{ $outbound_products }}</a>
+                            <div class="flex items-center mb-4">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <a class="text-gray-700 font-bold text-4xl ml-2">{{ $outbound_products }}</a>
+                            </div>
+                            <a class="text-gray-700 font-bold text-1xl mb-1">ยอดสินค้าส่งออกวันนี้</a>
                         </div>
-                        <a class="text-gray-700 font-bold text-1xl mb-1">ยอดสินค้าส่งออกวันนี้</a>
-                    </div>
-                    <div
-                        class="bg-white shadow-md rounded-lg p-4 flex flex-col items-center justify-center h-[10rem] w-[15.2rem]">
-                        @php
-                            $total_amount_all = 0;
-                        @endphp
+                        <div
+                            class="bg-white shadow-md rounded-lg p-4 flex flex-col items-center justify-center h-[10rem] w-[15.2rem]">
 
-                        @foreach ($onshelf_all as $onshelf)
-                            @php
-                                $total_amount_all += $onshelf->on_prod_amount;
-                            @endphp
-                        @endforeach
-                        <div class="flex items-center mb-4">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                            <a class="text-gray-700 font-bold text-4xl ml-2">{{ $total_amount_all }}</a>
+                            <div class="flex items-center mb-4">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <a class="text-gray-700 font-bold text-4xl ml-2">{{ $mas_product }}</a>
+                            </div>
+                            <a class="text-gray-700 font-bold text-1xl mb-1">สินค้าหลัก</a>
                         </div>
-                        <a class="text-gray-700 font-bold text-1xl mb-1">สินค้าทั้งหมด</a>
-                    </div>
-                    <div
-                        class="bg-white shadow-md rounded-lg p-4 flex flex-col items-center justify-center h-[10rem] w-[15.2rem]">
-                        <div class="flex items-center mb-4">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                            <a class="text-gray-700 font-bold text-4xl ml-2">{{ $count_warehouses}}</a>
+                        <div
+                            class="bg-white shadow-md rounded-lg p-4 flex flex-col items-center justify-center h-[10rem] w-[15.2rem]">
+                            <div class="flex items-center mb-4">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <a class="text-gray-700 font-bold text-4xl ml-2">{{ $count_warehouses }}</a>
+                            </div>
+                            <a class="text-gray-700 font-bold text-1xl mb-1">คลังสินค้าทั้งหมด</a>
                         </div>
-                        <a class="text-gray-700 font-bold text-1xl mb-1">คลังสินค้าทั้งหมด</a>
                     </div>
-                </div>
-                <div class="w-full mt-6 rounded-t-md">
-                    <div class="py-2 w-full bg-white rounded-t-md">
-                        <b class="mx-3  mt-2 text-lg text-black uppercase   ">
-                            รายการการสินค้าเข้า - ออก
-                        </b>
+                    <div class="w-full mt-6 rounded-t-md">
+                        <div class="py-2 w-full bg-white rounded-t-md">
+                            <b class="mx-3  mt-2 text-lg text-black uppercase   ">
+                                รายการการสินค้าเข้า - ออก
+                            </b>
+                        </div>
                     </div>
-                </div>
-                <hr>
-                <div class="bg-white text-lg  w-full h-[35rem]  ">
+                    <hr>
+                    <div class="bg-white text-lg  w-full h-[35rem]  ">
 
-                    <div class="chart-container"
-                        style="position: relative; display: flex;
+                        <div class="chart-container"
+                            style="position: relative; display: flex;
                     justify-content: center;  ; height:34rem; width:full">
-                        {{--  <b class=" text-sm ">จำนวน (ชิ้น)</b>  --}}
+                            {{--  <b class=" text-sm ">จำนวน (ชิ้น)</b>  --}}
 
-                        <canvas id="myChart"></canvas>
+                            <canvas id="myChart"></canvas>
+
+                        </div>
+
+
+                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+                        <script>
+                            const total = 0;
+
+                            const ctx = document.getElementById('myChart');
+
+                            new Chart(ctx, {
+                                type: 'line',
+                                data: {
+                                    labels: ['January', 'February', 'March', 'April',
+                                        'May', 'June', 'July', 'August',
+                                        'September', 'October', 'November', 'December'
+                                    ],
+                                    datasets: [{
+
+
+                                            label: 'สินค้าขาเข้า',
+                                            data: [
+
+                                                <?php
+                                                foreach ($onshelf_products_by_month as $month => $sum) {
+                                                    echo "$sum, ";
+                                                }
+                                                ?>
+                                            ],
+                                            borderWidth: 3
+                                        },
+                                        {
+                                            label: 'สินค้าขาออก',
+                                            data: [
+                                                <?php
+                                                foreach ($outbound_products_by_month as $month => $sum) {
+                                                    echo "$sum, ";
+                                                }
+                                                ?>
+                                            ],
+                                            borderWidth: 3
+                                        }
+                                    ]
+                                },
+                                options: {
+                                    scales: {
+                                        y: {
+                                            type: 'linear',
+                                            display: true,
+                                            position: 'left',
+                                        },
+                                    }
+                                }
+                            });
+                        </script>
 
                     </div>
 
-
-                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-
-                    <script>
-                        const total = 0;
-
-                        const ctx = document.getElementById('myChart');
-
-                        new Chart(ctx, {
-                            type: 'line',
-                            data: {
-                                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec '],
-                                datasets: [{
-
-
-                                        label: 'สินค้าขาเข้า',
-                                        data: [
-
-                                        {{ $onshelf_product_jan }},{{ $onshelf_product_feb }},{{ $onshelf_product_mar }}, {{ $onshelf_product_apr }},{{ $onshelf_product_may }}
-                                         , {{ $onshelf_product_jun }},  {{ $onshelf_product_jul }}, {{ $onshelf_product_aug }}, {{ $onshelf_product_sep }}, {{ $onshelf_product_oct }},{{ $onshelf_product_nov }} , {{ $onshelf_product_dec }}
-                                        ],
-                                        borderWidth: 3
-                                    },
-                                    {
-                                        label: 'สินค้าขาออก',
-                                        data: [
-                                            {{ $outbound_product_jan }},{{ $outbound_product_feb }},{{$outbound_product_mar}},{{ $outbound_product_apr }},{{$outbound_product_may}}
-                                            ,{{ $outbound_product_jun }},{{ $outbound_product_jul }},{{ $outbound_product_aug }},{{ $outbound_product_sep }},{{ $outbound_product_oct }},{{ $outbound_product_nov }}
-                                            ,{{ $outbound_product_dec }}
-                                        ],
-                                        borderWidth: 3
-                                    }
-                                ]
-                            },
-                            options: {
-                                scales: {
-                                    y: {
-                                        type: 'linear',
-                                        display: true,
-                                        position: 'left',
-                                    },
-                                }
-                            }
-                        });
-                    </script>
-
                 </div>
-
-
             </div>
         </div>
     </div>

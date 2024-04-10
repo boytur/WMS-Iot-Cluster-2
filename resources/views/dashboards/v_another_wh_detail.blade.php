@@ -2,7 +2,7 @@
 @section('title', 'ดูภาพรวมคลังสินค้าอื่น')
 
 @section('content')
-    <div style="height: calc(100vh - 4rem)" class="bg-[#F6F9FC] border w-full flex flex-col h-full">
+    <div style="height: calc(100vh - 4rem)" class="bg-[#F6F9FC] border w-full flex flex-col h-full ">
         <div class="mt-[5rem] md:mt-0">
             <div class=" w-full h-[3rem] ">
                 <div class="h-full flex items-center bg-white p-3 border-b-2 shadow-sm text-blue-800">
@@ -20,7 +20,7 @@
                                             class="bg-white shadow-md rounded-lg p-4 flex flex-col items-center justify-center h-[10rem] w-[15.2rem]">
                                             <div class="flex items-center mb-4">
                                                 <i class="fa-solid fa-magnifying-glass"></i>
-                                                <a class="text-gray-700 font-bold text-4xl ml-2">20,000</a>
+                                                <a class="text-gray-700 font-bold text-4xl ml-2">{{ $onshelf_products }}</a>
                                             </div>
                                             <a class="text-gray-700 font-bold text-1xl mb-1">ยอดสินค้ารับเข้าวันนี้</a>
                                         </div>
@@ -28,7 +28,8 @@
                                             class="bg-white shadow-md rounded-lg p-4 flex flex-col items-center justify-center h-[10rem] w-[15.2rem]">
                                             <div class="flex items-center mb-4">
                                                 <i class="fa-solid fa-magnifying-glass"></i>
-                                                <a class="text-gray-700 font-bold text-4xl ml-2">12,467</a>
+                                                <a
+                                                    class="text-gray-700 font-bold text-4xl ml-2">{{ $outbound_products }}</a>
                                             </div>
                                             <a class="text-gray-700 font-bold text-1xl mb-1">ยอดสินค้าส่งออกวันนี้</a>
                                         </div>
@@ -36,9 +37,9 @@
                                             class="bg-white shadow-md rounded-lg p-4 flex flex-col items-center justify-center h-[10rem] w-[15.2rem]">
                                             <div class="flex items-center mb-4">
                                                 <i class="fa-solid fa-magnifying-glass"></i>
-                                                <a class="text-gray-700 font-bold text-4xl ml-2">10,300</a>
+                                                <a class="text-gray-700 font-bold text-4xl ml-2">{{ $mas_product }}</a>
                                             </div>
-                                            <a class="text-gray-700 font-bold text-1xl mb-1">สินค้าทั้งหมด</a>
+                                            <a class="text-gray-700 font-bold text-1xl mb-1">สินค้าหลัก</a>
                                         </div>
                                     </div>
                                     <div class=" mt-3 w-full text-left ">
@@ -68,15 +69,26 @@
                                                 new Chart(ctx, {
                                                     type: 'line',
                                                     data: {
-                                                        labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12 '],
+                                                        labels: ['January', 'February', 'March', 'April',
+                                                            'May', 'June', 'July', 'August',
+                                                            'September', 'October', 'November', 'December'
+                                                        ],
                                                         datasets: [{
                                                                 label: 'สินค้าขาเข้า',
-                                                                data: [1, 2, 2, 1, 2, 2, 1, 1, 3, 1, 1, 2],
+                                                                data: [<?php
+                                                                foreach ($onshelf_products_by_month as $month => $sum) {
+                                                                    echo "$sum, ";
+                                                                }
+                                                                ?>],
                                                                 borderWidth: 3
                                                             },
                                                             {
                                                                 label: 'สินค้าขาออก',
-                                                                data: [1, 2, 1, 2, 0, 1, 1, 2, 1, 2, 2, 3],
+                                                                data: [<?php
+                                                                foreach ($outbound_products_by_month as $month => $sum) {
+                                                                    echo "$sum, ";
+                                                                }
+                                                                ?>],
                                                                 borderWidth: 3
                                                             }
                                                         ]
@@ -110,9 +122,9 @@
                                         </div>
 
                                         <div class="mx-1">
-                                            <b>รายละเอียด</b>
+                                            <b>ไม่มีรายละเอียดล่าสุด</b>
                                             <br>
-                                            <i>วันที่</i>
+                                            <i>4/10/2024</i>
                                         </div>
 
                                     </div>
@@ -123,9 +135,9 @@
                                         </div>
 
                                         <div class="mx-1">
-                                            <b>รายละเอียด</b>
+                                            <b>ไม่มีรายละเอียดล่าสุด</b>
                                             <br>
-                                            <i>วันที่</i>
+                                            <i>4/10/2024</i>
                                         </div>
 
                                     </div>
@@ -136,9 +148,9 @@
                                         </div>
 
                                         <div class="mx-1">
-                                            <b>รายละเอียด</b>
+                                            <b>ไม่มีรายละเอียดล่าสุด</b>
                                             <br>
-                                            <i>วันที่</i>
+                                            <i>4/10/2024</i>
                                         </div>
 
                                     </div>
@@ -149,9 +161,9 @@
                                         </div>
 
                                         <div class="mx-1">
-                                            <b>รายละเอียด</b>
+                                            <b>ไม่มีรายละเอียดล่าสุด</b>
                                             <br>
-                                            <i>วันที่</i>
+                                            <i>4/10/2024</i>
                                         </div>
 
                                     </div>
@@ -162,9 +174,9 @@
                                         </div>
 
                                         <div class="mx-1">
-                                            <b>รายละเอียด</b>
+                                            <b>ไม่มีรายละเอียดล่าสุด</b>
                                             <br>
-                                            <i>วันที่</i>
+                                            <i>4/10/2024</i>
                                         </div>
 
                                     </div>
@@ -175,9 +187,9 @@
                                         </div>
 
                                         <div class="mx-1">
-                                            <b>รายละเอียด</b>
+                                            <b>ไม่มีรายละเอียดล่าสุด</b>
                                             <br>
-                                            <i>วันที่</i>
+                                            <i>4/10/2024</i>
                                         </div>
 
                                     </div>
@@ -188,9 +200,9 @@
                                         </div>
 
                                         <div class="mx-1">
-                                            <b>รายละเอียด</b>
+                                            <b>ไม่มีรายละเอียดล่าสุด</b>
                                             <br>
-                                            <i>วันที่</i>
+                                            <i>4/10/2024</i>
                                         </div>
 
                                     </div>
@@ -201,9 +213,9 @@
                                         </div>
 
                                         <div class="mx-1">
-                                            <b>รายละเอียด</b>
+                                            <b>ไม่มีรายละเอียดล่าสุด</b>
                                             <br>
-                                            <i>วันที่</i>
+                                            <i>4/10/2024</i> 
                                         </div>
 
                                     </div>
