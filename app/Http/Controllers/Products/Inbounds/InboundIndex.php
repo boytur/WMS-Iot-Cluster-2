@@ -112,13 +112,16 @@ class InboundIndex extends Controller
 
     //เรียกดูรายการสินค้าภายในล็อต
     public function inbound_detail(int $lot_in_id)
+
     {
+
         $lot_in = LotIn::where('lot_in_id', $lot_in_id)->first();
 
-        $wh_id_current = Session::get('user_warehouse');
+        $wh_id_current = strval(Session::get('user_warehouse'));
         $wh_id_lot_in = strval($lot_in->wh_id);
 
         $onshelf_prod = OnShelfProduct::All();
+
 
         if ($wh_id_current === $wh_id_lot_in) {
             if ($lot_in !== null) {
