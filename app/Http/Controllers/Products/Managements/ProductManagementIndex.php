@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Products\ManageMents;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\InboundOrder;
 use App\Models\MasterProduct;
+use App\Models\OnShelfProduct;
+use App\Models\Space;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -59,12 +62,21 @@ class ProductManagementIndex extends Controller
             if (Auth::check() && Auth::user()->role === "warehouse_manager") {
 
                 if ($mas_prod_id !== null) {
+
                     $product = MasterProduct::where('mas_prod_id', $mas_prod_id)->first();
+                    $inbounds = InboundOrder::where('mas_prod_id', $mas_prod_id)->paginate(20);
+                    // foreach ($inbounds as $inbound) {
+                    //     $onshelfs = OnShelfProduct::where('inbound_id', $inbound->inbound_id)->get();
+                    //     foreach($onshelfs as $onself){
+                    //         $space = Space::where('space_id', $onself->space_id)->get();
+                    //         inbounds['space_name'] = $space
+                    //     }
+                    // }
 
                 } else {
                     return redirect('/product/managements');
                 }
-                return view('products.managements.v_detail_master_product', compact('product'));
+                return view('products.managements.v_detail_master_product', compact('product','inbounds'));
             } else {
                 return redirect('/product/inbounds');
             }
