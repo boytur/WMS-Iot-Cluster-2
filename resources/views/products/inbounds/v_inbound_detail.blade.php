@@ -173,10 +173,10 @@
                                             </th>
 
                                             <th scope="col" class="px-6 py-3 text-center">
-                                                คลังสินค้า
+                                                ตำแหน่ง
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-center">
-                                                ตำแหน่ง
+                                                คลังสินค้า
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-center">
                                                 สถานะ
