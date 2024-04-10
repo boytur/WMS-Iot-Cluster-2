@@ -140,7 +140,7 @@ class OutboundIndex extends Controller
                 $outbound_details = OutBoundOrder::where('lot_out_id', $lot_out_id)->paginate(10);
                 $products = MasterProduct::all();
 
-                $wh_id_current = Session::get('user_warehouse');
+                $wh_id_current = strval(Session::get('user_warehouse'));
                 $wh_id_lot_out = strval($lot_out->wh_id);
                 if ($wh_id_current === $wh_id_lot_out) {
                     if ($lot_out !== null) {
