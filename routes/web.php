@@ -103,8 +103,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/product/managements/add-new-product', [ProductManagementIndex::class, 'add_master_product_index'])->name('edit_master_product');
     Route::post('/product/managements/search-product', [ProductManagementIndex::class, 'search_product'])->name('search_product');
 
-    Route::get('/warehouse/add-space',[WarehouseController::class,'add_wh_space_index']);
-    Route::post('/warehouse/add-space',[WarehouseController::class,'add_wh_space']);
+    Route::get('/warehouse/add-space', [WarehouseController::class, 'add_wh_space_index']);
+    Route::post('/warehouse/add-space', [WarehouseController::class, 'add_wh_space']);
 
     //    route for warehouses management
     Route::get('/warehouse/add-wh', [WarehouseController::class, 'get_add_more_warehouse']);
@@ -133,9 +133,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/user-management/create_user', [UserManagementIndex::class, 'store_user'])->name('upload.image');
     Route::put('/user-management/edit-user-info/{id}', [UserManagementIndex::class, 'edit_user_info']);
     Route::get('/profile', [Profile::class, 'get_user_profile']);
-    Route::put('/user-management/edit-user-info/{user_id}',[UserManagementIndex::class,'edit_user_info']);
+    Route::put('/user-management/edit-user-info/{user_id}', [UserManagementIndex::class, 'edit_user_info']);
     Route::get('/profile', [Profile::class, 'get_user_profile']);
 
-    Route::post('warehouse/add-wh',[WarehouseController::class,'add_warehouse']);
-
+    Route::post('warehouse/add-wh', [WarehouseController::class, 'add_warehouse']);
 });
