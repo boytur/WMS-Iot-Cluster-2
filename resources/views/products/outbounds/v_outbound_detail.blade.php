@@ -133,7 +133,7 @@
                         </div>
                         <div class="card-footer pr-11">
                             <button class="btn btn-primary float-right h-[3rem] w-[10rem] justify-bottom">ยืนยันการส่งออก</button>
-                            <a href=""><button
+                            <a href="#" id="printButton"><button
                                     class="btn btn-secondary float-right mr-2 h-[3rem] w-[10rem] justify-bottom">พิมพ์ใบส่งสินค้า</button></a>
 
                         </div>
@@ -143,5 +143,152 @@
 
         </div>
     </div>
+    
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+    document.getElementById('printButton').addEventListener('click', function() {
+        Swal.fire({
+
+            html: `
+            <div class="flex h-[34rem] w-[60rem] p-2">
+                <div class=" w-3/5 p-3 flex items-center justify-center  h-full bg-gray-300">
+                    <img class"" src="https://scontent.fbkk20-1.fna.fbcdn.net/v/t39.30808-6/434751076_1796243624207178_3506995629515680686_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_ohc=2eGBH_ogJYkAb7H-Bfj&_nc_ht=scontent.fbkk20-1.fna&oh=00_AfBPUq6kQWpEe5AKAuL2A5-h-si_Z8YL8ysKcBDfJ3ZoQQ&oe=661C9362" class="max-h-full max-w-full" alt="รูปภาพ">
+
+                </div>
+                <div class="w-2/5 h-full bg-white " >
+                    <div class="">
+                        <b class=" text-xl">
+                            พิมพ์ใบขาย
+                        </b>
+                    </div>
+                    <div class="text-left mt-3 m-10 ">
+                        <br>
+                        <h2 class="text-left">
+                            พิมพ์
+                        </h2>
+                        <select name="" id="" class="mt-3 border border-gray-300 rounded-md w-full px-2 py-1">
+                            <option value="1">แผนงานปัจจุบัน</option>
+                        </select>
+                        
+                        <h2 class="text-left mt-3">
+                            ขนาดกระดาษ
+                        </h2>
+                        <select name="" id="" class="mt-3 border border-gray-300 rounded-md w-full px-2 py-1">
+                            <option value="1">A4(21.0cm x 29.7cm)</option>
+                        </select>
+                        <br>
+                        <h2 class="text-left mt-3">
+                            การวางแนวของหน้า
+                        </h2>
+                        <div class="mt-4 text-center w-full">
+                            <input type="radio" id="horizontal" name="layout" value="horizontal" style="margin-right:0rem;">
+                            <label for="horizontal">แนวนอน</label>
+                            <input type="radio" id="vertical" name="layout" value="vertical" style="margin-left:4rem;">
+                            <label for="vertical">แนวตั้ง</label>
+                        </div>
+
+                        <h2 class="text-left mt-3">
+                            สเกล
+                        </h2>
+                        <select name="" id="" class="mt-3 border border-gray-300 rounded-md w-full px-2 py-1">
+                            <option value="1">พอดีกับความกว้าง</option>
+                        </select>
+                        <br>
+                        <h2 class="text-left mt-3">
+                            ขอบ
+                        </h2>
+                        <select name="" id="" class="mt-3 border border-gray-300 rounded-md w-full px-2 py-1">
+                            <option value="1">ปกติ</option>
+                        </select>
+                        <br>
+                        <h4 class="text-left mt-3 text-blue-500">
+                            ตั้งค่าตัวแบ่งหน้าแบบกำหนดเอง
+                        </h4>
+                    </div>
+
+                </div>
+            </div>
+
+
+            `,
+            showCancelButton: true,
+            confirmButtonText: 'พิมพ์',
+            cancelButtonText: 'ยกเลิก'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // ตรวจสอบว่าปุ่ม OK ถูกคลิก
+                console.log('Print button clicked');
+                // ทำสิ่งที่ต้องการเมื่อปุ่ม OK ถูกคลิก
+            }
+        });
+    });
+</script>
+<style>
+    .swal2-popup {
+        width: auto !important;
+        max-width: 80vw;
+        padding: 0 !important;
+    }
+
+    .swal2-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .swal2-image {
+        margin-top: 20px;
+        max-height: 80vh;
+        max-width: 80vw;
+    }
+
+    /* เพิ่ม CSS เพื่อให้รูปภาพแสดงกึ่งกลางทั้งด้านบนและด้านข้าง */
+    .swal2-popup .swal2-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+    }
+
+    .swal2-popup .swal2-content > div {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .swal2-popup .swal2-content > div:first-child {
+        margin-bottom: 20px;
+    }
+
+    /* เพิ่ม CSS เพื่อสร้างเส้นขอบของ select */
+    .swal2-select {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+
+    .swal2-select select {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        appearance: none; /* ลบลักษณะเดิมของ select */
+        background-color: #fff;
+        background-image: none;
+    }
+
+    .swal2-select::after {
+        content: '\25bc'; /* ลูกศรลง */
+        position: absolute;
+        top: 50%;
+        right: 0.75rem;
+        transform: translateY(-50%);
+        pointer-events: none;
+    }
+    </style>
+
+
 
 @endsection
