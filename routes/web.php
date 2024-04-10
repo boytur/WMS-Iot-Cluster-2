@@ -55,7 +55,7 @@ Route::middleware(['auth'])->group(function () {
     //     return view('dashboards.v_all_wh');
     // });
     Route::get('/dashboard/view-all', [DashboardController::class, 'dashboard_index']);
-
+    Route::get('/dashboard/view-another/{wh_id}', [DashboardController::class, 'get_warehouse_detail_normal']);
     Route::post('/set-user-warehouse', [WarehouseController::class, 'set_user_warehouse'])->name('set-user-warehouse');
 
 
@@ -72,12 +72,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/product/inbounds/edit-inbound-order/{lot_in_id}', [EditByAddProductLotInOrder::class, 'add_product_to_lot_in'])->name('add_product_to_lot_in');
 
     Route::post('/product/inbounds/find-lot-in-space/{lot_in_id}', [FindLotInSpace::class, 'find_lot_in_space']);
-    Route::post('/product/inbounds/inbound-detail/closed_lot_in',[InboundIndex::class, 'Closed_lot_in']);
+    Route::post('/product/inbounds/inbound-detail/closed_lot_in', [InboundIndex::class, 'Closed_lot_in']);
     Route::post('/product/inbounds/search-lot-in', [InboundIndex::class, 'search_lot_in'])->name('search_lot_in');
     Route::post('/product/inbounds/create-inbound-order', [CreateLotInOrder::class, 'create_inbound_order']);
     Route::post('/product/inbounds/create-inbound-order/search-product', [InboundIndex::class, 'search_product_lot_in']);
-    Route::post('/product/inbounds/inbound-detail/cancel_on_shelf',[InboundIndex::class, 'cancel_on_shelf']);
-    Route::post('/product/inbounds/inbound-detail/confrim_on_shelf',[InboundIndex::class, 'confrim_on_shelf']);
+    Route::post('/product/inbounds/inbound-detail/cancel_on_shelf', [InboundIndex::class, 'cancel_on_shelf']);
+    Route::post('/product/inbounds/inbound-detail/confrim_on_shelf', [InboundIndex::class, 'confrim_on_shelf']);
 
 
     Route::post('/product/inbounds/search-lot-in', [InboundIndex::class, 'search_lot_in']);
@@ -136,8 +136,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/user-management/create_user', [UserManagementIndex::class, 'store_user']);
     Route::post('/user-management/create_user', [UserManagementIndex::class, 'store_user'])->name('upload.image');
-    Route::put('/user-management/edit-user-info/{id}',[UserManagementIndex::class,'edit_user_info']);
+    Route::put('/user-management/edit-user-info/{id}', [UserManagementIndex::class, 'edit_user_info']);
     Route::get('/profile', [Profile::class, 'get_user_profile']);
-
-
 });
